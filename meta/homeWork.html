@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>README.md</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="домашнее-задание----omit-in-toc---">Домашнее задание <!-- omit in toc --></h1>
+<blockquote>
+<p>Домашнее задание для студентов курса “Основы программирования” 1 курса кафедры ИУ5 МГТУ им Н.Э. Баумана.</p>
+</blockquote>
+<h2 id="содержание">Содержание</h2>
+<ul>
+<li><a href="#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5">Содержание</a></li>
+<li><a href="#%D1%86%D0%B5%D0%BB%D1%8C-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B">Цель работы</a></li>
+<li><a href="#%D0%BD%D0%B0%D1%87%D0%B0%D0%BB%D0%BE-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B">Начало работы</a></li>
+<li><a href="#%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5">Задание</a>
+<ul>
+<li><a href="#%D0%BE%D0%B1%D1%89%D0%B5%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B4%D0%BB%D1%8F-%D0%B2%D1%81%D0%B5%D1%85-%D0%B2%D0%B0%D1%80%D0%B8%D0%B0%D0%BD%D1%82%D0%BE%D0%B2">Общее задание для всех вариантов</a></li>
+<li><a href="#%D0%B8%D0%BD%D0%B4%D0%B8%D0%B2%D0%B8%D0%B4%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D1%8F">Индивидуальные задания</a></li>
+</ul>
+</li>
+<li><a href="#%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F-%D0%BA-%D0%B2%D1%8B%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D1%8E-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D1%8F">Указания к выполнению задания</a></li>
+</ul>
+<h2 id="цель-работы">Цель работы</h2>
+<p>Освоение низкоуровнего программирования</p>
+<h2 id="начало-работы">Начало работы</h2>
+<p>Зайдите в локальную директорию с репозиторием и обновите его из upstream-репозитория:</p>
+<pre class=" language-sh"><code class="prism  language-sh">git pull upstream
+</code></pre>
+<p><strong>или</strong>, если используется ветка homeWork:</p>
+<pre class=" language-sh"><code class="prism  language-sh">git pull upstream homeWork
+</code></pre>
+<p>Переключитесь на ветку с текущей работой:</p>
+<pre class=" language-sh"><code class="prism  language-sh">git checkout homeWork
+</code></pre>
+<p>Свяжите ветку локального репозитория с вашим удаленным репозиторием:</p>
+<pre class=" language-sh"><code class="prism  language-sh">git push --set-upstream origin homeWork
+</code></pre>
+<h2 id="задание">Задание</h2>
+<ul>
+<li>
+<p>Слова текста состоят из строчных латинских букв и разделены одним или несколькими пробелами.</p>
+</li>
+<li>
+<p>Текст оканчивается точкой.</p>
+</li>
+<li>
+<p>На экран должны выводиться только строчные латинские буквы, пробел и точка; все остальные вводимые символы игнорируются.</p>
+</li>
+<li>
+<p>При нажатии клавиши Backspace удаляется последний введённый символ.</p>
+</li>
+</ul>
+<p><strong>БЕЗ ИСПОЛЬЗОВАНИЯ</strong> конструкции</p>
+<ul>
+<li>STRING;</li>
+<li>ПОТОКОВОГО ВВОДА/ВЫВОДА;</li>
+<li>ФУНКЦИЙ scanf()/printf():</li>
+</ul>
+<h3 id="общее-задание-для-всех-вариантов">Общее задание для всех вариантов</h3>
+<p>а) написать программу ввода такого текста с клавиатуры.</p>
+<h3 id="индивидуальные-задания">Индивидуальные задания</h3>
+<ul>
+<li>
+<p><strong>Вариант 1.</strong> б) напечатать все слова, отличающиеся от последнего слова, перед печатью перенеся первую букву в конец слова.</p>
+</li>
+<li>
+<p><strong>Вариант 2.</strong>  б) напечатать все слова, отличающиеся от последнего слова, перед печатью удалив из слова последнюю букву.</p>
+</li>
+<li>
+<p><strong>Вариант 3.</strong>  б) напечатать все слова, отличающиеся от последнего слова, перед печатью удалив из слова все последующие вхождения первой буквы.</p>
+</li>
+<li>
+<p><strong>Вариант 4.</strong>  б) напечатать все слова, отличающиеся от последнего слова, перед печатью удалив из слова все предыдущие вхождения последней буквы.</p>
+</li>
+<li>
+<p><strong>Вариант 5.</strong>  б) напечатать все слова, отличающиеся от последнего слова, перед печатью оставив в слове только первые вхождения каждой буквы.</p>
+</li>
+<li>
+<p><strong>Вариант 6.</strong>  б) напечатать все слова, отличающиеся от последнего слова, перед печатью (если слово нечетной длины) удалив его среднюю букву.</p>
+</li>
+<li>
+<p><strong>Вариант 7.</strong>  б) напечатать все слова, отличающиеся от последнего слова, и одновременно симметричные.</p>
+</li>
+<li>
+<p><strong>Вариант 8.</strong>  б) напечатать все слова, отличающиеся от последнего слова, в которые первая буква печатаемого слова входит в него еще только один раз.</p>
+</li>
+<li>
+<p><strong>Вариант 9.</strong>  б) напечатать все слова, отличающиеся от последнего слова, в которых буквы упорядочены по алфавиту.</p>
+</li>
+<li>
+<p><strong>Вариант 10.</strong>  б) напечатать все слова, отличающиеся от последнего слова, и совпадающие с начальным отрезком алфавита (<code>a</code>, <code>ab</code>, <code>abc</code> и т.д.).</p>
+</li>
+<li>
+<p><strong>Вариант 11.</strong>  б) напечатать все слова, отличающиеся от последнего слова, и совпадающие с конечным отрезком алфавита (<code>z</code>, <code>yz</code>, <code>xyz</code> и т.д.).</p>
+</li>
+<li>
+<p><strong>Вариант 12.</strong>  б) напечатать все слова, отличающиеся от последнего слова, и имеющие максимальную длину.</p>
+</li>
+<li>
+<p><strong>Вариант 13.</strong>  б) напечатать все слова, отличающиеся от последнего слова, и не содержащие повторяющихся букв.</p>
+</li>
+<li>
+<p><strong>Вариант 14.</strong>  б) напечатать все слова, отличающиеся от последнего слова, и в которые каждая буква входит не менее двух раз.</p>
+</li>
+<li>
+<p><strong>Вариант 15.</strong>  б) напечатать все слова, отличающиеся от последнего слова, в которых гласные буквы (<code>a</code>, <code>e</code>, <code>i</code>, <code>o</code>, <code>u</code>, <code>y</code>) чередуются с согласными.</p>
+</li>
+<li>
+<p><strong>Вариант 16.</strong>  б) напечатать слова текста в обратном порядке букв.</p>
+</li>
+<li>
+<p><strong>Вариант 17.</strong>  б) напечатать этот текст, удалив все повторные вхождения слов.</p>
+</li>
+<li>
+<p><strong>Вариант 18.</strong>  б) напечатать все слова, входящие в текст по одному разу.</p>
+</li>
+<li>
+<p><strong>Вариант 19.</strong>  б) напечатать все различные слова текста, указав для каждого из них количество его вхождений в текст.</p>
+</li>
+<li>
+<p><strong>Вариант 20.</strong>  б) напечатать слова текста в алфавитном порядке.</p>
+</li>
+<li>
+<p><strong>Вариант 21.</strong>  б) напечатать все слова, отличающиеся от последнего слова, и совпадающие с конечным отрезком алфавита (<code>z</code>, <code>yz</code>, <code>xyz</code> и т.д.).</p>
+</li>
+<li>
+<p><strong>Вариант 22.</strong>  б) напечатать все слова, отличающиеся от последнего слова, и имеющие максимальную длину.</p>
+</li>
+<li>
+<p><strong>Вариант 23.</strong>  б) напечатать все слова, отличающиеся от последнего слова, и не содержащие повторяющихся букв.</p>
+</li>
+<li>
+<p><strong>Вариант 24.</strong>  б) напечатать все слова, отличающиеся от последнего слова, и в которые каждая буква входит не менее двух раз.</p>
+</li>
+<li>
+<p><strong>Вариант 25.</strong>  б) напечатать все слова, отличающиеся от последнего слова, в которых гласные буквы (<code>a</code>, <code>e</code>, <code>i</code>, <code>o</code>, <code>u</code>, <code>y</code>) чередуются с согласными.</p>
+</li>
+</ul>
+<h2 id="указания-к-выполнению-задания">Указания к выполнению задания</h2>
+<p>В Windows используется <code>getch()</code> (библиотека <code>conio.h</code>).</p>
+<p>В Linux / macOS аналогичной функции нет, поэтому для безэхового посимвольного ввода используется <code>termios</code>.</p>
+<p>Необходимо подключить:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;termios.h&gt;</span>   </span><span class="token comment">// для управления параметрами терминала (отключение эха)</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span>    </span><span class="token comment">// функции read(), write()</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span>     </span><span class="token comment">// putchar()</span>
+</code></pre>
+<p>В начале <code>main()</code> устанавливаем переменные управления консолью</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">struct</span> termios old<span class="token punctuation">,</span> raw<span class="token punctuation">;</span>
+</code></pre>
+<p>где</p>
+<ul>
+<li><code>old</code> — сохранит исходный режим терминала;</li>
+<li><code>raw</code> — изменённый;</li>
+</ul>
+<p>Отключение канонического режима и эха:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">tcgetattr</span><span class="token punctuation">(</span>STDIN_FILENO<span class="token punctuation">,</span> <span class="token operator">&amp;</span>old<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// читаем текущие настройки терминала</span>
+
+raw <span class="token operator">=</span> old<span class="token punctuation">;</span>                     <span class="token comment">// копируем для модификации</span>
+raw<span class="token punctuation">.</span>c_lflag <span class="token operator">&amp;</span><span class="token operator">=</span> <span class="token operator">~</span><span class="token punctuation">(</span>ICANON <span class="token operator">|</span> ECHO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>где</p>
+<ul>
+<li>ICANON — отключает буферизацию до Enter (отключает строковый режим т.е. теперь читаем посимвольно);</li>
+<li>ECHO   — отключает отображение вводимых символов;</li>
+</ul>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">tcsetattr</span><span class="token punctuation">(</span>STDIN_FILENO<span class="token punctuation">,</span> TCSANOW<span class="token punctuation">,</span> <span class="token operator">&amp;</span>raw<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// применяем новые настройки</span>
+</code></pre>
+<p>Перед завершением программы необходимо обязательно восстановить режим терминала:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">tcsetattr</span><span class="token punctuation">(</span>STDIN_FILENO<span class="token punctuation">,</span> TCSANOW<span class="token punctuation">,</span> <span class="token operator">&amp;</span>old<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</div>
+</body>
+
+</html>
