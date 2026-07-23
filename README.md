@@ -5,6 +5,7 @@
 
 https://iu5git.github.io/cpp/
 
+ - [План курса](https://iu5git.github.io/cpp/meta/planCourse@.html)
  - Лабораторные работы
 	 - [Лабораторная работа 0.1](https://iu5git.github.io/cpp/meta/lab-00_1.html)
 	 - [Лабораторная работа 0.2](https://iu5git.github.io/cpp/meta/lab-00_2.html)
