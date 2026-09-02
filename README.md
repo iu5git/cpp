@@ -5,10 +5,10 @@
 https://iu5git.github.io/cpp/
 
  - [План курса](https://iu5git.github.io/cpp/planCourse@.html)
-  
+
  - Лекции
-     - [Лекция 1](https://iu5git.github.io/cpp/lectures/lecture-01.html)
-     - [доп к Лекции 1](https://iu5git.github.io/cpp/lectures/proGit.html)
+     - [Лекция 1](https://iu5git.github.io/cpp/meta/lecture-01.html)
+     - [доп к лекции proGit](https://iu5git.github.io/cpp/meta/proGit.html)
  - Лабораторные работы
 	 - [Лабораторная работа 0.1](https://iu5git.github.io/cpp/meta/lab-00_1.html)
 	 - [Лабораторная работа 0.2](https://iu5git.github.io/cpp/meta/lab-00_2.html)
