@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>proGit.md</title>
+  <title>proGit.html</title>
   <link rel="stylesheet" href="https://stackedit.io/style.css" />
 </head>
 
@@ -36,7 +36,7 @@
 <p>program_old.cpp</p>
 <p>program_old_old.cpp</p>
 <p>А потом вы уже не знаете, какой из них последний.</p>
-<p><strong>git появился примерно для того, чтобы программисты больше не жили так.</strong></p>
+<p><strong><code>git</code> появился примерно для того, чтобы программисты больше не жили так.</strong></p>
 <hr>
 <h1 id="представим-что-мы-снимаем-фильм">Представим, что мы снимаем фильм</h1>
 <p>Давайте представим, что ваш проект — это фильм.</p>
@@ -60,13 +60,13 @@
 <p><strong>«Я считаю эту версию проекта значимой и хочу оставить её в истории».</strong></p>
 </blockquote>
 <p>Например:</p>
-<p>commit 1</p>
-<p>↓</p>
-<p>commit 2</p>
-<p>↓</p>
-<p>commit 3</p>
-<p>↓</p>
-<p>commit 4</p>
+<p>commit 1<br>
+↓<br>
+commit 2<br>
+↓<br>
+commit 3<br>
+↓<br>
+commit 4</p>
 <p>И теперь, если мы сделали глупость на этапе 4, у нас есть возможность посмотреть:</p>
 <blockquote>
 <p>«А каким проект был на этапе 3?»</p>
@@ -74,30 +74,30 @@
 <p>И это уже очень мощная идея.</p>
 <hr>
 <h1 id="так-что-же-такое-git">Так что же такое git?</h1>
-<p><strong>git — это система контроля версий.</strong></p>
+<p><strong><code>git</code> — это система контроля версий.</strong></p>
 <p>Ключевое слово здесь — <strong>версий</strong>.</p>
-<p>git следит за тем, как изменяется наш проект.</p>
-<p>Причём git работает <strong>на нашем компьютере</strong>.</p>
+<p><code>git</code> следит за тем, как изменяется наш проект.</p>
+<p>Причём <code>git</code> работает <strong>на нашем компьютере</strong>.</p>
 <p>Это важно.</p>
-<p>git — не GitHub.</p>
+<p><code>git</code> — не <code>GitHub</code>.</p>
 <hr>
 <h1 id="а-тогда-что-такое-github">А тогда что такое GitHub?</h1>
 <p>Представьте:</p>
-<p>git — это ваш личный дневник проекта.</p>
+<p><code>git</code> — это ваш личный дневник проекта.</p>
 <p>Он лежит у вас на компьютере.</p>
 <p>Но однажды вы понимаете:</p>
 <blockquote>
 <p>«А было бы неплохо иметь копию этого проекта где-нибудь в интернете».</p>
 </blockquote>
-<p>И появляется GitHub.</p>
-<p><strong>GitHub — это сервис, который позволяет хранить Git-репозитории в интернете и работать с ними вместе с другими людьми.</strong></p>
+<p>И появляется <code>GitHub</code>.</p>
+<p><strong><code>GitHub</code> — это сервис, который позволяет хранить Git-репозитории в интернете и работать с ними вместе с другими людьми.</strong></p>
 <p>Поэтому:</p>
-<p>git = инструмент контроля версий</p>
+<p><code>git</code> = инструмент контроля версий</p>
 <p>а</p>
-<p>GitHub = онлайн-платформа для git-репозиториев</p>
+<p><code>GitHub</code> = онлайн-платформа для git-репозиториев</p>
 <p>Можно сказать ещё проще:</p>
 <blockquote>
-<p><strong>git умеет помнить. GitHub умеет хранить эту память в интернете и делиться ею с другими.</strong></p>
+<p><strong><code>git</code> умеет помнить. <code>GitHub</code> умеет хранить эту память в интернете и делиться ею с другими.</strong></p>
 </blockquote>
 <hr>
 <h1 id="репозиторий">Репозиторий</h1>
@@ -105,17 +105,21 @@
 <p><strong>repository — репозиторий.</strong></p>
 <p>Репозиторий — это проект, который находится под контролем Git.</p>
 <p>Например, у нас есть:</p>
-<p>LecturesCPP</p>
-<p>Это репозиторий.</p>
+<p>LecturesCPP - Это репозиторий.</p>
 <p>В нём могут находиться:</p>
-<p><a href="http://README.md">README.md</a></p>
-<p>lecture-01</p>
-<p>lecture-02</p>
-<p>lecture-03</p>
-<p>…</p>
+<pre class=" language-text"><code class="prism  language-text">[README.md](http://README.md)
+	|
+lecture-01
+	|
+lecture-02
+	|
+lecture-03
+	|
+	…
+</code></pre>
 <p>Но самое интересное находится внутри скрытой папки:</p>
-<p>.git</p>
-<p>Именно там git хранит информацию об истории проекта.</p>
+<p><code>.git</code></p>
+<p>Именно там <code>git</code> хранит информацию об истории проекта.</p>
 <p>Поэтому репозиторий — это не просто папка.</p>
 <p>Это:</p>
 <blockquote>
@@ -131,12 +135,13 @@
 <p>Но мы можем от ствола пустить ветку.</p>
 <p>Например:</p>
 <p>main</p>
-<p>│</p>
-<p>├──── lab-01</p>
-<p>│</p>
-<p>├──── lab-02</p>
-<p>│</p>
-<p>└──── lab-03</p>
+<pre class=" language-text"><code class="prism  language-text">│
+├──── lab-01
+│
+├──── lab-02
+│
+└──── lab-03
+</code></pre>
 <p>И вот здесь начинается магия.</p>
 <p>Мы можем работать над <code>lab-01</code>, не ломая <code>main</code>.</p>
 <p>Можно экспериментировать.</p>
@@ -161,7 +166,7 @@
 <p>CPP</p>
 <p>Второй — студенту:</p>
 <p>Lastname-CPP-Labs-2026</p>
-<p>Но git должен понимать:</p>
+<p>Но <code>git</code> должен понимать:</p>
 <blockquote>
 <p>«А какой репозиторий где?»</p>
 </blockquote>
@@ -169,30 +174,31 @@
 <p><strong>origin</strong> и <strong>upstream</strong>.</p>
 <hr>
 <h1 id="origin">Origin</h1>
-<p><code>origin</code> — это имя, которое git обычно даёт репозиторию, из которого мы клонировали проект.</p>
+<p><code>origin</code> — это имя, которое <code>git</code> обычно даёт репозиторию, из которого мы клонировали проект.</p>
 <p>В нашем учебном сценарии:</p>
-<p>origin</p>
-<p>↓</p>
-<p>репозиторий студента</p>
+<pre class=" language-text"><code class="prism  language-text">origin
+   ↓
+репозиторий студента
+</code></pre>
 <p>То есть:</p>
 <blockquote>
 <p><strong>origin — мой репозиторий.</strong></p>
 </blockquote>
 <p>Например:</p>
-<p>GitHub</p>
-<p>└── Lastname-CPP-Labs-2026</p>
+<pre class=" language-text"><code class="prism  language-text">GitHub
+└── Lastname-CPP-Labs-2026
+</code></pre>
 <hr>
 <h1 id="upstream">Upstream</h1>
 <p>А репозиторий преподавателя мы назовём:</p>
 <p>upstream</p>
 <p>Получается:</p>
-<p>upstream</p>
-<p>↓</p>
-<p>CPP</p>
+<pre class=" language-text"><code class="prism  language-text">upstream
+   ↓
+  CPP
+</code></pre>
 <p>И теперь у студента в голове должна появиться вот такая картина:</p>
-<pre><code>             GitHub
-
-
+<pre class=" language-text"><code class="prism  language-text">             GitHub
 
     ┌─────────────────────┐
     │                     │
@@ -229,7 +235,8 @@
 <p>«Git, покажи мне, что нового появилось у преподавателя».</p>
 </blockquote>
 <p>И выполняет:</p>
-<p>git fetch upstream</p>
+<pre class=" language-bash"><code class="prism  language-bash">	<span class="token function">git</span> fetch upstream
+</code></pre>
 <p><code>fetch</code> означает:</p>
 <blockquote>
 <p><strong>«Посмотри, что нового появилось там, но пока ничего у меня не меняй».</strong></p>
@@ -244,13 +251,15 @@
 <p>Почему?</p>
 <p>Потому что <code>main</code> — наша спокойная, основная линия.</p>
 <p>Мы создаём отдельную ветку:</p>
-<p>lab-01</p>
+<p><code>lab-01</code></p>
 <p>Команда:</p>
-<p>git switch -c lab-01</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">git <span class="token keyword">switch</span> <span class="token operator">-</span>c lab<span class="token number">-01</span>
+</code></pre>
 <p>Теперь мы находимся здесь:</p>
-<p>main</p>
-<p>│</p>
-<p>└──── lab-01  ← мы здесь</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">main
+│
+└──── lab<span class="token number">-01</span> ← мы здесь
+</code></pre>
 <p>И начинаем работать.</p>
 <hr>
 <h1 id="работаем-ошибаемся-исправляем">Работаем, ошибаемся, исправляем</h1>
@@ -267,14 +276,16 @@
 <p>«Ура! Работает!»</p>
 </blockquote>
 <p>Теперь очень важно сохранить результат.</p>
-<p>Мы говорим git:</p>
-<p>git add .</p>
+<p>Мы говорим <code>git</code>:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">	git add <span class="token punctuation">.</span>
+</code></pre>
 <p>Это примерно:</p>
 <blockquote>
 <p>«Вот эти изменения я хочу подготовить для сохранения».</p>
 </blockquote>
 <p>А потом:</p>
-<p>git commit -m “lab 01”</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">git</span> commit -m “lab 01”
+</code></pre>
 <p>И это уже:</p>
 <blockquote>
 <p>«Зафиксируй эту версию проекта в истории».</p>
@@ -282,19 +293,14 @@
 <hr>
 <h1 id="commit-—-это-наша-точка-во-времени">Commit — это наша точка во времени</h1>
 <p>Получается:</p>
-<p>main</p>
-<p>│</p>
-<p>└── lab-01</p>
-<pre><code>    │
-
-    ● commit
-
+<pre class=" language-text"><code class="prism  language-text">main
+│
+└── lab-01
     │
-
     ● commit
-
     │
-
+    ● commit
+    │
     ● commit
 </code></pre>
 <p>Каждая точка — это сохранённая версия.</p>
@@ -302,86 +308,100 @@
 <blockquote>
 <p>«Ой… Я вчера всё сломал».</p>
 </blockquote>
-<p>git ответит:</p>
+<p><code>git</code> ответит:</p>
 <blockquote>
 <p>«Не переживай. Я помню, каким всё было вчера».</p>
 </blockquote>
 <hr>
 <h1 id="но-пока-это-всё-находится-на-компьютере">Но пока это всё находится на компьютере</h1>
-<p>И вот тут появляется GitHub.</p>
+<p>И вот тут появляется <code>GitHub</code>.</p>
 <p>Мы хотим отправить свою работу в свой удалённый репозиторий.</p>
 <p>Для этого:</p>
-<p>git push</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">git</span> push
+</code></pre>
 <p>И происходит:</p>
-<p>компьютер</p>
-<p>│</p>
-<p>│ push</p>
-<p>↓</p>
-<p>GitHub</p>
-<p>Теперь ваша ветка <code>lab-01</code> находится и у вас на компьютере, и на GitHub.</p>
+<pre class=" language-text"><code class="prism  language-text">компьютер
+		│
+	push
+	  ↓
+	GitHub
+</code></pre>
+<p>Теперь ваша ветка <code>lab-01</code> находится и у вас на компьютере и на GitHub.</p>
 <p>Например:</p>
-<p>Lastname-CPP-Labs-2026</p>
-<p>main</p>
-<p>lab-01</p>
+<pre class=" language-text"><code class="prism  language-text">Lastname-CPP-Labs-2026
+  |
+main
+  |
+lab-01
+</code></pre>
 <hr>
-<h1 id="и-вот-здесь-я-хочу-чтобы-вы-запомнили-одну-вещь">И вот здесь я хочу, чтобы вы запомнили одну вещь</h1>
+<h1 id="и-вот-здесь-надо-запомнить-одну-вещь">И вот здесь надо запомнить одну вещь</h1>
 <p><strong>Commit и push — это НЕ одно и то же.</strong></p>
 <p>Это очень частая ошибка новичков.</p>
-<p>git commit</p>
+<p><code>git commit</code></p>
 <p>означает:</p>
 <blockquote>
-<p>«Я сохранил изменения в истории git на своём компьютере».</p>
+<p>«Я сохранил изменения в истории <code>git</code> на своём компьютере».</p>
 </blockquote>
 <p>А:</p>
-<p>git push</p>
+<p><code>git push</code></p>
 <p>означает:</p>
 <blockquote>
 <p>«Я отправил свои commits на удалённый репозиторий».</p>
 </blockquote>
 <p>То есть:</p>
 <p>изменили файлы</p>
-<pre><code>  ↓
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">git</span> add
 </code></pre>
-<p>git add</p>
-<pre><code>  ↓
+<p>↓<br>
+закомитили ( сохранили текущее состояние кода или файлов в истории проекта)</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">git</span> commit
 </code></pre>
-<p>git commit</p>
-<pre><code>  ↓
+<p>сохранили на сервере</p>
+<p>↓</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">git</span> push
 </code></pre>
-<p>история git</p>
-<pre><code>  ↓
-</code></pre>
-<p>git push</p>
-<pre><code>  ↓
+<p>↓</p>
+<p>GitHub</p>
+<pre><code>
+----------
 
-GitHub
+# А что происходит со следующей лабораторной?
+
+Мы не продолжаем писать всё в ветке `lab-01`.
+
+Мы создаём ветку:
+
+`lab-02`
+
+Потом:
+
+`lab-03`
+
+Потом:
+
+`lab-04`
+
+И получается:
+
+```text
+main
+│
+├──── lab-01
+│
+├──── lab-02
+│
+├──── lab-03
+│
+└──── lab-04
 </code></pre>
-<hr>
-<h1 id="а-что-происходит-со-следующей-лабораторной">А что происходит со следующей лабораторной?</h1>
-<p>Мы не продолжаем писать всё в <code>lab-01</code>.</p>
-<p>Мы создаём:</p>
-<p>lab-02</p>
-<p>Потом:</p>
-<p>lab-03</p>
-<p>Потом:</p>
-<p>lab-04</p>
-<p>И получается:</p>
-<p>main</p>
-<p>│</p>
-<p>├──── lab-01</p>
-<p>│</p>
-<p>├──── lab-02</p>
-<p>│</p>
-<p>├──── lab-03</p>
-<p>│</p>
-<p>└──── lab-04</p>
 <p>Каждая лабораторная — <strong>своя ветка</strong>.</p>
 <p>Это позволяет нам не смешивать разные работы.</p>
 <hr>
 <h1 id="а-зачем-вообще-всё-это">А зачем вообще всё это?</h1>
 <p>Потому что через некоторое время ваши проекты перестают быть маленькими.</p>
 <p>Сначала у вас:</p>
-<p>main.cpp</p>
+<p><code>main.cpp</code></p>
 <p>Потом:</p>
 <p>10 файлов</p>
 <p>Потом:</p>
@@ -403,17 +423,19 @@ GitHub
 <blockquote>
 <p>«А можно я попробую новую идею, не разрушая основной проект?»</p>
 </blockquote>
-<p>И вот тут git превращается из «какой-то программы, которую заставляет использовать преподаватель» в <strong>один из главных инструментов разработчика</strong>.</p>
+<p>И вот тут <code>git</code> превращается из «какой-то программы, которую заставляет использовать преподаватель» в <strong>один из главных инструментов разработчика</strong>.</p>
 <hr>
-<h1 id="и-самое-красивое-—-git-помнит-не-только-файлы">И самое красивое — Git помнит не только файлы</h1>
-<p>git помнит <strong>историю проекта</strong>.</p>
+<h1 id="и-самое-красивое-—-git-помнит-не-только-файлы">И самое красивое — <code>git</code> помнит не только файлы</h1>
+<p><code>git</code> помнит <strong>историю проекта</strong>.</p>
 <p>Например:</p>
-<p>a82f31  add laboratory 3</p>
-<p>91bc52  fix array input</p>
-<p>3fa721  add laboratory 2</p>
-<p>7d451a  initial project</p>
+<pre class=" language-text"><code class="prism  language-text">a82f31 add laboratory 3
+91bc52 fix array input
+3fa721 add laboratory 2
+7d451a initial project
+</code></pre>
 <p>Мы можем посмотреть:</p>
-<p>git log</p>
+<pre class=" language-bash"><code class="prism  language-bash">	<span class="token function">git</span> log
+</code></pre>
 <p>И увидеть:</p>
 <blockquote>
 <p>Как проект пришёл к тому состоянию, в котором он находится сейчас.</p>
@@ -424,16 +446,17 @@ GitHub
 <p>«Сегодня я написал функцию и понял, что ничего не понимаю».</p>
 </blockquote>
 <p>там:</p>
-<p>add function</p>
-<p>fix bug</p>
-<p>refactor</p>
-<p>add tests</p>
-<p>fix input</p>
+<pre class=" language-text"><code class="prism  language-text">add function
+fix bug
+refactor
+add tests
+fix input
+</code></pre>
 <p>Хотя первое иногда тоже полезно было бы сохранять. 😄</p>
 <hr>
 <h1 id="и-теперь-вся-система-целиком">И теперь вся система целиком</h1>
 <p>Вот теперь можно собрать всё в одну картину.</p>
-<pre><code>                GITHUB
+<pre class=" language-text"><code class="prism  language-text">                GITHUB
 
     ┌─────────────────────────┐
     │        CPP              │
@@ -466,20 +489,26 @@ GitHub
           │     StudentCPP     │
           │     GitHub         │
           └────────────────────┘
+
 </code></pre>
 <hr>
-<h1 id="и-ваша-жизнь-в-git-будет-выглядеть-примерно-так">И ваша жизнь в git будет выглядеть примерно так</h1>
+<h1 id="и-ваша-жизнь-в-git-будет-выглядеть-примерно-так">И ваша жизнь в <code>git</code> будет выглядеть примерно так</h1>
 <p>Получили задания:</p>
-<p>git fetch upstream</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">git</span> fetch upstream
+</code></pre>
 <p>Создали ветку:</p>
-<p>git switch -c lab-01</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">git</span> switch -c lab-01
+</code></pre>
 <p>Работаете.</p>
 <p>Подготовили изменения:</p>
-<p>git add .</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">git</span> add <span class="token keyword">.</span>
+</code></pre>
 <p>Зафиксировали:</p>
-<p>git commit -m “lab 01”</p>
-<p>Отправили на GitHub:</p>
-<p>git push -u origin lab-01</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">git</span> commit -m “lab 01”
+</code></pre>
+<p>Отправили на <code>GitHub</code>:</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">git</span> push -u origin lab-01
+</code></pre>
 <p>А дальше — следующая лабораторная.</p>
 <p>lab-01</p>
 <p>lab-02</p>
@@ -487,9 +516,9 @@ GitHub
 <p>lab-04</p>
 <p>…</p>
 <hr>
-<h1 id="и-последнее-что-я-хочу-чтобы-вы-сегодня-унесли">И последнее, что я хочу, чтобы вы сегодня унесли</h1>
-<p>Не надо воспринимать git как набор страшных команд.</p>
-<p>git — это <strong>способ думать об изменениях</strong>.</p>
+<h1 id="и-последнее">И последнее</h1>
+<p>Не надо воспринимать <code>git</code> как набор страшных команд.</p>
+<p><code>git</code> — это <strong>способ думать об изменениях</strong>.</p>
 <p>Вы не просто:</p>
 <blockquote>
 <p>«поменяли код».</p>
@@ -514,13 +543,13 @@ GitHub
 <blockquote>
 <p>«Я создал отдельную ветку для независимой работы».</p>
 </blockquote>
-<p>И тогда git перестаёт быть магией.</p>
+<p>И тогда <code>git</code> перестаёт быть магией.</p>
 <hr>
-<h2 id="финальная-фраза-для-студентов">Финальная фраза для студентов</h2>
+<h2 id="финальная-фраза">Финальная фраза</h2>
 <blockquote>
 <p><strong>«Программист — это не тот, кто никогда не ошибается.</strong></p>
 <p><strong>Программист — это тот, кто умеет ошибаться так, чтобы можно было вернуться назад».</strong></p>
-<p>А Git как раз даёт нам такую возможность.</p>
+<p>А <code>git</code> как раз даёт нам такую возможность.</p>
 <p>Поэтому сегодня вы научились не просто нескольким командам.</p>
 <p>Вы получили возможность <strong>экспериментировать с кодом, не боясь его потерять</strong>.</p>
 <p>А это, пожалуй, один из первых признаков взросления программиста.</p>
@@ -531,22 +560,22 @@ GitHub
 </blockquote>
 <hr>
 <h3 id="один-маленький-слайд-шпаргалку">один маленький слайд-шпаргалку</h3>
-<p>git — история проекта</p>
-<p>GitHub — хранение и совместная работа</p>
-<p>git status                 что сейчас происходит?</p>
-<p>git switch -c lab-01       создать ветку</p>
-<p>git add .                  подготовить изменения</p>
-<p>git commit -m “…”        сохранить в историю</p>
-<p>git push                   отправить на GitHub</p>
-<p>git fetch upstream         получить информацию о новых заданиях</p>
-<p>git log                    посмотреть историю</p>
+<p><code>git</code> — история проекта</p>
+<p><code>GitHub</code> — хранение и совместная работа</p>
+<p><code>git status</code> что сейчас происходит?</p>
+<p><code>git switch</code> -c lab-01 создать ветку</p>
+<p><code>git add .</code> подготовить изменения</p>
+<p><code>git commit -m “…”</code>  сохранить в историю</p>
+<p><code>git push</code> отправить на GitHub</p>
+<p><code>git fetch</code> upstream получить информацию о новых заданиях</p>
+<p><code>git log</code> посмотреть историю</p>
 <hr>
-<p>origin                     мой GitHub</p>
-<p>upstream                   GitHub преподавателя</p>
+<p><code>origin</code> мой GitHub</p>
+<p><code>upstream</code> GitHub преподавателя</p>
 <hr>
-<p>main                       основная ветка</p>
-<p>lab-01                     ветка лабораторной №1</p>
-<p>lab-02                     ветка лабораторной №2</p>
+<p><code>main</code> основная ветка</p>
+<p><code>lab-01</code> ветка лабораторной №1</p>
+<p><code>lab-02</code> ветка лабораторной №2</p>
 <p>…</p>
 </div>
 </body>
