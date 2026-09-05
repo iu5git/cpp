@@ -1,0 +1,567 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lecture-02</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h6 id="лекции-по-курсу-основы-программирования-мгту-им.-баумана-кафедра-иу5"><em>Лекции по курсу "Основы программирования МГТУ им. Баумана кафедра ИУ5</em></h6>
+<h1 id="лекция-2.-типы-данных-переменные-операторы-и-условия">Лекция 2. Типы данных, переменные, операторы и условия</h1>
+<h1 id="цели-лекции">Цели лекции</h1>
+<p>После занятия студент должен:</p>
+<ul>
+<li>понимать, зачем языку программирования нужны типы данных;</li>
+<li>знать основные фундаментальные типы C++;</li>
+<li>уметь объявлять и инициализировать переменные;</li>
+<li>понимать разницу между объявлением, определением и инициализацией;</li>
+<li>знать способы преобразования типов;</li>
+<li>использовать арифметические, логические и операции сравнения;</li>
+<li>писать простые условные конструкции;</li>
+<li>понимать основы современного стиля программирования.</li>
+<li>использование прастранства имён - <code>namespace</code></li>
+</ul>
+<hr>
+<h1 id="план">План</h1>
+<h2 id="первая-часть">Первая часть</h2>
+<p><a href="#1-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D0%B8-%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D1%8C">1. Данные и память</a></p>
+<p><a href="#2-%D1%84%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D1%82%D0%B8%D0%BF%D1%8B-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85">2. Фундаментальные типы данных</a></p>
+<p><a href="#3-%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5">3. Переменные</a></p>
+<p><a href="#4-%D0%BA%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D1%8B">4. Константы</a></p>
+<p><a href="#5-%D0%B8%D0%BD%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F">5. Инициализация</a></p>
+<hr>
+<h2 id="вторая-часть">Вторая часть</h2>
+<p><a href="#6-%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%D1%8B">6. Операторы</a></p>
+<p><a href="#7-%D0%BF%D1%80%D0%B5%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D1%82%D0%B8%D0%BF%D0%BE%D0%B2">7. Преобразование типов</a></p>
+<p><a href="#8-%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D0%B8">8. Условные конструкции</a></p>
+<p><a href="#9-%D1%81%D0%BE%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9-%D1%81%D1%82%D0%B8%D0%BB%D1%8C-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F">9. Современный стиль программирования</a></p>
+<p><a href="#10-namespace">10.  namespace</a></p>
+<hr>
+<h1 id="данные-и-память">1. Данные и память</h1>
+<p>Программа — это последовательность инструкций.</p>
+<p>Большинство программ работает с данными: хранит их, обрабатывает или передаёт.</p>
+<p>Возникает вопрос:</p>
+<p><strong>Где хранятся эти данные?</strong></p>
+<p>Во время выполнения программы её данные могут храниться в регистрах процессора и различных областях памяти.</p>
+<p>Можно представить память как большое количество ячеек.</p>
+<pre class=" language-text"><code class="prism  language-text">┬─────┬─────┬─────┬─────┬─────┬
+|     |     |     |     |     |
+┴─────┴─────┴─────┴─────┴─────┴
+</code></pre>
+<p>Каждая ячейка имеет свой адрес.</p>
+<p>Программа помещает туда значения и затем читает их.</p>
+<hr>
+<h1 id="почему-существуют-типы-данных">Почему существуют типы данных?</h1>
+<p>Компьютер хранит только биты.</p>
+<pre class=" language-text"><code class="prism  language-text">01010110
+</code></pre>
+<p>Но один и тот же набор битов можно трактовать по-разному.</p>
+<p>Например</p>
+<pre class=" language-text"><code class="prism  language-text">01000001
+</code></pre>
+<p>может означать</p>
+<ul>
+<li>число 65;</li>
+<li>символ <code>'A'</code>;</li>
+<li>часть числа с плавающей точкой.</li>
+</ul>
+<p>Для этого существуют типы данных.</p>
+<p><em>Тип данных</em> определяет, какие значения может представлять объект, как эти значения представлены и какие операции над ними допустимы.</p>
+<hr>
+<h1 id="фундаментальные-типы-данных">2. Фундаментальные типы данных</h1>
+<p>Основные категории.<br>
+[]<a href="https://cppreference.com/cpp/language/types">https://cppreference.com/cpp/language/types</a></p>
+<hr>
+<h2 id="тип-void">Тип <code>void</code></h2>
+<p><code>void</code> — специальный тип, обозначающий отсутствие значения. Например, функция с типом <code>void</code> не возвращает значение.</p>
+<p>Подробно будет рассмотрен позже при изучении функций.</p>
+<h2 id="стандартные-целочисленные-типы">Стандартные целочисленные типы</h2>
+<p><strong><code>int</code></strong> — базовый целочисленный тип.</p>
+<p>Используются для хранения целых чисел.</p>
+<p>Например</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> age<span class="token punctuation">{</span><span class="token number">20</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> year <span class="token operator">=</span> <span class="token number">2026</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Ключевое слово <code>int</code> может быть опущено, если используются какие-либо из перечисленных ниже модификаторов. Если модификаторы длины отсутствуют, гарантируется ширина не менее 16 бит.</p>
+<p>На большинстве современных настольных платформ int занимает 4 байта.</p>
+<p><strong>Модификаторы</strong></p>
+<p>Изменяют базовый целочисленный тип. Может быть смешан в любом порядке. В имени типа может присутствовать только один представитель каждой группы.</p>
+<p><strong><code>signed</code></strong> — знаковый целочисленный тип (это значение по умолчанию, если оно опущено).<br>
+<strong><code>unsigned</code></strong> — беззнаковый целочисленный тип</p>
+<p>Размер:</p>
+<p><strong><code>short</code></strong> — целочисленный тип размером не менее 16 бит.<br>
+<strong><code>long</code></strong> — целочисленный тип размером не менее 32 бит.</p>
+<p><strong><code>long long</code></strong> — целочисленный тип размером не менее 64 бит.</p>
+<p><strong>Расширенные целочисленные</strong> типы определяются реализацией. Следует отметить, что <a href="https://cppreference.com/cpp/types/integer">целочисленные типы фиксированной ширины</a> обычно являются псевдонимами стандартных целочисленных типов.</p>
+<hr>
+<h2 id="логический-тип">Логический тип</h2>
+<p><strong><code>bool</code></strong> — логический тип, способный хранить одно из двух значений: <code>true</code> или <code>false</code>.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">bool</span> isReady<span class="token punctuation">{</span><span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<hr>
+<h2 id="символьный-тип">Символьный тип</h2>
+<p><code>char</code> — однобайтный целочисленный тип, который обычно используется для хранения символов.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">char</span> grade<span class="token punctuation">{</span><span class="token string">'A'</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p><code>signed char</code> и <code>unsigned char</code> — знаковая и беззнаковая разновидности <code>char</code>, используемые как целочисленные типы.</p>
+<p><code>char</code> — тип для представления символов ( 1 байт)<br>
+<code>wchar_t</code> — тип для широких символов; его размер зависит от платформы.</p>
+<p><strong>Расширенные</strong> типы для представления символов UTF-8, UTF-16, UTF-32 -кодированных последовательностей соответственно <code>char8_t</code> <em>(начиная с C++20)</em>; <code>char16_t</code>, <code>char32_t</code> <em>(начиная с C++11)</em></p>
+<blockquote>
+<p>ВАЖНО</p>
+<p>символ — это не строка.</p>
+</blockquote>
+<hr>
+<h2 id="типы-с-плавающей-запятой">Типы с плавающей запятой</h2>
+<p><code>float</code> — Тип с плавающей точкой одинарной точности. Обычно <a href="https://en.wikipedia.org/wiki/Single-precision_floating-point_format">в формате IEEE-754 binary32</a> .</p>
+<p><img src="/meta/img/float-data-structure.png" alt=" "></p>
+<p>Используются для хранения дробных значений.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">float</span> middlePoint<span class="token punctuation">{</span><span class="token number">1.5625f</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p><code>double</code> — Тип с плавающей точкой двойной точности. Обычно используется <a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format">формат IEEE-754 binary64</a> .</p>
+<p><img src="/meta/img/double-data-structure.png" alt=" "></p>
+<p><code>long double</code> — Тип данных с плавающей запятой расширенной точности.<br>
+Не обязательно соответствует типам, предписанным стандартом IEEE-754.</p>
+<p>Типы с плавающей точкой используются для хранения дробных значений.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">double</span> pi<span class="token punctuation">{</span><span class="token number">3.1415926535</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<hr>
+<h1 id="размеры-типов">Размеры типов</h1>
+<p>Размер зависит от платформы и компилятора.</p>
+<p>Нельзя писать <code>int</code> всегда 4 байта. Это неверно.</p>
+<p>Правильно использовать <code>sizeof(int)</code></p>
+<p>Например</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<hr>
+<h1 id="sizeof">sizeof</h1>
+<p><code>sizeof</code> — оператор, который возвращает размер типа или объекта в байтах.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> x<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>size_t n <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Важно: <code>sizeof</code> возвращает значение типа <code>std::size_t</code>.<br>
+Точное определение зависит от компилятора и стандартной библиотеки.</p>
+<p>Например, в GCC на Linux <code>std::size_t</code> обычно в конечном итоге соответствует <code>unsigned long</code>, но полагаться именно на это соответствие в переносимом C++ коде не следует.</p>
+<hr>
+<h1 id="переменные">3. Переменные</h1>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> age<span class="token punctuation">{</span><span class="token number">20</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li><strong>Объявление</strong> - сообщает компилятору о существовании сущности.</li>
+<li><strong>Определение</strong> - создаёт сущность и, для объекта, обычно выделяет необходимое место для хранения.</li>
+<li><strong>Инициализация</strong> - задаёт начальное значение объекта.</li>
+</ul>
+<hr>
+<h1 id="идентификаторы">Идентификаторы</h1>
+<p>Правила именования.</p>
+<p>Можно</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">studentAge
+</code></pre>
+<p>Нельзя</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">2age
+</code></pre>
+<p>или</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span>
+</code></pre>
+<p>как имя переменной.</p>
+<hr>
+<h1 id="хорошие-имена">Хорошие имена</h1>
+<p>Плохо</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> a<span class="token punctuation">;</span>
+</code></pre>
+<p>Хорошо</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> studentAge<span class="token punctuation">;</span>
+</code></pre>
+<hr>
+<h1 id="объявление">Объявление</h1>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> value<span class="token punctuation">;</span>
+</code></pre>
+<p>Локальная переменная, объявленная без инициализатора, не получает автоматически значение <code>0</code>. Использование её значения до инициализации приводит к неопределённому поведению.</p>
+<hr>
+<h1 id="инициализация">Инициализация</h1>
+<p>Современный стиль</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> value<span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<hr>
+<p>Другой допустимый способ</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> value <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+</code></pre>
+<p>тоже работает, но на курсе будем использовать инициализацию фигурными скобками.</p>
+<hr>
+<h1 id="почему-фигурные-скобки">Почему фигурные скобки?</h1>
+<p>Они предотвращают часть ошибок.</p>
+<p>Например</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> x<span class="token punctuation">{</span><span class="token number">3.7</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Компилятор сообщит об ошибке,</p>
+<p>поскольку происходит сужающее преобразование.</p>
+<p>А запись</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">3.7</span><span class="token punctuation">;</span>
+</code></pre>
+<p>скомпилируется, но значение станет равным <code>3</code>.</p>
+<hr>
+<h1 id="константы">Константы</h1>
+<p>Иногда значение не должно изменяться. Используется <code>const</code></p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">const</span> <span class="token keyword">double</span> Pi<span class="token punctuation">{</span><span class="token number">3.141592653589793</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Попытка изменить значение приведет к ошибке компиляции.</p>
+<hr>
+<h1 id="перерыв">Перерыв</h1>
+<hr>
+<h1 id="операторы">6. Операторы</h1>
+<h2 id="арифметические">Арифметические</h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">+</span>
+<span class="token operator">-</span>
+<span class="token operator">*</span>
+<span class="token operator">/</span>
+<span class="token operator">%</span>
+</code></pre>
+<p>оператор <code>%</code> работает только для целых чисел.</p>
+<hr>
+<h2 id="приоритет-операций">Приоритет операций</h2>
+<p>Как и в математике.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">*</span>
+<span class="token operator">/</span>
+</code></pre>
+<p>выполняются раньше</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">+</span>
+<span class="token operator">-</span>
+</code></pre>
+<p>При необходимости использовать скобки.</p>
+<hr>
+<h2 id="операции-присваивания">Операции присваивания</h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">=</span>
+<span class="token operator">+</span><span class="token operator">=</span>
+<span class="token operator">-</span><span class="token operator">=</span>
+<span class="token operator">*</span><span class="token operator">=</span>
+<span class="token operator">/</span><span class="token operator">=</span>
+<span class="token operator">%</span><span class="token operator">=</span>
+</code></pre>
+<hr>
+<h2 id="инкремент-и-декремент">Инкремент и декремент</h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">++</span>
+<span class="token operator">--</span>
+</code></pre>
+<p><code>++c;</code> префиксной → сначала прибавить, потом использовать</p>
+<p>и</p>
+<p><code>c++;</code> постфиксной формой → сначала использовать, потом прибавить.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> c<span class="token punctuation">{</span><span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> a<span class="token punctuation">{</span><span class="token operator">++</span>c<span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// c = 6, a = 6</span>
+<span class="token keyword">int</span> b<span class="token punctuation">{</span>c<span class="token operator">++</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// b = 6, c = 7</span>
+</code></pre>
+<hr>
+<h2 id="операции-сравнения">Операции сравнения</h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">==</span>
+<span class="token operator">!=</span>
+<span class="token operator">&lt;</span>
+<span class="token operator">&gt;</span>
+<span class="token operator">&lt;=</span>
+<span class="token operator">&gt;=</span>
+
+</code></pre>
+<p>Результат — тип <code>bool</code></p>
+<h2 id="логические-операции">Логические операции</h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">&amp;&amp;</span> —    И   → оба условия должны быть <span class="token boolean">true</span>
+<span class="token operator">||</span> —    ИЛИ → хотя бы одно условие должно быть <span class="token boolean">true</span>
+<span class="token operator">!</span> —     НЕ  → переворачивает значение
+</code></pre>
+<hr>
+<h1 id="преобразование-типов">7. Преобразование типов</h1>
+<h2 id="неявное">Неявное</h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">double</span> x<span class="token punctuation">{</span><span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Целое число автоматически преобразуется к типу <code>double</code>.</p>
+<hr>
+<h2 id="явное">Явное</h2>
+<p>C-style преобразование</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span>x
+
+</code></pre>
+<p>Современный стиль</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">static_cast</span><span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+</code></pre>
+<p>явно показывает намерение программиста выполнить преобразование.</p>
+<hr>
+<h1 id="условные-конструкции">8. Условные конструкции</h1>
+<p>Иногда программа должна принимать решение.</p>
+<p>Используются условные операторы.</p>
+<hr>
+<h2 id="if">if</h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>age <span class="token operator">&gt;=</span> <span class="token number">18</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Совершеннолетний"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<h2 id="if...else">if…else</h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>number <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Число четное.\n"</span>l<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Число нечетное.\n"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<h2 id="else-if">else if</h2>
+<p>Для нескольких вариантов.</p>
+<hr>
+<h2 id="switch">switch</h2>
+<p>Используется,</p>
+<p>когда необходимо выбрать один из нескольких фиксированных вариантов.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">switch</span> <span class="token punctuation">(</span>day<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Monday"</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Tuesday"</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token operator">:</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Unknown"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<h2 id="тернарный-оператор">Тернарный оператор</h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> max<span class="token punctuation">{</span><span class="token punctuation">(</span>a <span class="token operator">&gt;</span> b<span class="token punctuation">)</span> <span class="token operator">?</span> a <span class="token operator">:</span> b<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Компактная запись простого <code>if...else</code>.</p>
+<hr>
+<h1 id="современный-стиль-программирования">9. Современный стиль программирования</h1>
+<p>На протяжении курса придерживаемся следующих правил:</p>
+<ul>
+<li>использовать фигурную инициализацию;</li>
+<li>применять <code>const</code>, если значение не изменяется;</li>
+<li>избегать магических чисел;</li>
+<li>использовать понятные имена переменных;</li>
+<li>отдавать предпочтение <code>static_cast</code>, а не C-style cast;</li>
+<li>не писать сложные условия без необходимости;</li>
+<li>форматировать код единообразно.</li>
+</ul>
+<hr>
+<h1 id="итоги-лекции">Итоги лекции</h1>
+<p>К концу занятия студент должен понимать:</p>
+<ul>
+<li>зачем существуют типы данных;</li>
+<li>как объявлять и инициализировать переменные;</li>
+<li>чем отличаются переменные и константы;</li>
+<li>как работают арифметические, логические операторы и операторы сравнения;</li>
+<li>как выполняются преобразования типов;</li>
+<li>как использовать условные конструкции;</li>
+<li>какие рекомендации современного C++ следует применять уже на первых этапах разработки.</li>
+</ul>
+<hr>
+<p>Следующий раздел необходим для правильного выполнения лабораторной работы № 1</p>
+<hr>
+<h1 id="namespace">10. Namespace</h1>
+<ul>
+<li>10.1.  <strong>Проблема конфликтов имён</strong>.</li>
+<li>10.2.  <strong>Обычный <code>namespace</code></strong>.</li>
+<li>10.3.  <strong><code>std</code> как namespace</strong>.</li>
+<li>10.4.  <strong>Anonymous namespace</strong>.</li>
+<li>10.5.  <strong>Связь с лабораторной</strong>.</li>
+</ul>
+<h4 id="проблема-конфликтов-имён">1. Проблема конфликтов имён</h4>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> kMaxValue<span class="token punctuation">{</span><span class="token number">100</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token keyword">int</span> kMinValue<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    <span class="token comment">// ...</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>Где находятся эти константы?</p>
+</blockquote>
+<p>Здесь появляется понятие <strong>глобальной области видимости</strong>.</p>
+<blockquote>
+<p>Сейчас <code>kMaxValue</code> и <code>kMinValue</code> объявлены в глобальной области видимости. Это значит, что их имя находится на уровне всего исходного файла и потенциально может конфликтовать с другими именами.</p>
+</blockquote>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> kMaxValue<span class="token punctuation">{</span><span class="token number">100</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>// где-нибудь в другом месте программы</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> kMaxValue<span class="token punctuation">{</span><span class="token number">1000</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>В реальном большом проекте имён становится очень много. Поэтому возникает проблема:</p>
+<blockquote>
+<p><strong>Как организовать имена так, чтобы они не конфликтовали между собой?</strong></p>
+</blockquote>
+<p>Для этого используется <code>namespace</code>.</p>
+<hr>
+<h4 id="обычный-namespace">2. Обычный namespace</h4>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">namespace</span> Limits<span class="token punctuation">{</span>
+
+    <span class="token keyword">const</span> <span class="token keyword">int</span> kMaxValue<span class="token punctuation">{</span><span class="token number">100</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">const</span> <span class="token keyword">int</span> kMinValue<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Теперь эти имена находятся не просто в глобальной области, а внутри пространства имён <code>Limits</code>.</p>
+<p>Использовать их можно через <code>::</code>:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">int</span> value<span class="token punctuation">{</span><span class="token number">50</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>value <span class="token operator">&gt;</span> Limits<span class="token operator">::</span>kMaxValue<span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token comment">// ...</span>
+
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p><code>::</code> называется оператором разрешения области видимости — <strong>scope resolution operator</strong>.</p>
+</blockquote>
+<p>То есть: <code>Limits::kMaxValue</code> можно читать примерно как:</p>
+<blockquote>
+<p>«возьми <code>kMaxValue</code>, который находится внутри <code>Limits</code>».</p>
+</blockquote>
+<hr>
+<h4 id="зачем-вообще-это-нужно">3. Зачем вообще это нужно</h4>
+<p>Можно показать два разных пространства имён:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">namespace</span> Physics<span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">double</span> PI<span class="token punctuation">{</span><span class="token number">3.14159</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">namespace</span> Geometry<span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">double</span> PI<span class="token punctuation">{</span><span class="token number">3.14</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Теперь никаких проблем:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">double</span> a<span class="token punctuation">{</span>Physics<span class="token operator">::</span>PI<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">double</span> b<span class="token punctuation">{</span>Geometry<span class="token operator">::</span>PI<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>У нас существуют два разных <code>PI</code>:</p>
+<p><code>Physics::PI</code></p>
+<p><code>Geometry::PI</code></p>
+<p>Имена одинаковые, но они находятся в разных пространствах имён.</p>
+<blockquote>
+<p><strong>Namespace позволяет логически группировать имена и избегать конфликтов имён.</strong></p>
+</blockquote>
+<hr>
+<h4 id="связь-с-std">4. Связь с <code>std</code></h4>
+<p><code>std::cout</code></p>
+<p><code>std::cin</code></p>
+<blockquote>
+<p>А что такое <code>std</code>?</p>
+</blockquote>
+<p>Это тоже пространство имён.</p>
+<p>Например:</p>
+<p><code>std::cout &lt;&lt; "Hello";</code></p>
+<p>означает, что мы обращаемся к объекту <code>cout</code>, находящемуся в namespace <code>std</code>.</p>
+<hr>
+<h4 id="anonymous-namespace">5. Anonymous namespace</h4>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">namespace</span><span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span> kMaxValue<span class="token punctuation">{</span><span class="token number">100</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span> kMinValue<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>Это <strong>анонимное пространство имён</strong> — anonymous namespace.</p>
+</blockquote>
+<p>У него нет имени:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">namespace</span><span class="token punctuation">{</span>
+
+    <span class="token comment">// ...</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Поэтому обратиться к <code>kMaxValue</code> через какое-то имя namespace невозможно:</p>
+<p>// такого имени пространства имён нет.</p>
+<p><code>???::kMaxValue</code></p>
+<p>Использование происходит просто по имени:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">int</span> value<span class="token punctuation">{</span><span class="token number">50</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>value <span class="token operator">&gt;</span> kMaxValue<span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token comment">// ...</span>
+
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<h4 id="но-зачем-тогда-anonymous-namespace">6. Но зачем тогда anonymous namespace?</h4>
+<blockquote>
+<p>Представим, что эти константы нужны только этому исходному файлу. Мы не хотим использовать их как часть интерфейса программы и не хотим, чтобы их имена использовались где-то ещё.</p>
+</blockquote>
+<p>Тогда:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">namespace</span><span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span> kMaxValue<span class="token punctuation">{</span><span class="token number">100</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span> kMinValue<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p><strong>Эти имена предназначены для использования внутри данного исходного файла.</strong></p>
+</blockquote>
+<blockquote>
+<p>Более точно, объекты, объявленные в anonymous namespace, получают внутреннее связывание. К этому понятию мы ещё вернёмся, когда будем разбирать, как компилятор работает с несколькими исходными файлами.</p>
+</blockquote>
+<hr>
+<h4 id="почему-это-лучше-чем-просто-глобальная-переменная">7. Почему это лучше, чем просто глобальная переменная?</h4>
+<h4 id="просто-глобальная-область">Просто глобальная область</h4>
+<pre class=" language-cpp"><code class="prism  language-cpp">    <span class="token keyword">const</span> <span class="token keyword">int</span> kMaxValue<span class="token punctuation">{</span><span class="token number">100</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span> kMinValue<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 id="anonymous-namespace-1">Anonymous namespace</h4>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">namespace</span><span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span> kMaxValue<span class="token punctuation">{</span><span class="token number">100</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span> kMinValue<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>В обоих случаях внутри этого <code>.cpp</code> файла мы можем написать просто <code>kMaxValue</code>. Но anonymous namespace явно показывает: эти имена являются частью внутренней реализации этого исходного файла и не предназначены для использования как внешние имена.</p>
+</blockquote>
+<p>Это особенно хорошо ложится на будущую тему <strong>инкапсуляции и организации кода</strong>.</p>
+<hr>
+<h4 id="важный-момент-namespace-≠-область-видимости-функции">8. Важный момент: namespace ≠ область видимости функции</h4>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">namespace</span> Constants<span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span> kMaxValue<span class="token punctuation">{</span><span class="token number">100</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">int</span> value<span class="token punctuation">{</span><span class="token number">50</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>value <span class="token operator">&lt;</span> Constants<span class="token operator">::</span>kMaxValue<span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token keyword">int</span> result<span class="token punctuation">{</span>value <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// result здесь недоступен</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p><code>namespace</code> и область видимости переменной — связанные, но разные понятия.</p>
+<blockquote>
+<p>Namespace — это механизм организации имён.<br>
+Область видимости определяет, где конкретное имя можно использовать.</p>
+</blockquote>
+<p>Подробно различие между <strong>scope, linkage и lifetime</strong> будет рассмотрено позже.</p>
+<p>Подробно различие между <strong>scope</strong> (областью видимости), <strong>linkage</strong> (связыванием) и <strong>lifetime</strong> (временем жизни) будет рассмотрено позже.</p>
+<hr>
+<h4 id="небольшая-связь-с-лабораторной">9. Небольшая связь с лабораторной</h4>
+<blockquote>
+<p>В лабораторной вы будете использовать константы, которые необходимо определять в anonymous namespace. <strong>Удалять namespace или переносить эти константы в <code>main</code> не нужно.</strong></p>
+<p>Ваша задача — использовать в своей программе константы вместо магических чисел.</p>
+</blockquote>
+<hr>
+</div>
+</body>
+
+</html>
