@@ -27,18 +27,18 @@
 <hr>
 <h1 id="план">План</h1>
 <h2 id="первая-часть">Первая часть</h2>
-<p><a href="#1-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D0%B8-%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D1%8C">1. Данные и память</a></p>
-<p><a href="#2-%D1%84%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D1%82%D0%B8%D0%BF%D1%8B-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85">2. Фундаментальные типы данных</a></p>
-<p><a href="#3-%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5">3. Переменные</a></p>
+<p><a href="#part1">1. Данные и память</a></p>
+<p><a href="#part2">2. Фундаментальные типы данных</a></p>
+<p><a href="#part3">3. Переменные</a></p>
 <hr>
 <h2 id="вторая-часть">Вторая часть</h2>
-<p><a href="#4-%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%D1%8B">4. Операторы</a></p>
-<p><a href="#5-%D0%BF%D1%80%D0%B5%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D1%82%D0%B8%D0%BF%D0%BE%D0%B2">5. Преобразование типов</a></p>
-<p><a href="#6-%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5-%D0%BA%D0%BE%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D0%B8">6. Условные конструкции</a></p>
-<p><a href="#7-%D1%81%D0%BE%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9-%D1%81%D1%82%D0%B8%D0%BB%D1%8C-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F">7. Современный стиль программирования</a></p>
-<p><a href="#8-namespace">8.  namespace</a></p>
+<p><a href="#part4">4. Операторы</a></p>
+<p><a href="#part5">5. Преобразование типов</a></p>
+<p><a href="#part6">6. Условные конструкции</a></p>
+<p><a href="#part7">7. Современный стиль программирования</a></p>
+<p><a href="#part8">8. namespace</a></p>
 <hr>
-<h1 id="данные-и-память">1. Данные и память</h1>
+<h1 id="part1">1. Данные и память</h1>
 <p>Программа — это последовательность инструкций.</p>
 <p>Большинство программ работает с данными: хранит их, обрабатывает или передаёт.</p>
 <p>Возникает вопрос:</p>
@@ -69,9 +69,9 @@
 <p>Для этого существуют типы данных.</p>
 <p><em>Тип данных</em> определяет, какие значения может представлять объект, как эти значения представлены и какие операции над ними допустимы.</p>
 <hr>
-<h1 id="фундаментальные-типы-данных">2. Фундаментальные типы данных</h1>
+<h1 id="part2">2. Фундаментальные типы данных</h1>
 <p>Основные категории.<br>
-[]<a href="https://cppreference.com/cpp/language/types">https://cppreference.com/cpp/language/types</a></p>
+<a href="https://cppreference.com/cpp/language/types">https://cppreference.com/cpp/language/types</a></p>
 <hr>
 <h2 id="тип-void">Тип <code>void</code></h2>
 <p><code>void</code> — специальный тип, обозначающий отсутствие значения. Например, функция с типом <code>void</code> не возвращает значение.</p>
@@ -115,12 +115,12 @@
 <hr>
 <h2 id="типы-с-плавающей-запятой">Типы с плавающей запятой</h2>
 <p><code>float</code> — Тип с плавающей точкой одинарной точности. Обычно <a href="https://en.wikipedia.org/wiki/Single-precision_floating-point_format">в формате IEEE-754 binary32</a> .</p>
-<p><img src="/meta/img/float-data-structure.png" alt=" "></p>
+<p><img src="./img/float-data-structure.png" alt=" "></p>
 <p>Используются для хранения дробных значений.</p>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">float</span> middlePoint<span class="token punctuation">{</span><span class="token number">1.5625f</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 <p><code>double</code> — Тип с плавающей точкой двойной точности. Обычно используется <a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format">формат IEEE-754 binary64</a> .</p>
-<p><img src="/meta/img/double-data-structure.png" alt=" "></p>
+<p><img src="./img/double-data-structure.png" alt=" "></p>
 <p><code>long double</code> — Тип данных с плавающей запятой расширенной точности.<br>
 Не обязательно соответствует типам, предписанным стандартом IEEE-754.</p>
 <p>Типы с плавающей точкой используются для хранения дробных значений.</p>
@@ -148,7 +148,7 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 Точное определение зависит от компилятора и стандартной библиотеки.</p>
 <p>Например, в GCC на Linux <code>std::size_t</code> обычно в конечном итоге соответствует <code>unsigned long</code>, но полагаться именно на это соответствие в переносимом C++ коде не следует.</p>
 <hr>
-<h1 id="переменные">3. Переменные</h1>
+<h1 id="part3">3. Переменные</h1>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> age<span class="token punctuation">{</span><span class="token number">20</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 <ul>
@@ -213,7 +213,7 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 <hr>
 <h1 id="перерыв">Перерыв</h1>
 <hr>
-<h1 id="операторы">4. Операторы</h1>
+<h1 id="part4">4. Операторы</h1>
 <h2 id="арифметические">Арифметические</h2>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">+</span>
 <span class="token operator">-</span>
@@ -272,7 +272,7 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 <span class="token operator">!</span> —     НЕ  → переворачивает значение
 </code></pre>
 <hr>
-<h1 id="преобразование-типов">5. Преобразование типов</h1>
+<h1 id="part5">5. Преобразование типов</h1>
 <h2 id="неявное">Неявное</h2>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">double</span> x<span class="token punctuation">{</span><span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
@@ -288,7 +288,7 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 </code></pre>
 <p>явно показывает намерение программиста выполнить преобразование.</p>
 <hr>
-<h1 id="условные-конструкции">6. Условные конструкции</h1>
+<h1 id="part6">6. Условные конструкции</h1>
 <p>Иногда программа должна принимать решение.</p>
 <p>Используются условные операторы.</p>
 <hr>
@@ -330,7 +330,7 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 </code></pre>
 <p>Компактная запись простого <code>if...else</code>.</p>
 <hr>
-<h1 id="современный-стиль-программирования">7. Современный стиль программирования</h1>
+<h1 id="part7">7. Современный стиль программирования</h1>
 <p>На протяжении курса придерживаемся следующих правил:</p>
 <ul>
 <li>использовать фигурную инициализацию;</li>
@@ -356,7 +356,7 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 <hr>
 <p>Следующий раздел необходим для правильного выполнения лабораторной работы № 1</p>
 <hr>
-<h1 id="namespace">8. Namespace</h1>
+<h1 id="part8">8. Namespace</h1>
 <ul>
 <li>10.1.  <strong>Проблема конфликтов имён</strong>.</li>
 <li>10.2.  <strong>Обычный <code>namespace</code></strong>.</li>
