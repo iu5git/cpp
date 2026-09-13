@@ -1,0 +1,468 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lecture-03</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h6 id="лекции-по-курсу-основы-программирования-мгту-им.-баумана-кафедра-иу5"><em>Лекции по курсу "Основы программирования МГТУ им. Баумана кафедра ИУ5</em></h6>
+<h1 id="лекция-3.-циклы">Лекция 3. Циклы</h1>
+<p><strong>Дисциплина:</strong> Основы программирования на C++<br>
+<strong>Продолжительность:</strong> 2 × 45 минут</p>
+<p>Главная идея лекции:</p>
+<blockquote>
+<p><strong>Цикл позволяет выполнить один и тот же фрагмент программы несколько раз, пока выполняется некоторое условие.</strong><br>
+Сформировать понимание <strong>цикла как алгоритмической конструкции</strong>: условие → тело → изменение состояния → повторная проверка.</p>
+</blockquote>
+<hr>
+<h1 id="цели-лекции">Цели лекции</h1>
+<p>После занятия студент должен:</p>
+<ul>
+<li>понимать, зачем нужны циклы;</li>
+<li>уметь определять условие продолжения цикла;</li>
+<li>знать <code>while</code>, <code>do while</code> и <code>for</code>;</li>
+<li>понимать различие между ними;</li>
+<li>уметь использовать <code>break</code> и <code>continue</code>;</li>
+<li>понимать вложенные циклы;</li>
+<li>уметь находить бесконечные циклы;</li>
+<li>понимать типичные ошибки при работе с циклами;</li>
+<li>познакомиться со статическими локальными переменными;</li>
+<li>понимать базовую связь между областью видимости и временем жизни переменной.</li>
+</ul>
+<hr>
+<h1 id="план">План</h1>
+<h3 id="первая-часть">Первая часть</h3>
+<p><a href="#part1">1. Зачем нужны циклы</a></p>
+<p><a href="#part2">2. Цикл как алгоритм</a></p>
+<p><a href="#while">3. <code>while</code></a></p>
+<p><a href="#part4">4. Бесконечные циклы</a></p>
+<p><a href="#do-while">5. <code>do while</code></a></p>
+<h3 id="вторая-часть">Вторая часть</h3>
+<p><a href="#part6">6. Цикл <code>for</code></a></p>
+<p><a href="#part7">7. Циклы и управление их выполнением</a></p>
+<p><a href="#part8">8. Вложенные циклы</a></p>
+<p><a href="#part9">9. Итоги</a></p>
+<hr>
+<h1 id="part1">1. Зачем нужны циклы</h1>
+<p>Допустим, необходимо вывести числа от 1 до 5.</p>
+<p>Можно написать:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token number">2</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token number">3</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token number">4</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token number">5</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+
+</code></pre>
+<p>Работает.</p>
+<p>Но что если нужно вывести числа от 1 до 1 000 000?</p>
+<p>Очевидно, такой подход не подходит.</p>
+<p>Нам нужно описать <strong>правило</strong>, а не перечислить миллион команд.</p>
+<p>Например:</p>
+<blockquote>
+<p>Начать с 1 и каждый раз увеличивать число на 1, пока оно не станет больше 1 000 000.</p>
+</blockquote>
+<p>Вот это и есть идея цикла.</p>
+<hr>
+<h1 id="part2">2. Цикл как алгоритм</h1>
+<p>Любой цикл можно представить в виде одной из трех схем:</p>
+<p><img src="./img/flowcharts-organization-cycle.png" alt=""></p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;=</span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+    <span class="token operator">++</span>i<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="до-начала-цикла">До начала цикла</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p><code>i</code> равно <code>1</code>.</p>
+<h3 id="проверка">Проверка</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp">i <span class="token operator">&lt;=</span> <span class="token number">5</span>
+</code></pre>
+<p>Истина.</p>
+<h3 id="выполнение-тела">Выполнение тела</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp">std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="изменение-состояния">Изменение состояния</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">++</span>i<span class="token punctuation">;</span>
+</code></pre>
+<p>Теперь <code>i == 2</code>.</p>
+<p>Снова проверяем условие.</p>
+<p>И так далее.</p>
+<hr>
+<h1 id="while">3. <code>while</code></h1>
+<p>Общий вид:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span>условие<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// тело цикла</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Смысл:</p>
+<blockquote>
+<p>Пока условие истинно, выполнять тело цикла.</p>
+</blockquote>
+<hr>
+<h2 id="важное-свойство-while">Важное свойство <code>while</code></h2>
+<p>Условие проверяется <strong>до</strong> выполнения тела.</p>
+<p>Поэтому тело может не выполниться ни одного раза.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> x<span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">while</span> <span class="token punctuation">(</span>x <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> x <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Ничего не произойдет.</p>
+<hr>
+<h2 id="состояние-цикла">Состояние цикла</h2>
+<blockquote>
+<p>Чтобы цикл когда-нибудь закончился, его состояние должно изменяться так, чтобы условие в какой-то момент стало ложным.</p>
+</blockquote>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;=</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+    <span class="token operator">++</span>i<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Здесь состояние — <code>i</code>.</p>
+<p>Мы изменяем его:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">    <span class="token operator">++</span>i<span class="token punctuation">;</span>
+</code></pre>
+<hr>
+<h2 id="распространенные-ошибки">Распространенные ошибки</h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+    <span class="token operator">++</span>i<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><code>i</code> увеличивается, хотя для завершения цикла его нужно уменьшать.</p>
+<hr>
+<p>А здесь:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;=</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>состояние не меняется.</p>
+<p>Получаем бесконечный цикл.</p>
+<hr>
+<h1 id="part4">4. Бесконечные циклы</h1>
+<p>Бесконечный цикл — это цикл, условие которого никогда не становится ложным.</p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Это <strong>намеренно</strong> бесконечный цикл.</p>
+<hr>
+<h1 id="do-while">5. <code>do while</code></h1>
+<p>Иногда необходимо, чтобы тело цикла выполнилось <strong>как минимум один раз</strong>.</p>
+<p>Тогда используется:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">do</span> <span class="token punctuation">{</span>
+    <span class="token comment">// тело</span>
+<span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span>условие<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> x<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">do</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Введите положительное число: "</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>cin <span class="token operator">&gt;&gt;</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span>x <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Здесь проверка выполняется <strong>после</strong> тела.</p>
+<hr>
+<h2 id="главное-отличие">Главное отличие</h2>
+<p><strong><code>while</code></strong></p>
+<pre class=" language-text"><code class="prism  language-text">проверка
+   ↓
+  тело
+   ↓
+проверка
+</code></pre>
+<p><strong><code>do while</code></strong></p>
+<pre class=" language-text"><code class="prism  language-text">тело
+    ↓
+проверка
+    ↓
+тело
+</code></pre>
+<p>Поэтому:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> x<span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">while</span> <span class="token punctuation">(</span>x <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"while\n"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>ничего не выведет,</p>
+<p>a:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> x<span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">do</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"do while\n"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span>x <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>выведет:</p>
+<pre class=" language-text"><code class="prism  language-text">do while
+</code></pre>
+<p>ровно один раз.</p>
+<hr>
+<h2 id="когда-использовать-do-while">Когда использовать <code>do while</code></h2>
+<p>Например, при организации меню</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">int</span> choice<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">do</span> <span class="token punctuation">{</span>
+    <span class="token comment">// показать меню</span>
+    <span class="token comment">// получить choice</span>
+
+<span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span>choice <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Пользователь должен увидеть меню хотя бы один раз.</p>
+<blockquote>
+<p><strong>Однако</strong><br>
+Профессиональные разработчики и стандарты кодирования (например, Google C++ Style Guide) рекомендуют избегать <code>do-while</code> по нескольким веским причинам:</p>
+</blockquote>
+<p><em><strong>1. Логическая инверсия кода</strong></em> В цикле <code>for</code> или <code>while</code> условие находится сверху. Вы сразу видите, при каком условии выполнится код.В <code>do-while</code> тело цикла выполняется вслепую, а условие проверки спрятано в самом низу. Если тело цикла длинное (больше 10–15 строк), человеку приходится прокручивать код вниз, чтобы понять, почему этот цикл вообще крутится. Это снижает читаемость.</p>
+<p><strong><em>2. Опасность «первой бесплатной итерации</em>»</strong> Главная фишка <code>do-while</code> — он всегда выполняется минимум один раз, даже если условие изначально ложно. В современном программировании это частый источник багов: Если перед циклом данные оказались некорректными (например, файл не открылся), <code>do-while</code> всё равно пойдет выполнять код и вызовет критическую ошибку (Crash). Обычный <code>while</code> сначала проверит и просто пропустит цикл.</p>
+<p><em><strong>3. Проблемы с областью видимости (Scope)</strong></em> Переменные, объявленные внутри тела <code>do-while</code>, не видны в условии проверки.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">do</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">{</span><span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span>x <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// ОШИБКА: компилятор не знает, что такое x!</span>
+</code></pre>
+<p>Используйте код с осторожностью. Чтобы код заработал, переменную приходится выносить наверх, за пределы цикла.</p>
+<hr>
+<h1 id="первая-половина-ключевой-вывод">Первая половина: ключевой вывод</h1>
+<p><code>while</code></p>
+<blockquote>
+<p>может выполнить тело 0 или больше раз.</p>
+</blockquote>
+<p><code>do while</code></p>
+<blockquote>
+<p>выполняет тело 1 или больше раз.</p>
+</blockquote>
+<hr>
+<h1 id="перерыв">Перерыв</h1>
+<hr>
+<h1 id="part6">6. Цикл <code>for</code></h1>
+<p><code>for</code> особенно удобен, когда структура цикла естественно выражается через начальное состояние, условие продолжения и изменение состояния — например, при переборе диапазона или использовании счётчика.</p>
+<p>Например:</p>
+<blockquote>
+<p>вывести числа от 1 до 10.</p>
+</blockquote>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Общий вид:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span>инициализация<span class="token punctuation">;</span> условие<span class="token punctuation">;</span> изменение<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// тело</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Три части:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+</code></pre>
+<h3 id="инициализация"><em>1. Инициализация</em></h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Выполняется один раз.</p>
+<h3 id="условие"><em>2. Условие</em></h3>
+<pre class=" language-cpp"><code class="prism  language-cpp">i <span class="token operator">&lt;=</span> <span class="token number">10</span> <span class="token punctuation">;</span>
+</code></pre>
+<p>Проверяется перед каждой итерацией.</p>
+<h3 id="изменение"><em>3. Изменение</em></h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">++</span>i
+</code></pre>
+<p>Выполняется после тела.</p>
+<hr>
+<h1 id="part7">7. Циклы и управление их выполнением</h1>
+<p><em><strong>Итерация</strong></em> — одно выполнение тела цикла.</p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">3</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"i = "</span> <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>имеет три итерации:</p>
+<pre class=" language-text"><code class="prism  language-text">i = 1
+i = 2
+i = 3
+</code></pre>
+<p>После <code>i == 4</code> условие:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">i <span class="token operator">&lt;=</span> <span class="token number">3</span>
+</code></pre>
+<p>становится ложным.</p>
+<p>Цикл заканчивается.</p>
+<hr>
+<p><em><strong><code>break</code></strong></em></p>
+<p><code>break</code> немедленно завершает цикл.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Вывод:</p>
+<pre class=" language-text"><code class="prism  language-text">0
+1
+2
+3
+4
+</code></pre>
+<p>Когда <code>i == 5</code>, выполняется <code>break</code>.</p>
+<p>Программа выходит из цикла.</p>
+<hr>
+<blockquote>
+<p>Важно</p>
+</blockquote>
+<p><code>break</code> завершает <strong>только ближайший цикл</strong>.</p>
+<p>Если есть вложенные циклы:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>будет завершен внутренний цикл.</p>
+<hr>
+<p><em><strong><code>continue</code></strong></em></p>
+<p><code>continue</code> не завершает цикл.</p>
+<p>Он говорит:</p>
+<blockquote>
+<p>Пропустить оставшуюся часть текущей итерации и перейти к следующей.</p>
+</blockquote>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">continue</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Вывод:</p>
+<pre class=" language-text"><code class="prism  language-text">1
+3
+5
+7
+9
+</code></pre>
+<hr>
+<p><strong><code>break</code> и <code>continue</code></strong></p>
+<pre class=" language-text"><code class="prism  language-text">break
+    ↓
+выйти из цикла
+</code></pre>
+<pre class=" language-text"><code class="prism  language-text">continue
+    ↓
+перейти к следующей итерации
+</code></pre>
+<hr>
+<p><em><strong><code>for</code> и <code>while</code></strong></em></p>
+<p>Эти циклы могут выполнять одну и ту же задачу.</p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;=</span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+    <span class="token operator">++</span>i<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>и:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">5</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<p>Результат одинаковый.</p>
+<p>Разница в том, что <code>for</code> компактно объединяет:</p>
+<ul>
+<li>начальное состояние;</li>
+<li>условие;</li>
+<li>изменение состояния.</li>
+</ul>
+<hr>
+<p><em><strong>Какой цикл использовать?</strong></em></p>
+<p><strong><code>for</code></strong> - Когда есть понятный счетчик или диапазон, когда заранее известно количество итераций.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+</code></pre>
+<p><strong><code>while</code></strong> - Когда повторение зависит от некоторого условия и количество итераций заранее неизвестно.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span>value <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><strong><code>do while</code></strong> - Когда тело должно выполниться хотя бы один раз.</p>
+<hr>
+<p><em><strong>Область видимости переменной цикла</strong></em></p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<p>После цикла переменная <code>i</code> больше не существует.</p>
+<p>Она имеет область видимости внутри <code>for</code>.</p>
+<h1 id="part8">8. Вложенные циклы</h1>
+<p>Цикл может находиться внутри другого цикла.</p>
+<p>Например, таблица:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">3</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> <span class="token number">3</span><span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">*</span> j <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Внешний цикл отвечает за строки.</p>
+<p>Внутренний — за элементы строки.</p>
+<p><strong>Как это работает</strong></p>
+<p>При:</p>
+<pre class=" language-text"><code class="prism  language-text">i = 1
+</code></pre>
+<p>внутренний цикл полностью выполняется:</p>
+<pre class=" language-text"><code class="prism  language-text">j = 1
+j = 2
+j = 3
+</code></pre>
+<p>Затем:</p>
+<pre class=" language-text"><code class="prism  language-text">i = 2
+</code></pre>
+<p>и внутренний цикл снова проходит:</p>
+<pre class=" language-text"><code class="prism  language-text">j = 1
+j = 2
+j = 3
+</code></pre>
+<p>И так далее.</p>
+<hr>
+<h1 id="part9">9. Итоги</h1>
+<blockquote>
+<p><strong>Цикл — это не просто синтаксис <code>for</code> или <code>while</code>. Это способ описать повторение действий на основе некоторого изменяющегося состояния.</strong></p>
+</blockquote>
+<p>Tри конструкции:</p>
+<pre class=" language-text"><code class="prism  language-text">while
+    └── повторять, пока условие истинно
+
+do while
+    └── выполнить хотя бы один раз, затем повторять
+
+for
+    └── удобно описывать цикл с инициализацией,
+        условием и изменением счетчика
+
+</code></pre>
+<p>a <code>break</code> и <code>continue</code> — это уже <strong>управление ходом выполнения цикла</strong>.</p>
+<pre class=" language-text"><code class="prism  language-text">scope     &lt;= где имя доступно
+lifetime  &lt;= как долго объект существует
+</code></pre>
+<p>Пока без глубокого погружения. В следующих лекциях эти два понятия станут ключом к пониманию <strong>ссылок, указателей, <code>static</code>, динамической памяти и RAII</strong>.</p>
+</div>
+</body>
+
+</html>
