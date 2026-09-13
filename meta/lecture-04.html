@@ -1,0 +1,776 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lecture-04</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h6 id="лекции-по-курсу-основы-программирования-мгту-им.-баумана-кафедра-иу5"><em>Лекции по курсу "Основы программирования МГТУ им. Баумана кафедра ИУ5</em></h6>
+<h1 id="лекция-4.-функции">Лекция 4. Функции</h1>
+<p><strong>Дисциплина:</strong> Основы программирования на C++<br>
+<strong>Продолжительность:</strong> 2 × 45 минут</p>
+<blockquote>
+<p><strong>Функция позволяет дать имя отдельному фрагменту программы, определить его один раз и вызывать там, где он нужен.</strong></p>
+</blockquote>
+<hr>
+<h1 id="цели-лекции">Цели лекции</h1>
+<ul>
+<li>понимать, зачем нужны функции;</li>
+<li>уметь объявлять и определять функции;</li>
+<li>понимать разницу между объявлением и определением;</li>
+<li>уметь передавать параметры;</li>
+<li>понимать возвращаемое значение;</li>
+<li>различать передачу параметров по значению и по ссылке — пока только на уровне идеи;</li>
+<li>понимать область видимости локальных переменных;</li>
+<li>знать, что такое стек вызовов;</li>
+<li>понимать базовую идею рекурсии;</li>
+<li>знать, что такое перегрузка функций;</li>
+<li>познакомиться с <code>void</code>, <code>const</code> и <code>assert()</code>;</li>
+<li>понимать, зачем нужны предварительные объявления функций.</li>
+</ul>
+<hr>
+<h1 id="план">План</h1>
+<p><strong>Первая часть</strong></p>
+<p><a href="#part1">1. Функции</a></p>
+<ul>
+<li><a href="#part11">Объявление и определение функций</a></li>
+<li><a href="#part12">Параметры и аргументы</a></li>
+<li><a href="#part13">Возвращаемое значение</a></li>
+</ul>
+<p><a href="#part2">2. Локальные переменные и область видимости</a></p>
+<p><a href="#part3">3. Статические локальные переменные</a></p>
+<p><strong>Вторая часть</strong></p>
+<p><a href="#part4">4. Передача параметров</a></p>
+<ul>
+<li><a href="#part14">Передача по значению</a></li>
+<li><a href="#part15">Ссылка — первое знакомство</a></li>
+</ul>
+<p><a href="#part5">5. Стек вызовов</a></p>
+<p><a href="#part6">6. Перегрузка функций</a></p>
+<p><a href="#part7">7. Рекурсия</a></p>
+<p><a href="#8-assert">8. <code>assert()</code></a></p>
+<p><a href="#part9">9. Атрибуты функций</a></p>
+<p><a href="#part10">10. Хороший стиль функций</a></p>
+<hr>
+<p><em><strong>Зачем нужны функции</strong></em></p>
+<p>Допустим, нужно написать программу, которая работает с числами:</p>
+<ul>
+<li>проверяет, является ли число четным;</li>
+<li>находит максимум;</li>
+<li>вычисляет сумму;</li>
+<li>выводит результат.</li>
+</ul>
+<p>Можно всё написать внутри <code>main()</code>.</p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">int</span> a<span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> b<span class="token punctuation">{</span><span class="token number">20</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>a <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// ...</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>b <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// ...</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// еще код</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Очень быстро <code>main()</code> превращается в длинный и плохо читаемый код.</p>
+<p>Возникает естественная идея:</p>
+<blockquote>
+<p>Давайте отдельную операцию оформим как самостоятельную часть программы.</p>
+</blockquote>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">bool</span> <span class="token function">isEven</span><span class="token punctuation">(</span><span class="token keyword">int</span> number<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> number <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Теперь можно написать:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isEven</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>и:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isEven</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<h1 id="part1">1. Функции</h1>
+<p><em><strong>Функция</strong></em> — именованный фрагмент программы, который выполняет определенную задачу и может быть вызван из другого места программы.</p>
+<p>У функции есть:</p>
+<ul>
+<li>имя;</li>
+<li>параметры;</li>
+<li>возвращаемый тип;</li>
+<li>тело.</li>
+</ul>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Разберем:</p>
+<pre class=" language-text"><code class="prism  language-text">int
+│
+└── тип возвращаемого значения
+
+add
+│
+└── имя функции
+
+(int a, int b)
+│
+└── параметры
+
+{ ... }
+│
+└── тело функции
+</code></pre>
+<!--&#10;***&#1054;&#1087;&#1088;&#1077;&#1076;&#1077;&#1083;&#1077;&#1085;&#1080;&#1077;:***&#10;&#10;```cpp&#10;int add(int a, int b) {&#10;    return a + b;&#10;}&#10;```&#10;&#10;***&#1042;&#1099;&#1079;&#1086;&#1074;:***&#10;&#10;```cpp&#10;int result{add(2, 3)};&#10;```&#10;&#10;***&#1056;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;:***&#10;&#10;```cpp&#10; value = add(2, 3);&#10;    |&#10;    5&#10;```&#10;&#10;&#1055;&#1086;&#1089;&#1083;&#1077; &#1079;&#1072;&#1074;&#1077;&#1088;&#1096;&#1077;&#1085;&#1080;&#1103; &#1092;&#1091;&#1085;&#1082;&#1094;&#1080;&#1080; &#1088;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090; &#1074;&#1086;&#1079;&#1074;&#1088;&#1072;&#1097;&#1072;&#1077;&#1090;&#1089;&#1103; &#1074; &#1084;&#1077;&#1089;&#1090;&#1086; &#1074;&#1099;&#1079;&#1086;&#1074;&#1072;.&#10;-->
+<hr>
+<h2 id="part11">Объявление (declaration) и определение (definition) функций</h2>
+<h3 id="определение"><strong>Определение</strong></h3>
+<p>содержит её реализацию — тело функции, а также её заголовок:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="объявление"><strong>Объявление</strong></h3>
+<p>сообщает компилятору о существовании функции и её интерфейсе.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<blockquote>
+<p>Точка с запятой здесь обязательна.</p>
+</blockquote>
+<p><em>Зачем нужно объявление?</em></p>
+<p>Рассмотрим:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> result<span class="token punctuation">{</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Компилятор, обрабатывая <code>main()</code>, еще не знает о функции <code>add</code>.</p>
+<p>Поэтому можно заранее написать:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> result<span class="token punctuation">{</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Такое объявление функции, размещённое до её использования, часто называют <em><strong>предварительным объявлением</strong></em> (forward declaration).</p>
+<p>Позже, когда будем говорить о многофайловых программах, эта идея станет основой заголовочных файлов.</p>
+<hr>
+<h2 id="part12"><strong>Параметры</strong></h2>
+<p>Параметры позволяют передавать функции данные.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">square</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> x <span class="token operator">*</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Вызов:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> result<span class="token punctuation">{</span><span class="token function">square</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>При передаче по значению параметр функции получает копию значения аргумента.</p>
+<p>Внутри:</p>
+<pre class=" language-text"><code class="prism  language-text">x = 5
+</code></pre>
+<p>результат:</p>
+<pre class=" language-text"><code class="prism  language-text">25
+</code></pre>
+<h3 id="параметры-и-аргументы">Параметры и аргументы</h3>
+<p>Важно использовать правильные термины.</p>
+<p>В объявлении функции:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">square</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span>
+</code></pre>
+<p><code>x</code> — <strong>параметр</strong>.</p>
+<p>При вызове:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">square</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><code>5</code> — <strong>аргумент</strong>.</p>
+<p>Можно сформулировать:</p>
+<blockquote>
+<p>Параметр — имя, указанное в списке параметров функции и используемое внутри функции для обращения к переданному значению или объекту.</p>
+<p>Аргумент — выражение, указанное при вызове функции.</p>
+</blockquote>
+<h3 id="несколько-параметров">Несколько параметров</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>a <span class="token operator">&gt;</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> a<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Вызов:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> result<span class="token punctuation">{</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Получим:</p>
+<pre class=" language-text"><code class="prism  language-text">20
+</code></pre>
+<hr>
+<h2 id="part13">Возвращаемое значение</h2>
+<p>Функция может возвращать результат.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">multiply</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> a <span class="token operator">*</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Ключевое слово: <code>return</code> означает:</p>
+<blockquote>
+<p><code>return</code> завершает выполнение текущей функции. В функции с возвращаемым типом он может одновременно передать значение вызывающему коду.</p>
+</blockquote>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">    result <span class="token operator">=</span> <span class="token function">multiply</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>После выполнения: если <code>x</code> равно 4, <code>y</code> равно 5 тогда <code>result</code> будет равен 20</p>
+<p><em><strong>Что происходит после <code>return</code></strong></em></p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">10</span><span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Строка <code>std::cout &lt;&lt; "Hello";</code> никогда не выполнится.</p>
+<p><code>return</code> завершает функцию.</p>
+<h3 id="тип-void">Тип <code>void</code></h3>
+<p>Не каждая функция должна возвращать значение.</p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">printHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Hello\n"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><code>void</code> означает:</p>
+<blockquote>
+<p>что функция не возвращает значение вызывающему коду.</p>
+</blockquote>
+<p>Вызов:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">printHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Можно использовать <code>return</code> без значения:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">printNumber</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>В данном примере функция завершится если значение переменной <code>x</code> меньше <strong>0</strong>.</p>
+<hr>
+<h1 id="part2">2. Локальные переменные и область видимости</h1>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> result<span class="token punctuation">{</span>a <span class="token operator">+</span> b<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> result<span class="token punctuation">;</span> <span class="token comment">// ошибка</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><code>result</code> — локальная переменная, объявленная внутри блока тела функции <code>add()</code>. Переменная с именем <code>result</code> доступна только внутри этого блока.</p>
+<p><strong>Scope (область видимости)</strong> — часть программы, в которой имя доступно.</p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> y<span class="token punctuation">{</span><span class="token number">20</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> x<span class="token punctuation">;</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> y<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> x<span class="token punctuation">;</span>
+
+    <span class="token comment">// y здесь уже недоступна</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h1 id="part3">3. Статические локальные переменные</h1>
+<p>Обычная локальная переменная:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> count<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token operator">++</span>count<span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> count <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Каждый вызов функции создает новую переменную <code>count</code>.</p>
+<p>Если вызвать:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>получим:</p>
+<pre class=" language-text"><code class="prism  language-text">1
+1
+1
+</code></pre>
+<p>Теперь:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> count<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token operator">++</span>count<span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> count <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<p>Результат:</p>
+<pre class=" language-text"><code class="prism  language-text">1
+2
+3
+</code></pre>
+<p>Почему?</p>
+<p><code>static</code> для локальной переменной означает, что объект имеет статическую длительность хранения: он создаётся один раз и существует до завершения программы, сохраняя своё значение между вызовами функции.</p>
+<p><strong>Область видимости</strong> и <strong>время жизни</strong> — это не одно и то же.</p>
+<p>В примере:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> count<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>переменная <code>count</code>:</p>
+<ul>
+<li>видна только внутри <code>foo()</code>;</li>
+<li>объект с локальным <code>static</code> существует до завершения программы, но его инициализация выполняется при первом прохождении объявления.</li>
+</ul>
+<p>То есть:</p>
+<p><code>scope</code> - где переменную можно использовать</p>
+<p><code>lifetime</code> - как долго переменная существует</p>
+<h2 id="где-полезен-static">Где полезен <code>static</code></h2>
+<p>Например, нужно посчитать количество вызовов функции:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">printCallCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> count<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token operator">++</span>count<span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Вызов № "</span> <span class="token operator">&lt;&lt;</span> count <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Это демонстрационный пример.</p>
+<p>В реальном современном коде глобальное состояние и скрытое состояние функций нужно использовать осторожно.</p>
+<hr>
+<h1 id="перерыв">Перерыв</h1>
+<hr>
+<h1 id="part4">3. Передача параметров</h1>
+<ul>
+<li>Передача <em><strong>по значению</strong></em></li>
+<li>Передача <em><strong>по ссылке</strong></em> — первое знакомство.</li>
+<li>Передача <em><strong>по указателю</strong></em> — будет рассмотренно после изучения указателей</li>
+</ul>
+<h2 id="part14">Передача <em><strong>по значению</strong></em></h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">increment</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token operator">++</span>x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Вызов:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> a<span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token function">increment</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> a<span class="token punctuation">;</span>
+</code></pre>
+<p>Что получим?</p>
+<pre class=" language-text"><code class="prism  language-text">10
+</code></pre>
+<p>Почему?</p>
+<p>Потому что функция получила <strong>копию</strong> значения <code>a</code>.</p>
+<p>Можно представить:</p>
+<pre class=" language-text"><code class="prism  language-text">main():
+
+a = 10
+ │
+ │ копирование
+ ▼
+increment():
+
+x = 10
+</code></pre>
+<p>После:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">++</span>x<span class="token punctuation">;</span>
+</code></pre>
+<p>получается:</p>
+<pre class=" language-text"><code class="prism  language-text">x = 11
+</code></pre>
+<p>но исходный <code>a</code> остается:</p>
+<pre class=" language-text"><code class="prism  language-text">a = 10
+</code></pre>
+<hr>
+<h2 id="part15">Ссылка — первое знакомство</h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">increment</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">&amp;</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token operator">++</span>x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Теперь:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> a<span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token function">increment</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> a<span class="token punctuation">;</span>
+</code></pre>
+<p>получим:</p>
+<pre class=" language-text"><code class="prism  language-text">11
+</code></pre>
+<p>Почему?</p>
+<p>Потому что <code>x</code> — ссылка на исходный объект.</p>
+<p>Подробно ссылки будут рассмотрены на <code>лекции 6</code>.</p>
+<blockquote>
+<p>способ передачи параметра влияет на то, работает ли функция с копией или с исходным объектом.</p>
+</blockquote>
+<hr>
+<h1 id="part5">5. Стек вызовов</h1>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">square</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> x <span class="token operator">*</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> a<span class="token punctuation">{</span><span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> result<span class="token punctuation">{</span><span class="token function">square</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Упрощенно можно представить:</p>
+<pre class=" language-text"><code class="prism  language-text">┌─────────────────────┐
+│ square()            │
+│ x = 5               │
+└─────────────────────┘
+          ↑
+          │
+┌─────────────────────┐
+│ main()              │
+│ a = 5               │
+│ result = ?          │
+└─────────────────────┘
+</code></pre>
+<blockquote>
+<p>В упрощённой модели вызов функции связан с созданием <em><strong>кадра стека</strong></em>, в котором хранится часть данных и служебной информации, необходимой для выполнения вызова.</p>
+<p>После завершения вызова соответствующий кадр стека перестаёт использоваться.</p>
+</blockquote>
+<hr>
+<h1 id="part6">6. Перегрузка функций</h1>
+<p>В C++ можно определить несколько функций с одним именем, если их списки параметров различаются так, чтобы вызов можно было однозначно сопоставить с одной из перегрузок.</p>
+<p>Только возвращаемый тип не учитывается для различения перегрузок.</p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">double</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">double</span> a<span class="token punctuation">,</span> <span class="token keyword">double</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Теперь:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>использует первую функцию.</p>
+<p>А:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">2.5</span><span class="token punctuation">,</span> <span class="token number">3.5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>вторую.</p>
+<hr>
+<h2 id="зачем-нужна-перегрузка">Зачем нужна перегрузка?</h2>
+<p>Позволяет использовать одно понятное имя для одной логической операции.</p>
+<p>Без перегрузки пришлось бы писать:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">addInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">addDouble</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">addFloat</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p>Перегрузка позволяет:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">add</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<hr>
+<h2 id="что-нельзя">Что нельзя?</h2>
+<p>Нельзя перегружать функции <strong>только по возвращаемому типу</strong>.</p>
+<p>Возвращаемый тип не входит в список параметров, по которому C++ выбирает перегрузку.</p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Так нельзя.</p>
+<p>Почему?</p>
+<p>Потому что при вызове:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> y <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>компилятор не знает, какую функцию выбрать - это ошибка компиляции</p>
+<hr>
+<h1 id="part7">7. Рекурсия</h1>
+<p>Теперь интересный пример.</p>
+<p>Функция может вызвать сама себя.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">countDown</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> n <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+
+    <span class="token function">countDown</span><span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Вызов:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">countDown</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Получим:</p>
+<pre class=" language-text"><code class="prism  language-text">3
+2
+1
+</code></pre>
+<hr>
+<h2 id="как-работает-рекурсия">Как работает рекурсия?</h2>
+<p>Первый вызов:</p>
+<pre class=" language-text"><code class="prism  language-text">countdown(3)
+</code></pre>
+<p>вызывает:</p>
+<pre class=" language-text"><code class="prism  language-text">countdown(2)
+</code></pre>
+<p>который вызывает:</p>
+<pre class=" language-text"><code class="prism  language-text">countdown(1)
+</code></pre>
+<p>который вызывает:</p>
+<pre class=" language-text"><code class="prism  language-text">countdown(0)
+</code></pre>
+<p>Теперь срабатывает условие остановки.</p>
+<hr>
+<h2 id="базовый-случай">Базовый случай</h2>
+<p>В рекурсивной функции обязательно должно быть условие завершения.</p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Это называется <strong>базовым случаем</strong>.</p>
+<p>Без него:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Если рекурсивный вызов не приводит к достижению условия завершения, рекурсия не завершится.</p>
+<p>При достаточно глубокой рекурсии обычно происходит переполнение стека вызовов.</p>
+<hr>
+<h2 id="рекурсия-и-стек">Рекурсия и стек</h2>
+<p>Здесь очень удобно связать две темы.</p>
+<p>При:</p>
+<pre class=" language-text"><code class="prism  language-text">countDown(3)
+</code></pre>
+<p>условно:</p>
+<pre class=" language-text"><code class="prism  language-text">┌─────────────┐
+│ countdown(1)│
+├─────────────┤
+│ countdown(2)│
+├─────────────┤
+│ countdown(3)│
+├─────────────┤
+│ main        │
+└─────────────┘
+</code></pre>
+<p>Каждый вызов создает новый контекст.</p>
+<p>Когда функция завершается, контекст удаляется.</p>
+<hr>
+<h1 id="assert">8. <code>assert()</code></h1>
+<p>Теперь вводим важный инструмент проверки предположений программы.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cassert&gt;</span></span>
+</code></pre>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">processAge</span><span class="token punctuation">(</span><span class="token keyword">int</span> age<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">assert</span><span class="token punctuation">(</span>age <span class="token operator">&gt;=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span class="token string">"Возраст не может быть отрицательным!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Здесь программист утверждает:</p>
+<blockquote>
+<p>В момент вызова функции <code>age</code> должен быть неотрицательным.</p>
+</blockquote>
+<hr>
+<h2 id="как-работает-assert">Как работает <code>assert</code></h2>
+<p>Если условие истинно:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">assert</span><span class="token punctuation">(</span>age <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>ничего особенного не происходит.</p>
+<p>Если условие ложно:</p>
+<pre class=" language-text"><code class="prism  language-text">age &lt; 0
+</code></pre>
+<p>программа аварийно завершается и сообщает информацию о месте, где сработало утверждение.</p>
+<hr>
+<h2 id="важное-различие">Важное различие</h2>
+<p><code>assert()</code> — <strong>не обычная обработка ошибок для пользователя</strong>.</p>
+<p>Он предназначен прежде всего для обнаружения ошибок в логике программы и проверки предположений программиста.</p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">assert</span><span class="token punctuation">(</span>index <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Это не означает:</p>
+<blockquote>
+<p>«Пользователь ввел неправильное значение, покажем ему сообщение».</p>
+</blockquote>
+<p>Это означает:</p>
+<blockquote>
+<p>«Программист считает, что здесь <code>index</code> уже должен быть неотрицательным. Если это не так — в программе есть проблема».</p>
+</blockquote>
+<blockquote>
+<p>Важно: <code>assert</code> предназначен для проверок, которые нужны во время разработки. При определении макроса NDEBUG проверки assert отключаются.</p>
+</blockquote>
+<hr>
+<h1 id="part9">9. Атрибуты функций</h1>
+<ul>
+<li>общий синтаксис <code>[[...]]</code></li>
+<li><code>[[nodiscard]]</code></li>
+<li><code>[[maybe_unused]]</code></li>
+<li><code>[[deprecated]]</code></li>
+<li>обзор <code>[[fallthrough]]</code></li>
+<li>обзор <code>[[noreturn]]</code></li>
+</ul>
+<p>В современном C++ атрибуты записываются в двойных квадратных скобках: <code>[[attribute]]</code></p>
+<p>Они позволяют сообщить компилятору или другим инструментам дополнительную информацию о сущности программы.</p>
+<h3 id="nodiscard"><em><code>nodiscard</code></em></h3>
+<p>Результат функции желательно не игнорировать.</p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token punctuation">[</span><span class="token punctuation">[</span>nodiscard<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token keyword">int</span> <span class="token function">calculateSum</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Если написать:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">calculateSum</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>компилятор может предупредить:</p>
+<pre class=" language-bash"><code class="prism  language-bash">warning: ignoring <span class="token keyword">return</span> value
+</code></pre>
+<h3 id="maybe_unused"><em>[[maybe_unused]]</em></h3>
+<p>Сообщает компилятору, что функция, переменная или другой объект может намеренно не использоваться, и предупреждение об этом не требуется.</p>
+<p>Особенно полезно в условной компиляции и коде, где значение используется только в некоторых конфигурациях.</p>
+<p>например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token punctuation">[</span><span class="token punctuation">[</span>maybe_unused<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token keyword">void</span> <span class="token function">debugFunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><em><strong>[[deprecated]]</strong></em></p>
+<p>Предупреждение компилятора.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token punctuation">[</span><span class="token punctuation">[</span>deprecated<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token keyword">void</span> <span class="token function">oldFunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Теперь: <code>oldFunction();</code></p>
+<p>может вызвать предупреждение компилятора.</p>
+<p>Можно даже написать сообщение:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token function">deprecated</span><span class="token punctuation">(</span><span class="token string">"Use newFunction() instead"</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token keyword">void</span> <span class="token function">oldFunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment">//...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class=" language-text"><code class="prism  language-text">старая функция
+      ↓
+ещё существует
+      ↓
+но использовать её больше не рекомендуется
+</code></pre>
+<p>Aтрибуты используются не только для компилятора, но и как часть документации намерений программиста.</p>
+<h3 id="fallthrough"><em>[[fallthrough]]</em></h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">switch</span> <span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>
+    <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">[</span><span class="token punctuation">[</span>fallthrough<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span>
+    <span class="token function">doSomethingElse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Он сообщает: что, переход из одного <code>case</code> в следующий сделан намеренно.</p>
+<h3 id="noreturn"><em>[[noreturn]]</em></h3>
+<p>Cообщает, что функция не возвращает управление вызывающему коду.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token punctuation">[</span><span class="token punctuation">[</span>noreturn<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token keyword">void</span> <span class="token function">fatalError</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cerr <span class="token operator">&lt;&lt;</span> <span class="token string">"Fatal error\n"</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span><span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>Важное различие: <strong>атрибут</strong> ≠ комментарий</p>
+</blockquote>
+<p>Комментарий:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token comment">// Не забыть проверить результат!</span>
+<span class="token keyword">int</span> <span class="token function">calculate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Компилятор ничего с этим не делает.</p>
+<p>А:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token punctuation">[</span><span class="token punctuation">[</span>nodiscard<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token keyword">int</span> <span class="token function">calculate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>уже является частью программы, которую понимает компилятор.</p>
+<p>То есть:</p>
+<pre class=" language-text"><code class="prism  language-text">комментарий
+   ↓
+для человека
+</code></pre>
+<pre class=" language-text"><code class="prism  language-text">[[nodiscard]]
+   ↓
+информация для компилятора
++ намерение программиста
+</code></pre>
+<hr>
+<p>В современном C++ существуют и другие стандартные атрибуты, например <code>[[likely]]</code> и <code>[[unlikely]]</code>, которые позволяют сообщить о предполагаемой вероятности ветвления. Но это уже тема оптимизации, и сейчас нам достаточно знать, что атрибутов много и они имеют разные назначения.</p>
+<p>И ещё один важный момент — <strong>стандарт</strong></p>
+<p><code>[[...]]</code> — стандартный синтаксис атрибутов C++.</p>
+<p>Есть нестандартные атрибуты конкретного компилятора, например исторически встречавшиеся:</p>
+<p><code>__attribute__((...))</code></p>
+<p>или:</p>
+<p><code>__declspec(...)</code></p>
+<p>В современном переносимом C++ предпочтительно сначала смотреть, существует ли стандартный атрибут для нужной задачи.</p>
+<hr>
+<h1 id="part10">10. Хороший стиль функций</h1>
+<p>Хорошая функция обычно:</p>
+<p><em><strong>1. Делает одну понятную вещь</strong></em></p>
+<p>Плохо:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token function">processStudentAndSaveFileAndPrintReport</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>У функции слишком много обязанностей.</p>
+<p>Лучше разделить.</p>
+<hr>
+<p><em><strong>2. Имеет понятное имя</strong></em></p>
+<p>Плохо:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Лучше:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">bool</span> <span class="token function">openFile</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span> nameFile<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Имя должно объяснять назначение.</p>
+<hr>
+<p><em><strong>3. Имеет небольшой и понятный интерфейс</strong></em></p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">double</span> <span class="token function">calculateArea</span><span class="token punctuation">(</span><span class="token keyword">double</span> radius<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>понятно:</p>
+<ul>
+<li>что принимает;</li>
+<li>что возвращает;</li>
+<li>что делает.</li>
+</ul>
+<hr>
+<p><em><strong>4. Не использует ненужные глобальные данные</strong></em></p>
+<p>На этом этапе достаточно правила:</p>
+<blockquote>
+<p>Чем меньше скрытых зависимостей у функции, тем легче ее понимать и тестировать.</p>
+</blockquote>
+<hr>
+<hr>
+</div>
+</body>
+
+</html>
