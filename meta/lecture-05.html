@@ -13,7 +13,7 @@
 <p><strong>Дисциплина:</strong> Основы программирования на C++<br>
 <strong>Продолжительность:</strong> 2 × 45 минут</p>
 <blockquote>
-<p><strong>Разделение программы на части позволяет отделить интерфейс от реализации, уменьшить зависимости и сделать программу понятнее и удобнее для сопровождения.</strong></p>
+<p><strong>азделение программы на части позволяет отделить интерфейс от реализации, уменьшить зависимости и сделать программу понятнее и удобнее для сопровождения.</strong></p>
 </blockquote>
 <hr>
 <h1 id="цели-лекции">Цели лекции</h1>
@@ -35,48 +35,49 @@
 <h1 id="план">План</h1>
 <h3 id="первая-часть">Первая часть</h3>
 <ol>
-<li><a href="#part1">Зачем нужен препроцессор</a></li>
-<li><a href="#part2">Директивы препроцессора</a>
+<li><a href="#%D1%87%D1%82%D0%BE-%D0%BF%D1%80%D0%BE%D0%B8%D1%81%D1%85%D0%BE%D0%B4%D0%B8%D1%82-%D1%81-%D0%B8%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D1%8B%D0%BC-%D0%BA%D0%BE%D0%B4%D0%BE%D0%BC-%D0%B4%D0%BE-%D0%BA%D0%BE%D0%BC%D0%BF%D0%B8%D0%BB%D1%8F%D1%86%D0%B8%D0%B8">Зачем нужен препроцессор</a></li>
+<li><a href="#2-%D0%B4%D0%B8%D1%80%D0%B5%D0%BA%D1%82%D0%B8%D0%B2%D1%8B-%D0%BF%D1%80%D0%B5%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81%D0%BE%D1%80%D0%B0">Директивы препроцессора</a>
 <ul>
-<li><a href="#include">директива<code>include</code></a></li>
-<li><a href="#define">макросы и <code>#define</code></a></li>
-<li><a href="#part13">условная компиляция</a></li>
+<li><a href="#%D0%B4%D0%B8%D1%80%D0%B5%D0%BA%D1%82%D0%B8%D0%B2%D0%B0-include"><code>include</code></a></li>
+<li><a href="#%D0%BC%D0%B0%D0%BA%D1%80%D0%BE%D1%81%D1%8B-%D0%B8-define">макросы и <code>#define</code></a></li>
+<li><a href="#%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%BD%D0%B0%D1%8F-%D0%BA%D0%BE%D0%BC%D0%BF%D0%B8%D0%BB%D1%8F%D1%86%D0%B8%D1%8F">условная компиляция</a></li>
 </ul>
 </li>
 </ol>
 <h3 id="вторая-часть">Вторая часть</h3>
 <ol start="3">
-<li><a href="#part3">Несколько файлов в C++</a></li>
-<li><a href="#part4">Заголовочные файлы</a></li>
-<li><a href="#extern"><code>extern</code></a></li>
-<li><a href="#scope-lifetime-linkage"><code>scope</code>, <code>lifetime</code> и <code>linkage</code></a></li>
+<li><a href="#3-%D0%BD%D0%B5%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%BE-%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2-%D0%B2-c">Несколько файлов в C++</a></li>
+<li><a href="#4-%D0%B7%D0%B0%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BE%D1%87%D0%BD%D1%8B%D0%B5-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B">Заголовочные файлы</a></li>
+<li><a href="#5-extern"><code>extern</code></a></li>
+<li><a href="#6-scope-lifetime-%D0%B8-linkage"><code>scope</code>, <code>lifetime</code> и <code>linkage</code></a></li>
 </ol>
 <hr>
-<h1 id="part1">1. Зачем нужен препроцессор</h1>
+<h1 id="зачем-нужен-препроцессор">1. Зачем нужен препроцессор</h1>
 <p>Что происходит с исходным кодом до компиляции:</p>
 <p>Когда мы пишем программу на C++, может показаться, что компилятор сразу берёт исходный <code>.cpp</code>-файл и компилирует его.</p>
 <p>На самом деле перед компиляцией исходный файл проходит дополнительный этап — <strong>предварительную обработку</strong>.</p>
-<p>Предварительную обработку выполняет <strong>препроцессор</strong>.</p>
+<p>Предварительную обработку выполняет программа <strong>препроцессор</strong>, которая вносит различные изменения в текст файла кода. Препроцессор фактически никак не изменяет исходные файлы кода — все изменения, вносимые препроцессором, происходят либо временно в памяти, либо с использованием временных файлов.</p>
+<p>Когда препроцессор завершает обработку файла кода, результат называется <strong>единицей трансляции</strong> . Именно эта единица трансляции затем компилируется компилятором.</p>
 <p>Упрощённо процесс можно представить так:</p>
 <pre class=" language-text"><code class="prism  language-text">Исходный код
-     ↓
-Предварительная обработка
-     ↓
-Результат предварительной обработки
-     ↓
-Компиляция
-     ↓
-Объектный файл
-     ↓
-Компоновка
-     ↓
-Исполняемая программа
+        ⬇
+    Предварительная обработка
+            ↓
+            └➔ Результат предварительной обработки
+                    ⬇
+                Компиляция
+                  ↓
+                  └➔ Объектный файл
+                           ⬇
+                        Компоновка
+                        ↓
+                        └➔ Исполняемая программа
 </code></pre>
 <p>На этапе предварительной обработки препроцессор работает прежде всего с текстом программы. Он обрабатывает специальные конструкции, называемые <strong>директивами препроцессора</strong>.</p>
 <p>В современных компиляторах препроцессор обычно интегрирован в общий процесс обработки программы, поэтому программисту не требуется запускать его как отдельную программу.</p>
 <p>В совокупности предварительную обработку, компиляцию и компоновку можно рассматривать как части процесса трансляции программы.</p>
 <hr>
-<h1 id="part2">2. Директивы препроцессора</h1>
+<h1 id="директивы-препроцессора">2. Директивы препроцессора</h1>
 <p>Директивы препроцессора начинаются с символа <code>#</code>.</p>
 <p>Например:</p>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
@@ -84,8 +85,7 @@
 <p>или:</p>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> SIZE 10</span>
 </code></pre>
-<p>Директива препроцессора не является обычной инструкцией C++.</p>
-<p>Поэтому после неё не ставится точка с запятой:</p>
+<p>Директива препроцессора не является обычной инструкцией языка Си / C++. Поэтому после неё не ставится точка с запятой:</p>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> SIZE 10</span>
 </code></pre>
 <p>Препроцессор обрабатывает исходный файл последовательно, начиная с его начала.</p>
@@ -98,7 +98,7 @@
 <span class="token macro property">#<span class="token directive keyword">endif</span></span>
 </code></pre>
 <hr>
-<h2 id="include">Директива <code>#include</code></h2>
+<h2 id="директива-include">Директива <code>#include</code></h2>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
 </code></pre>
 <p>Упрощённо можно считать, что директива <code>#include</code> приводит к включению содержимого указанного файла в текущую единицу трансляции.</p>
@@ -129,11 +129,12 @@
 </code></pre>
 <p>Именно механизм включения файлов станет особенно важен, когда мы перейдём к заголовочным файлам.</p>
 <hr>
-<h2 id="define">Макросы и <code>#define</code></h2>
+<h2 id="макросы-и-define">Макросы и <code>#define</code></h2>
 <p>Другой важной директивой является:</p>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span></span>
 </code></pre>
-<p>Макросы, определяемые с помощью <code>#define</code>, можно разделить на несколько видов.</p>
+<p>Макросы, определяемые с помощью <code>#define</code>, можно разделить на несколько видов. Существует два основных типа макросов: <em><strong>объектно-подобные</strong></em> макросы и <em><strong>функционально-подобные</strong></em> макросы.</p>
+<p>Идентификатор макроса использует те же правила именования, что и обычные идентификаторы: он может содержать буквы, цифры и символы подчеркивания, не может начинаться с цифры и не должен начинаться с символа подчеркивания.</p>
 <h3 id="объектоподобные-макросы">Объектоподобные макросы</h3>
 <p>Макрос можно рассматривать как правило, по которому препроцессор преобразует текст программы.</p>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
@@ -184,17 +185,26 @@
 <p>В этом случае макрос не предназначен для замены одного текста другим.</p>
 <p>Сам факт того, что макрос определён, можно использовать для <strong>условной компиляции</strong>.</p>
 <p>Например:</p>
-<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> DEBUG</span>
-</code></pre>
-<p>А затем:</p>
-<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">ifdef</span> DEBUG</span>
-    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Debug mode\n"</span><span class="token punctuation">;</span>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> PRINT_JOE</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+<span class="token macro property">#<span class="token directive keyword">ifdef</span> PRINT_JOE</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Joe\n"</span><span class="token punctuation">;</span>
 <span class="token macro property">#<span class="token directive keyword">endif</span></span>
+
+<span class="token macro property">#<span class="token directive keyword">ifdef</span> PRINT_BOB</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Bob\n"</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
-<p>Если <code>DEBUG</code> определён, этот участок программы будет включён в результат предварительной обработки.</p>
-<p>Если <code>DEBUG</code> не определён, этот участок будет исключён.</p>
-<hr>
-<h2 id="part13">Условная компиляция</h2>
+<p>Если <code>PRINT_JOE</code> определён, этот участок программы будет включён в результат предварительной обработки.</p>
+<p>Если <code>PRINT_JOE</code> не определён, этот участок будет исключён.</p>
+<h2 id="условная-компиляция">Условная компиляция</h2>
 <p>Основные директивы:</p>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">ifdef</span></span>
 <span class="token macro property">#<span class="token directive keyword">ifndef</span></span>
@@ -212,7 +222,7 @@
 <p>— позволяет задать альтернативное условие, если предыдущие проверки вернули ложь.</p>
 <h3 id="endif-end-if"><code>#endif</code> (END IF)</h3>
 <p>— обязательная директива, которая закрывает блок условной компиляции.</p>
-<p><em><strong>Главные сценарии использования</strong></em></p>
+<h4 id="главные-сценарии-использования"><em>Главные сценарии использования</em></h4>
 <ol>
 <li><code>Include Guards</code> (Защита заголовков от повторного включения).</li>
 </ol>
@@ -279,8 +289,31 @@
 <td align="left">Код в обеих ветках должен быть синтаксически правильным.</td>
 </tr>
 </tbody>
-</table><hr>
-<h1 id="part3">3. Несколько файлов в C++</h1>
+</table><h3 id="функционально-подобные-макросы-function-like-macros">Функционально-подобные макросы (function-like macros)</h3>
+<p>В отличие от объектноподобных макросов, которые просто заменяют одно имя на кусок кода, функционально-подобные макросы позволяют динамически подставлять переданные в них значения в тело макроса перед компиляцией.</p>
+<p>Синтаксис объявления</p>
+<p><code>#define ИМЯ_МАКРОСА(аргумент1, аргумент2, ...) тело_макроса</code></p>
+<blockquote>
+<p>Важное правило: <em>между именем макроса и открывающей скобкой <code>(</code> не должно быть пробелов. Если поставить пробел, препроцессор посчитает макрос объектно-подобным, а скобки — частью заменяемого текста.</em></p>
+</blockquote>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream.h&gt;</span></span>
+
+<span class="token macro property">#<span class="token directive keyword">define</span> MAX(a, b) (a &gt; b) ? a : b</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x <span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> y <span class="token punctuation">{</span><span class="token number">20</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> result <span class="token punctuation">{</span><span class="token function">MAX</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token comment">// Препроцессор заменит это на: int result { x &gt; y ? x : y };</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> result <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>В современном C++ вместо функционально-подобных макросов настоятельно рекомендуется использовать inline-функции или шаблоны (templates), так как они безопаснее и поддерживают строгую проверку типов.</p>
+<hr>
+<h1 id="несколько-файлов-в-c">3. Несколько файлов в C++</h1>
 <p>По мере роста программы один исходный файл становится неудобным.</p>
 <p>Поэтому программу разбивают на несколько файлов.</p>
 <p>Например:</p>
@@ -349,11 +382,11 @@ add.cpp
 <li>организовывать большие программы по отдельным компонентам.</li>
 </ul>
 <hr>
-<h1 id="part4">4. Заголовочные файлы</h1>
+<h1 id="заголовочные-файлы">4. Заголовочные файлы</h1>
 <p>Если проект содержит много функций, постоянно писать их объявления вручную в каждом <code>.cpp</code> становится неудобно.</p>
 <p>Для этого используются <strong>заголовочные файлы</strong>.</p>
 <p>Например:</p>
-<p><img src="../meta/img//includeHeader.png" alt=""></p>
+<p><img src="./includeHeader.png" alt=""></p>
 <pre class=" language-text"><code class="prism  language-text">add.h
 add.cpp
 main.cpp
@@ -394,12 +427,12 @@ main.cpp
              программа
 </code></pre>
 <hr>
-<h3 id="проблема-повторного-включения">Проблема повторного включения</h3>
+<h3 id="проблема-повторного-включения-one-definition-rule">Проблема повторного включения (<a href="#%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B2%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%BE-odr">One Definition Rule</a>)</h3>
 <p>Использование <code>#include</code> приводит к важному вопросу.</p>
 <p>Что произойдёт, если один и тот же заголовочный файл будет включён несколько раз?</p>
 <p>Возникает повторное определение, а это ошибка.</p>
 <p>Следовательно, заголовочные файлы должны быть защищены от многократного включения в одну единицу трансляции.</p>
-<p>Для этого используется механизм <strong>header guard</strong>, или <strong>защита заголовочного файла</strong>, который был рассмотрен выше при изучении условной компиляции.</p>
+<p>Для этого используется механизм <a href="#%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D0%B5-%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B8-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F">header guard</a>, или <strong>защита заголовочного файла</strong>, который был рассмотрен выше при изучении условной компиляции.</p>
 <h3 id="итоговая-схема">Итоговая схема</h3>
 <p>В результате организацию небольшого многофайлового проекта можно представить следующим образом:</p>
 <pre class=" language-text"><code class="prism  language-text">                Заголовочный файл
@@ -457,12 +490,19 @@ main.cpp
 </blockquote>
 <p>Но глобальное состояние следует использовать осторожно.</p>
 <hr>
-<h1 id="scope-lifetime-linkage">6. Scope, lifetime и linkage</h1>
+<h1 id="scope-lifetime-и-linkage">6. Scope, lifetime и linkage</h1>
 <p>Теперь связываем несколько лекций.</p>
 <p>Мы уже знаем:</p>
 <p><strong><code>Scope</code></strong> - где имя доступно.</p>
 <p><strong><code>Lifetime</code></strong> - как долго существует объект.</p>
 <p><strong><code>Linkage</code></strong> - (связывание) — определяет, может ли одно и то же имя обозначать одну и ту же сущность в разных единицах трансляции.**</p>
+<h1 id="правило-одного-определения-one-definition-rule-odr">7. Правило одного определения (One Definition Rule, <code>ODR</code>)</h1>
+<p>Правило одного определения (или сокращенно ODR) — это хорошо известное правило в C++. Правило <code>ODR</code> состоит из трех частей:</p>
+<ul>
+<li>Внутри файла каждая функция, переменная, тип или шаблон в заданной области видимости может иметь только одно определение. Определения, встречающиеся в разных областях видимости (например, локальные переменные, определенные внутри разных функций, или функции, определенные внутри разных пространств имен), не нарушают это правило.</li>
+<li>Внутри программы каждая функция или переменная в заданной области видимости может иметь только одно определение. Это правило существует потому, что программы могут иметь более одного файла. Функции и переменные, невидимые для компоновщика, исключаются из этого правила.</li>
+<li>Типы, шаблоны, встроенные функции и встроенные переменные могут иметь дублирующиеся определения в разных файлах, при условии, что каждое определение идентично.</li>
+</ul>
 </div>
 </body>
 
