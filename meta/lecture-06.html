@@ -1,0 +1,456 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lecture-06</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h6 id="лекции-по-курсу-основы-программирования-мгту-им.-баумана-кафедра-иу5"><em>Лекции по курсу "Основы программирования МГТУ им. Баумана кафедра ИУ5</em></h6>
+<h1 id="лекция-6.-указатели">Лекция 6. Указатели</h1>
+<p><strong>Дисциплина:</strong> Основы программирования на C++<br>
+<strong>Продолжительность:</strong> 2 × 45 минут</p>
+<blockquote>
+<p><strong>Ссылка и указатель позволяют работать с уже существующим объектом через его связь с памятью, не создавая обязательно отдельную независимую копию значения.</strong></p>
+</blockquote>
+<hr>
+<h1 id="цели-лекции">Цели лекции</h1>
+<p>После занятия студент должен понимать:</p>
+<ul>
+<li>что такое объект и его адрес;</li>
+<li>что делает оператор <code>&amp;</code> в контексте получения адреса;</li>
+<li>что такое ссылка;</li>
+<li>как объявляется ссылка;</li>
+<li>почему ссылка должна быть инициализирована;</li>
+<li>что ссылка не является отдельной копией объекта;</li>
+<li>передачу параметров по ссылке;</li>
+<li><code>const</code>-ссылки;</li>
+<li>что такое указатель;</li>
+<li>как объявляется указатель;</li>
+<li>что такое <code>nullptr</code>;</li>
+<li>что делают <code>&amp;</code> и <code>*</code>;</li>
+<li>что такое ссылка;</li>
+<li>как объявляется ссылка;</li>
+<li>почему ссылка должна быть инициализирована;</li>
+<li>что ссылка не является отдельной копией объекта;</li>
+<li>передачу параметров по ссылке;</li>
+<li><code>const</code>-ссылки;</li>
+<li>разницу между ссылкой и указателем;</li>
+<li>почему работа с указателями требует аккуратности.</li>
+</ul>
+<hr>
+<h3 id="план-лекции">План лекции</h3>
+<h2 id="первая-часть-—-45-минут">Первая часть — 45 минут</h2>
+<ul>
+<li><a href="#%D0%BB%D0%B5%D0%BA%D1%86%D0%B8%D1%8F-6-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D0%B8">Лекция 6. Указатели</a></li>
+<li><a href="#%D1%86%D0%B5%D0%BB%D0%B8-%D0%BB%D0%B5%D0%BA%D1%86%D0%B8%D0%B8">Цели лекции</a>
+<ul>
+<li><a href="#%D0%BF%D0%BB%D0%B0%D0%BD-%D0%BB%D0%B5%D0%BA%D1%86%D0%B8%D0%B8">План лекции</a></li>
+<li><a href="#%D0%BF%D0%B5%D1%80%D0%B2%D0%B0%D1%8F-%D1%87%D0%B0%D1%81%D1%82%D1%8C--45-%D0%BC%D0%B8%D0%BD%D1%83%D1%82">Первая часть — 45 минут</a></li>
+<li><a href="#%D0%B2%D1%82%D0%BE%D1%80%D0%B0%D1%8F-%D1%87%D0%B0%D1%81%D1%82%D1%8C--45-%D0%BC%D0%B8%D0%BD%D1%83%D1%82">Вторая часть — 45 минут</a></li>
+<li><a href="#1-%D1%81%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BD%D1%8B%D0%B5-%D1%82%D0%B8%D0%BF%D1%8B-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85">1. Составные типы данных</a></li>
+<li><a href="#2-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8C-%D0%BD%D0%B0-%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82">2. Указатель на объект</a>
+<ul>
+<li><a href="#%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82-%D0%B8-%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D1%8C">Объект и память</a></li>
+<li><a href="#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B0%D0%B4%D1%80%D0%B5%D1%81%D0%B0">Получение адреса</a></li>
+<li><a href="#%D1%87%D1%82%D0%BE-%D1%82%D0%B0%D0%BA%D0%BE%D0%B5-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8C">Что такое указатель</a></li>
+<li><a href="#%D1%80%D0%B0%D0%B7%D1%8B%D0%BC%D0%B5%D0%BD%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8F">Разыменование указателя</a></li>
+<li><a href="#%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%B0-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8C">Изменение объекта через указатель</a></li>
+<li><a href="#%D0%BD%D1%83%D0%BB%D0%B5%D0%B2%D1%8B%D0%B5-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D0%B8-nullptr">Нулевые указатели <code>nullptr</code></a></li>
+<li><a href="#%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D0%B8-%D0%B8-%D0%BA%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D1%8B">Указатели и константы</a></li>
+<li><a href="#%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D1%87%D0%B0-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8F-%D0%B2-%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D1%8E">Передача указателя в функцию</a></li>
+<li><a href="#%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0-%D0%BD%D0%B0-%D0%BD%D1%83%D0%BB%D0%B5%D0%B2%D0%BE%D0%B5-%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5">Проверка на нулевое значение</a></li>
+<li><a href="#%D0%B2%D0%BE%D0%B7%D0%B2%D1%80%D0%B0%D1%82-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8F-%D0%B8%D0%B7-%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%B8">Возврат указателя из функции</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="вторая-часть-—-45-минут">Вторая часть — 45 минут</h2>
+<ol start="3">
+<li>Ссылки</li>
+<li>Инициализация ссылки</li>
+<li>Ссылка как псевдоним</li>
+<li>Передача по ссылке</li>
+<li><code>const</code>-ссылки</li>
+<li>Ссылка vs указатель</li>
+<li>Указатели и функции</li>
+<li>Типичные ошибки</li>
+</ol>
+<hr>
+<h2 id="составные-типы-данных">1. Составные типы данных</h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> numeratorFirst <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> denominatorFirst <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> numeratorSecond <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> denominatorSecond <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Введите дробь: "</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>cin <span class="token operator">&gt;&gt;</span> numeratorFirst <span class="token operator">&gt;&gt;</span> denominatorFirst<span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Введите дробь: "</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>cin <span class="token operator">&gt;&gt;</span> numeratorSecond <span class="token operator">&gt;&gt;</span> denominatorSecond<span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Результат умножения одной дроби на другую: "</span>
+        <span class="token operator">&lt;&lt;</span> numeratorFirst <span class="token operator">*</span> numeratorSecond <span class="token operator">&lt;&lt;</span> <span class="token string">'/'</span> <span class="token operator">&lt;&lt;</span> denominatorFirst <span class="token operator">*</span> denominatorSecond <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Результат:</p>
+<pre class=" language-text"><code class="prism  language-text">Введите дробь: 1/2
+Введите дробь: 3/4
+Результат умножения одной дроби на другую: 3/8:
+</code></pre>
+<p>Программа работает, но она ставит перед нами несколько задач, которые необходимо улучшить. Во-первых, каждая пара целых чисел связана лишь косвенно — вне комментариев и контекста их использования в коде мало что указывает на взаимосвязь между парами числитель-знаменатель. Во-вторых, следуя принципу <a href="../Style-Guide.html#dry"><strong>DRY</strong></a> (Don’t Repeat Yourself — не повторяйтесь), следует создать функцию для обработки ввода пользователем дроби (а также обработки ошибок). Однако функции могут возвращать только <strong>одно значение</strong>, поэтому как нам вернуть числитель и знаменатель вызывающей стороне?</p>
+<p>Или функция принимает несколько элементов которые в процессе  её работы будут каким-то образом обработаны, или в результате работы функции результат не щдно значение, а несколько (а если они разнотипные) как вернуть в вызывающую функцию результат работы функции.</p>
+<p>Или необходимо передать в функцию очень большой объект (при передаче параметров происходит копирование).</p>
+<p><strong>Составные типы данных</strong></p>
+<p>C++ поддерживает набор типов данных, которые определяются на основе других существующих (базовых)типов данных. Они называются <strong>составные типы</strong> (композитные типами) данных и обладают дополнительными свойствами и поведением для решения задач.</p>
+<p>В C++ поддерживаются следующие <em>составные типы</em>:</p>
+<ul>
+<li>Функции</li>
+<li>Массивы в стиле C</li>
+<li>Типы указателей:
+<ul>
+<li>Указатель на объект</li>
+<li>Указатель на функцию</li>
+</ul>
+</li>
+<li>Указатель на типы элементов:
+<ul>
+<li>Указатель на элемент данных</li>
+<li>Указатель на функцию-член</li>
+</ul>
+</li>
+<li>Типы ссылок:
+<ul>
+<li>Ссылки на значения L (L-value references)</li>
+<li>Ссылки на значения R (R-value references)</li>
+</ul>
+</li>
+<li>Перечисляемые типы (<strong>Enum</strong>erated types):
+<ul>
+<li>Перечисления без области видимости (Unscoped enumerations)</li>
+<li>Ограниченные перечисления (Scoped enumerations)</li>
+</ul>
+</li>
+<li>Типы классов:
+<ul>
+<li>Структуры (Structs)</li>
+<li>Классы (Classes)</li>
+<li>Объединения (Unions)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="указатель-на-объект">2. Указатель на объект</h2>
+<p>В программировании на C++ передача данных — это управление ресурсами. <code>Указатели</code> и <code>ссылки</code> решают три ключевые задачи:</p>
+<p>• <strong>Эффективность:</strong> Позволяет избежать дорогостоящего копирования больших объектов (тяжелых структур, векторов, строк). Вместо копирования мегабайта данных передается лишь небольшой адрес в памяти.</p>
+<p>• <strong>Изменение данных (In-Out параметры):</strong> Позволяют функции модифицировать оригинальный объект, находящийся вне её области видимости, а не его локальную копию.</p>
+<p>• <strong>Разделение ресурсов (Shared State):</strong> Разные части программы могут иметь доступ к одному и тому же экземпляру объекта в памяти.</p>
+<h3 id="объект-и-память">Объект и память</h3>
+<p>Каждая переменная в C++ — это объект, занимающий определенный непрерывный участок физической памяти (оперативной памяти).</p>
+<p>• Объект характеризуется типом (определяет размер в байтах и правила интерпретации бит) и значением.</p>
+<p>• Память можно представить как гигантский массив ячеек, где у каждого байта есть свой уникальный порядковый номер.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">char</span> x <span class="token punctuation">{</span><span class="token string">'Y'</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> x <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>  <span class="token comment">// print the value of variable x</span>
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>x <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span> <span class="token comment">// print the memory address of variable x</span>
+</code></pre>
+<pre class=" language-text"><code class="prism  language-text">Y
+0x002A07FE
+</code></pre>
+<p><code>Адрес объекта</code> — это номер самого первого (младшего) байта в памяти, с которого начинается этот объект.</p>
+<p>• Адреса представляют собой числа в шестнадцатеричном формате</p>
+<h3 id="получение-адреса">Получение адреса</h3>
+<p>Для получения адреса объекта используется оператор:</p>
+<p><code>&amp;</code></p>
+<p>Конкретный адрес заранее неизвестен и может меняться между запусками.</p>
+<h3 id="что-такое-указатель">Что такое указатель</h3>
+<p>Указатель — объект, который хранит адрес другого объекта  соответствующего типа, нулевое значение, либо некоторые другие допустимые значения указателя.</p>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> number<span class="token punctuation">{</span><span class="token number">42</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">;</span>
+ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>number<span class="token punctuation">;</span>
+</code></pre>
+<p>Теперь:</p>
+<pre class=" language-text"><code class="prism  language-text">        value            name        type
+    ┌───────────┐
+    │    42     │       number        int
+┌─▶ ├───────────┤
+│   │           │
+│   ├───────────┤
+│   │           │
+│   ├───────────┤
+│.      ...
+│
+│
+│   ├───────────┤
+└─  │0x0027FEA0 │         ptr         int*
+    └───────────┘
+</code></pre>
+<p><code>ptr</code> хранит адрес <code>number</code>.</p>
+<p><strong>Что означает <code>int*</code></strong></p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">;</span>
+</code></pre>
+<p>Можно читать:</p>
+<blockquote>
+<p><code>ptr</code> — указатель на <code>int</code>.</p>
+</blockquote>
+<p>А:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">double</span><span class="token operator">*</span> ptr<span class="token punctuation">;</span>
+</code></pre>
+<p>означает:</p>
+<blockquote>
+<p><code>ptr</code> — указатель на <code>double</code>.</p>
+</blockquote>
+<p>Тип указателя связан с типом объекта, на который он указывает.</p>
+<h3 id="разыменование-указателя">Разыменование указателя</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> number<span class="token punctuation">{</span><span class="token number">42</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">{</span><span class="token operator">&amp;</span>number<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p><code>*ptr</code></p>
+<p>Для получения доступа к значению, хранящемуся по этому адресу используют <em>Оператор разыменования</em> <code>*</code> (иногда также называемый <em>оператором косвенного доступа</em> ), который возвращает значение по заданному адресу памяти в виде <code>lvalue</code>:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+</code></pre>
+<p>на экране:</p>
+<pre class=" language-text"><code class="prism  language-text">42
+</code></pre>
+<blockquote>
+<p>В простом случае операторы <code>&amp;</code> и <code>*</code> позволяют выполнить противоположные по смыслу действия: получить адрес объекта и обратиться к объекту через этот адрес.</p>
+</blockquote>
+<h3 id="изменение-объекта-через-указатель">Изменение объекта через указатель</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> number<span class="token punctuation">{</span><span class="token number">42</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">{</span><span class="token operator">&amp;</span>number<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Теперь:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> number<span class="token punctuation">;</span>
+</code></pre>
+<p>Получим:</p>
+<pre class=" language-text"><code class="prism  language-text">100
+</code></pre>
+<p>Сам <code>Указатель</code> это тоже объект, для него также выделяется память.</p>
+<h3 id="нулевые-указатели-nullptr">Нулевые указатели <code>nullptr</code></h3>
+<p>Указатель может иметь нулевое значение, обозначающее, что он не указывает на объект. В современном C++ для инициализации такого указателя обычно используют <code>nullptr</code>.</p>
+<p>Самый простой способ создать нулевой указатель — использовать инициализацию значения:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">{</span><span class="token keyword">nullptr</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p><strong>Проверка указателя</strong></p>
+<p>Можно написать:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>ptr <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Или современный вариант:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>ptr<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Оба варианта проверяют, является ли указатель ненулевым. Такая проверка необходима перед разыменованием, но сама по себе не гарантирует, что указатель действителен и указывает на существующий объект.</p>
+<p><strong>Разыменование нулевого указателя приводит к неопределённому поведению (undefined behavior UB).</strong></p>
+<p>Вот так нельзя:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">{</span><span class="token keyword">nullptr</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+</code></pre>
+<p>Нулевой указатель не указывает на объект, поэтому разыменовывать его нельзя. Такое действие приводит к <strong>неопределённому поведению</strong>.</p>
+<p><strong>Неопределенное поведение (undefined behavior UB)</strong></p>
+<p>Если программа делает то, для чего стандарт C++ не определяет корректного результата, возникает <strong>undefined behavior</strong>.</p>
+<p>Программа может:</p>
+<ul>
+<li>аварийно завершиться;</li>
+<li>вывести что-то странное;</li>
+<li>«работать»;</li>
+<li>сломаться позже.</li>
+</ul>
+<p>Именно поэтому нельзя разыменовывать недействительный указатель.</p>
+<p>Устаревшие литералы нулевых указателей: <code>0</code> и <code>NULL</code></p>
+<p>Макрос <code>NULL</code>, который предоставляется стандартными заголовками . Его конкретное определение зависит от реализации.</p>
+<p>Первый тип — это литерал 0. В контексте указателя литерал <code>0</code> специально определен как нулевое значение, и это единственный случай, когда можно присвоить указателю целочисленный литерал.<br>
+Кроме того, существует макрос препроцессора с именем <code>NULL</code> (определенный в заголовочном файле <code>&lt;cstddef&gt;</code>). Этот макрос унаследован от языка C, где он обычно используется для обозначения нулевого указателя.</p>
+<h3 id="указатели-и-константы">Указатели и константы</h3>
+<ul>
+<li>Неконстантному указателю (<code>int* ptr</code>) можно присвоить другой адрес, чтобы изменить то, на что он указывает.</li>
+<li>Указатель на неконстантное значение (например, <code>int* ptr</code>) может изменять значение, на которое он указывает. Такие указатели не могут указывать на константное значение.</li>
+<li>Указатель на константное значение (например, <code>const int* ptr</code>) рассматривает это значение как константное при доступе через указатель и не может изменить значение, на которое он указывает. На них могут указывать константные или неконстантные l-значения.</li>
+<li>Постоянный указатель <code>const int* const ptr</code> - константный указатель на <code>const int</code>: после инициализации указатель нельзя перенаправить на другой объект и изменить объект через этот указатель нельзя.</li>
+</ul>
+<pre class=" language-cpp"><code class="prism  language-cpp">   <span class="token comment">// -------неконстантный указатель---------------------</span>
+<span class="token punctuation">{</span>  <span class="token keyword">int</span> x <span class="token punctuation">{</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span><span class="token operator">*</span> ptr <span class="token punctuation">{</span> <span class="token operator">&amp;</span>x <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// ptr — это обычный (неконстантный) указатель</span>
+    <span class="token keyword">int</span> y <span class="token punctuation">{</span> <span class="token number">6</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>y<span class="token punctuation">;</span>       <span class="token comment">// можно указать на другое значение</span>
+
+    <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">;</span> <span class="token comment">// можно изменить значение по адресу</span>
+ <span class="token punctuation">}</span>
+<span class="token comment">// -------------------------------------------------------</span>
+<span class="token punctuation">{</span>   <span class="token keyword">const</span> <span class="token keyword">int</span> x <span class="token punctuation">{</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>   <span class="token comment">// x -&gt; const</span>
+    <span class="token keyword">int</span><span class="token operator">*</span> ptr <span class="token punctuation">{</span> <span class="token operator">&amp;</span>x <span class="token punctuation">}</span><span class="token punctuation">;</span>   <span class="token comment">// ERROR: компиляции: невозможно преобразовать const int* в int*</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// -------------------------------------------------------</span>
+
+    <span class="token comment">// -------Указатель на константное значение (pointer to const)----</span>
+<span class="token punctuation">{</span>   <span class="token keyword">const</span> <span class="token keyword">int</span> x<span class="token punctuation">{</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">*</span> ptr <span class="token punctuation">{</span> <span class="token operator">&amp;</span>x <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// okay: указатель ptr указывает на "константное целое число"</span>
+
+    <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span> <span class="token comment">// ERROR: нельзя изменять константное значение</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// -----------------------------------------------------------</span>
+
+<span class="token comment">// указатель на const сам по себе не является const (он просто указывает на const-значение)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span> x<span class="token punctuation">{</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">*</span> ptr <span class="token punctuation">{</span> <span class="token operator">&amp;</span>x <span class="token punctuation">}</span><span class="token punctuation">;</span>  <span class="token comment">// ptr указывает на const int x</span>
+
+    <span class="token keyword">const</span> <span class="token keyword">int</span> y<span class="token punctuation">{</span> <span class="token number">6</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>y<span class="token punctuation">;</span>               <span class="token comment">// ptr указывает на const int y</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//-------указатель на const может указывать и на неконстантные переменные---</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">{</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>             <span class="token comment">// x не const</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">*</span> ptr <span class="token punctuation">{</span> <span class="token operator">&amp;</span>x <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// ptr points to a "const int"</span>
+
+    <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span>   <span class="token comment">// ERROR: указатель ptr указывает на "константное целое число",</span>
+                <span class="token comment">// поэтому мы не можем изменить значение через ptr</span>
+    x <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span>
+                <span class="token comment">// okay: значение остается неконстантным при доступе через</span>
+                <span class="token comment">// неконстантный идентификатор x.</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// -------Константные указатели--------------------------</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">{</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span><span class="token operator">*</span> <span class="token keyword">const</span> ptr <span class="token punctuation">{</span> <span class="token operator">&amp;</span>x <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// const после звездочки означает, что это константный указатель</span>
+    <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span> <span class="token comment">// okay: значение переменной х является неконстантным</span>
+
+    <span class="token keyword">int</span> y<span class="token punctuation">{</span> <span class="token number">6</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>y<span class="token punctuation">;</span> <span class="token comment">// ERROR: После инициализации константный указатель изменить нельзя</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//-------Константный указатель на константное значение----</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x <span class="token punctuation">{</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">*</span> <span class="token keyword">const</span> ptr <span class="token punctuation">{</span> <span class="token operator">&amp;</span>x <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// a const указатель на const значение</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="передача-указателя-в-функцию">Передача указателя в функцию</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword">void</span> <span class="token function">printValue</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"\nwork function: printValue(int val)\n"</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> val <span class="token operator">&lt;&lt;</span> <span class="token string">" в ОП по адресу "</span> <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>val <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">printPointer</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span>  ptr<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"\nwork function: printPointer(int* ptr)\n"</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"в ОП по адресу "</span><span class="token operator">&lt;&lt;</span> ptr <span class="token operator">&lt;&lt;</span> <span class="token string">" значение "</span> <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>ptr <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> value <span class="token punctuation">{</span><span class="token number">42</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token function">printValue</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printPointer</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class=" language-text"><code class="prism  language-text">/a.out
+
+work function: printValue(int val)
+42 в ОП по адресу 0x16ddb299c
+
+work function: printPointer(int* ptr)
+в ОП по адресу 0x16ddb29c8 значение 42
+</code></pre>
+<p>При передаче указателя по значению копируется значение указателя, а не объект, на который он указывает. Когда функция принимает адрес объекта, параметр-указатель позволяет ей работать с самим этим объектом с помощью операции разыменования. Если указатель указывает на доступный для изменения объект через неконстантный тип указателя, функция может изменить этот объект с помощью разыменования.</p>
+<p>Если функция не должна изменять передаваемый объект, параметром функции следует сделать указатель на константу:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">changeValue</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span> <span class="token comment">// error: невозможно изменить константное значение</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>По тем же причинам, по которым обычно без необходимости не объявляют обычные параметры функций как <code>const</code>, так же обычно не объявляют константными и сами указатели, передаваемые в функции</p>
+<ul>
+<li>
+<p>Использование ключевого слова <code>const</code> для того, чтобы сделать сам указатель — параметр функции — константным, имеет мало практической пользы. Это не влияет на вызывающий код и в основном служит лишь для документирования того, что внутри функции указатель не будет изменён.</p>
+</li>
+<li>
+<p>Использование ключевого слова <code>const</code> для указания на то, что указатель указывает на константный объект, имеет большое значение. Вызывающему коду важно знать, может ли функция изменить переданный объект.</p>
+</li>
+</ul>
+<p>Если не объявлять параметры-указатели как константные указатели, все случаи использования <code>const</code> в их объявлениях будут иметь практический смысл. Если же дополнительно использовать <code>const</code> для самих указателей, становится сложнее определить, в каких случаях это ключевое слово действительно важно, а в каких оно избыточно. Что ещё важнее, становится труднее заметить указатели, через которые функция может изменять переданные объекты.</p>
+<p>Например:</p>
+<ul>
+<li>
+<p>Обычные указатели: каждое использование <code>const</code> имеет значение - <code>void foo(const char* source, char* dest, int count);</code><br>
+<code>source</code> — это указатель на константный объект, а <code>dest</code> — указатель на неконстантный объект.</p>
+</li>
+<li>
+<p>Константные указатели: среди избыточных <code>const</code> - <code>void foo(const char* const source, char* const dest, int count);</code><br>
+здесь сложнее заметить, что <code>dest</code> — константный указатель на неконстантный объект. Сам указатель dest нельзя перенаправить на другой объект внутри функции, но объект, на который он указывает, функция по-прежнему может изменять.</p>
+</li>
+</ul>
+<blockquote>
+<p><em><strong>Рекомендации по стилю</strong></em></p>
+</blockquote>
+<blockquote>
+<ul>
+<li><em>Предпочитайте указатели на константные объекты (<code>const T*</code>) в качестве параметров функций, если функция не должна изменять переданный объект.</em></li>
+<li><em>Используйте указатели на неконстантные объекты (<code>T*</code>), если функция должна иметь возможность изменять переданный объект.</em></li>
+<li><em>Не объявляйте сами указатели-параметры константными (<code>T* const</code> или <code>const T* const</code>), если для этого нет веских причин.</em></li>
+</ul>
+</blockquote>
+<h3 id="проверка-на-нулевое-значение">Проверка на нулевое значение</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>ptr <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">{</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span><span class="token operator">*</span> myPtr <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>myPtr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Программа сначала выведет <code>5</code>, а затем выполнит разыменование нулевого указателя. Это приводит к неопределённому поведению: программа может аварийно завершиться, но такое завершение не гарантируется.</p>
+<p>При передаче параметра по адресу следует убедиться, что указатель не является нулевым, прежде чем разыменовывать значение. Один из способов сделать это — использовать условное выражение:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>ptr <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>или</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>ptr<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>ptr <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="возврат-указателя-из-функции">Возврат указателя из функции</h3>
+<p>При передаче аргумента по значению в параметр функции создаётся копия аргумента. Для базовых типов (копирование которых обходится дёшево) это приемлемо. Но для типов классов (таких как std::string) копирование обычно обходится дорого. Мы можем избежать дорогостоящего копирования, используя передачу по (константной) ссылке (или передачу по адресу).</p>
+<p>При передаче аргумента по адресу в вызываемой функции создаётся копия адреса аргумента. Аналогичная ситуация возникает при возврате: копия возвращаемого значения передается обратно вызывающей стороне.</p>
+<p>Возврат по адресу работает практически идентично возврату по значению, за исключением того, что возвращается указатель на объект, а не сам объект. Нельзя возвращать указатель на локальную автоматическую переменную, если после завершения функции её время жизни заканчивается. Возвращённый указатель станет <code>висячим</code>. Возвращать указатель можно на объект, время жизни которого гарантированно продолжается после завершения функции, при условии что соблюдены правила владения и использования этого объекта.</p>
+<p>Возврат указателя удобен в случаях, когда функция может вернуть адрес существующего объекта или <code>nullptr</code>, обозначающий отсутствие результата.</p>
+<p>Главный недостаток возврата по адресу заключается в том, что вызывающей стороне необходимо помнить о проверке <code>nullptr</code> перед разыменованием возвращаемого значения, иначе может произойти разыменование нулевого указателя, что приведет к неопределенному поведению (UB).</p>
+</div>
+</body>
+
+</html>
