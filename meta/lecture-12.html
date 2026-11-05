@@ -1,0 +1,405 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lecture-11</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h6 id="лекции-по-курсу-основы-программирования-мгту-им.-баумана-кафедра-иу5"><em>Лекции по курсу “Основы программирования” МГТУ им. Баумана кафедра ИУ5</em></h6>
+<h1 id="лекция-12.-пользовательские-типы-данных">Лекция 12. Пользовательские типы данных</h1>
+<p><strong>Дисциплина:</strong> Основы программирования на C++<br>
+<strong>Продолжительность:</strong> 2 × 45 минут</p>
+<blockquote>
+<p><strong>Объединение нескольких связанных данных в один пользовательский тип.</strong></p>
+</blockquote>
+<hr>
+<h1 id="план">План</h1>
+<h3 id="первая-часть">Первая часть</h3>
+<ol>
+<li><a href="#1-%D0%BF%D0%B5%D1%80%D0%B5%D1%87%D0%B8%D1%81%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F-enum">Перечисления <code>enum</code></a></li>
+<li><a href="#2-%D0%BF%D0%B5%D1%80%D0%B5%D1%87%D0%B8%D1%81%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B1%D0%B5%D0%B7-%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D0%B8-%D0%B2%D0%B8%D0%B4%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8-enum">Перечисления без области видимости (<code>enum</code>)</a></li>
+<li><a href="#3-%D0%BF%D0%B5%D1%80%D0%B5%D1%87%D0%B8%D1%81%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F-%D1%81-%D0%BE%D0%B3%D1%80%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9-%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%D1%8E-%D0%B2%D0%B8%D0%B4%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8-enum-class">Перечисления с ограниченной областью видимости (<code>enum class</code>)</a></li>
+</ol>
+<h3 id="вторая-часть">Вторая часть</h3>
+<ol start="4">
+<li><a href=""></a></li>
+</ol>
+<hr>
+<h1 id="первая-часть-1">Первая часть</h1>
+<h2 id="перечисления-enum">1. Перечисления <code>enum</code></h2>
+<p>В C++ содержится множество полезных базовых и составных типов данных. Но этих типов не всегда достаточно для тех задач, которые нам необходимо выполнить.</p>
+<p>Например, предположим, вы пишете программу, которой нужно отслеживать, красное, жёлтое или зелёное яблоко, или время суток. Если бы были доступны только базовые типы данных, как бы вы это сделали?</p>
+<p>Цвет можно хранить как целочисленное значение, используя неявное сопоставление ( 0 = ночь, 1 = утро, 2 = день, 3 = вечер):</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">int</span> timeDayNight<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> timeDayMorning<span class="token punctuation">{</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Mожно избавиться от «магических чисел», используя символические константы:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">int</span> night<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">constexpr</span> <span class="token keyword">int</span> morning<span class="token punctuation">{</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">constexpr</span> <span class="token keyword">int</span> afternoon<span class="token punctuation">{</span> <span class="token number">2</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">constexpr</span> <span class="token keyword">int</span> evening<span class="token punctuation">{</span> <span class="token number">3</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> timeDayNight<span class="token punctuation">{</span> night <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> timeDayMorning<span class="token punctuation">{</span> morning <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Mожно сделать эту программу немного понятнее, используя псевдоним типа:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">using</span> TimeDay <span class="token operator">=</span> <span class="token keyword">int</span><span class="token punctuation">;</span> <span class="token comment">// псевдоним типа с именем timeDay</span>
+
+<span class="token keyword">constexpr</span> TimeDay night<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">constexpr</span> TimeDay morning<span class="token punctuation">{</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">constexpr</span> TimeDay afternoon<span class="token punctuation">{</span> <span class="token number">2</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">constexpr</span> TimeDay evening<span class="token punctuation">{</span> <span class="token number">3</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    TimeDay timeDayNight<span class="token punctuation">{</span> night <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    TimeDay timeDayMorning<span class="token punctuation">{</span> morning <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Tеперь у типа есть уникальное имя <code>TimeDay</code> по которому можно найти набор соответствующих символических констант.</p>
+<p><code>TimeDay</code> является всего лишь псевдонимом для <code>int</code>, остается проблема, заключающаяся в том, что ничто не обеспечивает правильного использования этих символических констант времени суток.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">    TimeDay day<span class="token punctuation">{</span> <span class="token number">8</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// синтаксически корректно, семантически бессмысленно</span>
+</code></pre>
+<p>Кроме того, при отладке любую из этих переменных в отладчике, отразится только целочисленное значение (например, 3), а не его символическое значение ( evening ), что может затруднить определение корректности нашей программы.</p>
+<p>Mожно сделать лучше.</p>
+<p>В качестве примера рассмотрим <code>bool</code> тип. У <code>bool</code> всего два определенных значения: <code>true</code> и <code>false</code>. Можно использовать <code>true</code> или <code>false</code> напрямую (как литералы), или же можем создать экземпляр <code>bool</code>-объекта, который будет содержать любое из этих значений. Кроме того, компилятор способен отличать <code>bool</code> от других типов. Это означает, что можно перегружать функции и настраивать их поведение при передаче <code>bool</code> значения.</p>
+<blockquote>
+<p><em><strong>Перечисление</strong></em> (также называемое перечисляемым типом или enum ) — это составной тип данных , значения которого ограничены набором именованных символических констант (называемых перечислителями).</p>
+</blockquote>
+<p>В C++ поддерживаются два типа перечислений:</p>
+<ul>
+<li><em><strong>перечисления без области видимости</strong></em></li>
+<li><em><strong>перечисления с областью видимости</strong></em></li>
+</ul>
+<p>Поскольку перечисления являются программно-определяемыми типами, каждое перечисление должно быть полностью определено, прежде чем можно его использовать (предварительного объявления недостаточно).</p>
+<h2 id="перечисления-без-области-видимости-enum">2. Перечисления без области видимости (<code>enum</code>)</h2>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token comment">// Определите новое перечисление без области видимости с именем `TimeDay`</span>
+<span class="token keyword">enum</span> TimeDay<span class="token punctuation">{</span>
+    <span class="token comment">// элементы перечисления</span>
+    <span class="token comment">// Эти символические константы определяют все возможные значения, которые может принимать данный тип</span>
+    <span class="token comment">// Каждый элемент перечисления разделяется запятой, а не точкой с запятой</span>
+    night<span class="token punctuation">,</span>
+    morning<span class="token punctuation">,</span>
+    afternoon<span class="token punctuation">,</span>
+    evening<span class="token punctuation">,</span>  <span class="token comment">// Замыкающая запятая необязательна, но рекомендуется</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// Определение перечисления должно заканчиваться точкой с запятой</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    TimeDay timeDayNight<span class="token punctuation">{</span> night <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    TimeDay timeDayMorning<span class="token punctuation">{</span> morning <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    TimeDay timeDayAfternoon<span class="token punctuation">{</span> afternoon <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    TimeDay timeDayEvening<span class="token punctuation">{</span> evening <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    TimeDay day <span class="token punctuation">{</span> midday <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// error: midday не является элементом перечисления TimeDay</span>
+    TimeDay h <span class="token punctuation">{</span> <span class="token number">2</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>       <span class="token comment">// error: 2 не является элементом перечисления TimeDay</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="enum-типы-—-это-различные-типы"><code>enum</code> типы — это различные типы</h3>
+<p>Каждый создаваемый перечисляемый тип считается отдельным типом, то есть компилятор может отличить его от других типов (в отличие от псевдонимов типов).</p>
+<p>Поскольку перечисляемые типы являются различными, перечислители, определенные как часть одного перечисляемого типа, не могут использоваться с объектами другого перечисляемого типа:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">enum</span> Pet<span class="token punctuation">{</span>
+    cat<span class="token punctuation">,</span>
+    dog<span class="token punctuation">,</span>
+    pig<span class="token punctuation">,</span>
+    whale<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">enum</span> Color<span class="token punctuation">{</span>
+    black<span class="token punctuation">,</span>
+    red<span class="token punctuation">,</span>
+    blue<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    Pet myPet <span class="token punctuation">{</span> black <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// error компиляции: black не является элементом перечисления Pet</span>
+    Color shirt <span class="token punctuation">{</span> pig <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// error компиляции: не является элементом перечисления Color</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="применение-перечислений-на-практике">Применение перечислений на практике</h3>
+<p>Поскольку перечислители являются описательными, они полезны для улучшения документирования кода и его читаемости. Перечисляемые типы лучше всего использовать, когда у вас есть небольшой набор связанных констант, и объектам нужно хранить только одно из этих значений одновременно.</p>
+<p>К общепринятым обозначениям относятся дни недели, стороны света и масти в колоде карт:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">enum</span> DaysOfWeek<span class="token punctuation">{</span>
+    sunday<span class="token punctuation">,</span>
+    monday<span class="token punctuation">,</span>
+    tuesday<span class="token punctuation">,</span>
+    wednesday<span class="token punctuation">,</span>
+    thursday<span class="token punctuation">,</span>
+    friday<span class="token punctuation">,</span>
+    saturday<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">enum</span> CardinalDirections<span class="token punctuation">{</span>
+    north<span class="token punctuation">,</span>
+    east<span class="token punctuation">,</span>
+    south<span class="token punctuation">,</span>
+    west<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">enum</span> CardSuits<span class="token punctuation">{</span>
+    clubs<span class="token punctuation">,</span>
+    diamonds<span class="token punctuation">,</span>
+    hearts<span class="token punctuation">,</span>
+    spades<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="проблема-имён-в-enum-без-области-видимости">Проблема имён в <code>enum</code> без области видимости</h3>
+<p>Перечисления без области видимости называются так потому, что они помещают имена перечислителей в ту же область видимости, что и само определение перечисления (в отличие от создания новой области видимости, как это делает пространство имен).</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">enum</span> Color<span class="token punctuation">{</span> <span class="token comment">// Это перечисление определено в global namespace</span>
+    red<span class="token punctuation">,</span> <span class="token comment">// поэтому red помещается в  global namespace</span>
+    green<span class="token punctuation">,</span>
+    blue<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    Color apple <span class="token punctuation">{</span> red <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Перечисление <code>Color</code> определено в глобальной области видимости. Следовательно, все имена перечислений ( red, green, и blue) также попадают в глобальную область видимости. Это загрязняет глобальную область видимости и значительно повышает вероятность конфликтов имен.</p>
+<p>Одним из следствий этого является то, что имя перечислителя нельзя использовать в нескольких перечислениях в рамках одной и той же области видимости:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">enum</span> Color<span class="token punctuation">{</span>
+    red<span class="token punctuation">,</span>
+    green<span class="token punctuation">,</span>
+    blue<span class="token punctuation">,</span> <span class="token comment">// blue находится в global namespace</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">enum</span> Feeling<span class="token punctuation">{</span>
+    happy<span class="token punctuation">,</span>
+    tired<span class="token punctuation">,</span>
+    blue<span class="token punctuation">,</span> <span class="token comment">// error: конфликт имен с объявленным выше blue</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    Color apple <span class="token punctuation">{</span> red <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">//</span>
+    Feeling me <span class="token punctuation">{</span> happy <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// I'm happy right now (even though my program doesn't compile)</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>В приведенном выше примере оба не ограниченных областью видимости перечисления ( <code>Color</code> и <code>Feeling</code>) помещают перечисления с одинаковым именем <code>blue</code> в глобальную область видимости. Это приводит к конфликту имен и последующей ошибке компиляции.</p>
+<p>Удачный вариант — поместить перечисляемый тип внутрь чего-либо, что обеспечивает отдельную область видимости, например, пространства имен:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">namespace</span> Color<span class="token punctuation">{</span>
+    <span class="token keyword">enum</span> Color<span class="token punctuation">{</span>
+        red<span class="token punctuation">,</span>
+        green<span class="token punctuation">,</span>
+        blue<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">namespace</span> Feeling<span class="token punctuation">{</span>
+    <span class="token keyword">enum</span> Feeling<span class="token punctuation">{</span>
+        happy<span class="token punctuation">,</span>
+        tired<span class="token punctuation">,</span>
+        blue<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    Color<span class="token operator">::</span>Color paint<span class="token punctuation">{</span> Color<span class="token operator">::</span>blue <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    Feeling<span class="token operator">::</span>Feeling me<span class="token punctuation">{</span> Feeling<span class="token operator">::</span>blue <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Это означает, что теперь нам необходимо добавлять префикс к именам перечисления и перечислителя, указывающий на область действия.</p>
+<h3 id="преобразования-целочисленных-значений-перечислителей-без-области-действия">Преобразования целочисленных значений перечислителей без области действия</h3>
+<p>Перечислители являются символическими константами.</p>
+<p>При определении перечисления каждому перечислителю автоматически присваивается целочисленное значение в зависимости от его позиции в списке перечислителей. По умолчанию первому перечислителю присваивается целочисленное значение 0, а каждому последующему перечислителю присваивается значение на единицу больше:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">enum</span> Color<span class="token punctuation">{</span>
+    black<span class="token punctuation">,</span>   <span class="token comment">// 0</span>
+    red<span class="token punctuation">,</span>     <span class="token comment">// 1</span>
+    blue<span class="token punctuation">,</span>    <span class="token comment">// 2</span>
+    green<span class="token punctuation">,</span>   <span class="token comment">// 3</span>
+    white<span class="token punctuation">,</span>   <span class="token comment">// 4</span>
+    cyan<span class="token punctuation">,</span>    <span class="token comment">// 5</span>
+    yellow<span class="token punctuation">,</span>  <span class="token comment">// 6</span>
+    magenta<span class="token punctuation">,</span> <span class="token comment">// 7</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    Color shirt<span class="token punctuation">{</span> blue <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// shirt на самом деле хранит целочисленное значение 2</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Можно явно задать значения перечислителей. Эти целочисленные значения могут быть положительными или отрицательными и могут иметь то же значение, что и другие перечислители. Любым неопределенным перечислителям присваивается значение на единицу больше, чем у предыдущего перечислителя.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">enum</span> Animal<span class="token punctuation">{</span>
+    cat <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">,</span>    <span class="token comment">// значения могут быть отрицательными</span>
+    dog<span class="token punctuation">,</span>         <span class="token comment">// -2</span>
+    pig<span class="token punctuation">,</span>         <span class="token comment">// -1</span>
+    horse <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">,</span>
+    giraffe <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token comment">// имеет то же значение, что и horse</span>
+    chicken<span class="token punctuation">,</span>     <span class="token comment">// 6</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="инициализация-значения-перечисления">Инициализация значения перечисления</h3>
+<p>Перечисление инициализируется значением 0, даже если нет соответствующего перечислителя с таким значением.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword">enum</span> Animal<span class="token punctuation">{</span>
+    cat <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">,</span>    <span class="token comment">// -3</span>
+    dog<span class="token punctuation">,</span>         <span class="token comment">// -2</span>
+    pig<span class="token punctuation">,</span>         <span class="token comment">// -1</span>
+    <span class="token comment">// в этом списке нет элемента перечисления со значением 0</span>
+    horse <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">,</span>   <span class="token comment">// 5</span>
+    giraffe <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token comment">// 5</span>
+    chicken<span class="token punctuation">,</span>     <span class="token comment">// 6</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    Animal a <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> a<span class="token punctuation">;</span> <span class="token comment">//  0</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>По этой причине целесообразно выбрать в качестве перечислителя со значением 0 то значение, которое наилучшим образом соответствует значению по умолчанию для вашего перечисления.</p>
+<h3 id="размер-перечисления-и-его-базовый-тип-underlying-type">Размер перечисления и его базовый тип (underlying type)</h3>
+<p>Перечислители имеют значения целочисленного типа. Большинство компиляторов будут использовать <code>int</code> в качестве базового типа</p>
+<h3 id="преобразование-целого-числа-в-перечислитель-без-области-видимости">Преобразование целого числа в перечислитель без области видимости</h3>
+<p>Хотя компилятор неявно преобразует перечисление без области видимости в целое число, он не преобразует целое число в перечисление без области видимости. Следующий код приведет к ошибке компиляции:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">enum</span> Pet <span class="token punctuation">{</span>
+    cat<span class="token punctuation">,</span>        <span class="token comment">//0</span>
+    dog<span class="token punctuation">,</span>        <span class="token comment">//1</span>
+    pig<span class="token punctuation">,</span>        <span class="token comment">//2</span>
+    whale<span class="token punctuation">,</span>      <span class="token comment">//3</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    Pet pet <span class="token punctuation">{</span> <span class="token number">2</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// error компиляции: целочисленное значение 2 не будет неявно преобразовано в тип Pet</span>
+    pet <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>       <span class="token comment">// error компиляции: целочисленное значение 3 не будет неявно преобразовано в тип Pet</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">enum</span> Pet <span class="token punctuation">{</span>
+    cat<span class="token punctuation">,</span> <span class="token comment">// assigned 0</span>
+    dog<span class="token punctuation">,</span> <span class="token comment">// assigned 1</span>
+    pig<span class="token punctuation">,</span> <span class="token comment">// assigned 2</span>
+    whale<span class="token punctuation">,</span> <span class="token comment">// assigned 3</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    Pet pet <span class="token punctuation">{</span> <span class="token keyword">static_cast</span><span class="token operator">&lt;</span>Pet<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    pet <span class="token operator">=</span> <span class="token keyword">static_cast</span><span class="token operator">&lt;</span>Pet<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// our pig evolved into a whale!</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Можно безопасно преобразовывать в <code>static_cast</code> любое целочисленное значение, представленное перечислителем целевого перечисления. Поскольку <code>Pet</code> перечисление имеет перечислители со значениями 0, 1, 2, и 3, преобразование целочисленных значений 0, 1, 2 и 3 с помощью <code>static_cast&lt;Pet&gt;</code> является допустимым».</p>
+<p>Начиная с C++17, если у перечисления без области видимости явно указан базовый класс, компилятор позволит инициализировать такое перечисление целочисленным значением:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">enum</span> Pet<span class="token operator">:</span> <span class="token keyword">int</span> <span class="token punctuation">{</span>
+    cat<span class="token punctuation">,</span>
+    dog<span class="token punctuation">,</span>
+    pig<span class="token punctuation">,</span>
+    whale<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    Pet pet1 <span class="token punctuation">{</span> <span class="token number">2</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// ok: разрешено в C++17 при явном базовом типе"</span>
+    Pet <span class="token function">pet2</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// error компиляции:</span>
+    Pet pet3 <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>   <span class="token comment">// error компиляции:</span>
+
+    pet1 <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>       <span class="token comment">// error компиляции:</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="перечисления-с-ограниченной-областью-видимости-enum-class">3. Перечисления с ограниченной областью видимости (<code>enum class</code>)</h2>
+<h3 id="ограниченные-перечисления">Ограниченные перечисления</h3>
+<p>Перечисления с областью видимости работают аналогично перечислениям без области видимости, но имеют два основных отличия: они <strong>не преобразуются неявно в целые числа</strong>, и перечислители <strong>помещаются только в область видимости перечисления</strong> (а не в область видимости, где определено перечисление).</p>
+<p>Для создания перечисления с ограниченной областью видимости используются ключевые слова <code>enum class</code>. Остальная часть определения перечисления с ограниченной областью видимости аналогична определению перечисления без области видимости.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+    <span class="token keyword">enum</span> <span class="token keyword">class</span> <span class="token class-name">Color</span><span class="token punctuation">{</span>
+        red<span class="token punctuation">,</span>
+        blue<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">enum</span> <span class="token keyword">class</span> <span class="token class-name">Fruit</span><span class="token punctuation">{</span>
+        banana<span class="token punctuation">,</span>
+        apple<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    Color color <span class="token punctuation">{</span> Color<span class="token operator">::</span>red <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    Fruit fruit <span class="token punctuation">{</span> Fruit<span class="token operator">::</span>banana <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>color <span class="token operator">==</span> fruit<span class="token punctuation">)</span> <span class="token comment">// error компиляции: типы строго изолированы друг от друга и не приводятся неявно к int</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"color and fruit are equal\n"</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"color and fruit are not equal\n"</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>В этой программе возникает ошибка компиляции поскольку перечисление с ограниченной областью видимости не преобразуется ни в какой тип, который можно сравнить с другим типом.</p>
+<p>Иногда возникает необходимость рассматривать перечислитель с областью видимости как целочисленное значение. В таких случаях можно явно преобразовать перечислитель с областью видимости в целое число, используя <code>static_cast</code>. В C++23 лучшим вариантом является использование метода <code>std::to_underlying()</code> (определенного в заголовочном файле <code>&lt;utility&gt;</code>), который преобразует перечислитель в значение базового типа перечисления.</p>
+<p>Это один из лучших способов использовать <code>enum class</code>.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword">enum</span> <span class="token keyword">class</span> <span class="token class-name">Direction</span><span class="token punctuation">{</span>
+    Up<span class="token punctuation">,</span>
+    Down<span class="token punctuation">,</span>
+    Left<span class="token punctuation">,</span>
+    Right
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    Direction direction<span class="token punctuation">{</span>Direction<span class="token operator">::</span>Left<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>direction<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> Direction<span class="token operator">::</span>Up<span class="token operator">:</span>
+            std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"up"</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">case</span> Direction<span class="token operator">::</span>Down<span class="token operator">:</span>
+            std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"down"</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">case</span> Direction<span class="token operator">::</span>Left<span class="token operator">:</span>
+            std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"left"</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">case</span> Direction<span class="token operator">::</span>Right<span class="token operator">:</span>
+            std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"right"</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<p>перерыв</p>
+<hr>
+<h1 id="вторая-часть-1">Вторая часть</h1>
+<hr>
+</div>
+</body>
+
+</html>
