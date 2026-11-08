@@ -14,7 +14,7 @@ https://iu5git.github.io/cpp/
      - [Лекция 4](https://iu5git.github.io/cpp/meta/lecture-04.html)
      - [Лекция 5](https://iu5git.github.io/cpp/meta/lecture-05.html)
      - [Лекция 6](https://iu5git.github.io/cpp/meta/lecture-06.html)
-     - [Лекция 6](https://iu5git.github.io/cpp/meta/lecture-07.html)
+     - [Лекция 7](https://iu5git.github.io/cpp/meta/lecture-07.html)
      - [Лекция 11](https://iu5git.github.io/cpp/meta/lecture-12.html)
  - Лабораторные работы
 	 - [Лабораторная работа 0.1](https://iu5git.github.io/cpp/meta/lab-00_1.html)
