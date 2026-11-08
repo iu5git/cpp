@@ -1,0 +1,385 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lecture-07</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h6 id="лекции-по-курсу-основы-программирования-мгту-им.-баумана-кафедра-иу5"><em>Лекции по курсу “Основы программирования МГТУ им. Баумана кафедра ИУ5”</em></h6>
+<h1 id="лекция-7.-массивы-и-продолжение-указателей">Лекция 7. Массивы и продолжение указателей</h1>
+<p><strong>Курс:</strong> Основы программирования на C++<br>
+<strong>Продолжительность:</strong> 2 × 45 минут</p>
+<h1 id="план-лекции">План лекции</h1>
+<h2 id="первая-часть-—-45-минут">Первая часть — 45 минут</h2>
+<ol>
+<li><a href="#1-%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0-%D0%BC%D0%B0%D1%81%D1%88%D1%82%D0%B0%D0%B1%D0%B8%D1%80%D1%83%D0%B5%D0%BC%D0%BE%D1%81%D1%82%D0%B8-%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85">Проблема масштабируемости переменных</a></li>
+<li><a href="#2-%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D1%8B">Массивы</a>
+<ul>
+<li><a href="#%D0%BE%D0%B1%D1%8A%D1%8F%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%B0">Объявление массива</a></li>
+<li><a href="#%D0%B0%D0%B3%D1%80%D0%B5%D0%B3%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%B0%D1%8F-%D0%B8%D0%BD%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F-%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%BE%D0%B2">Агрегированная инициализация массивов</a></li>
+<li><a href="#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B4%D0%BB%D0%B8%D0%BD%D1%8B-%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%B0">Получение длины массива</a></li>
+<li><a href="#%D1%86%D0%B8%D0%BA%D0%BB-range-based-for">Цикл range-based for</a></li>
+<li><a href="#%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D1%87%D0%B0-%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%B0-%D0%B2-%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D1%8E">Передача массива в функцию</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="вторая-часть-—-45-минут">Вторая часть — 45 минут</h2>
+<ul>
+<li><a href="#%D0%B0%D0%B4%D1%80%D0%B5%D1%81-%D0%BD%D1%83%D0%BB%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE-%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D0%B0">Адрес нулевого элемента</a></li>
+<li><a href="#%D0%BF%D0%B5%D1%80%D0%B5%D0%B1%D0%BE%D1%80-%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D0%BE%D0%B2-%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%B0">Перебор элементов массива</a></li>
+<li><a href="#const-%D0%B8-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D0%B8"><code>const</code> и указатели</a></li>
+</ul>
+<hr>
+<h1 id="первая-часть-—-массивы">Первая часть — массивы</h1>
+<h2 id="проблема-масштабируемости-переменных">1. Проблема масштабируемости переменных</h2>
+<p>Рассмотрим ситуацию, когда нам нужно записать результаты тестов 26 студентов и рассчитать средний балл по группе. Для этого нам потребуется 26 переменных. Мы можем определить их следующим образом:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">
+    <span class="token keyword">int</span> testScore1 <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> testScore2 <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> testScore3 <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token comment">// ...</span>
+    <span class="token keyword">int</span> testScore26 <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Нужно определить очень много переменных! А чтобы рассчитать средний балл, нам нужно будет сделать что-то подобное:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> average <span class="token punctuation">{</span> <span class="token punctuation">(</span>testScore1 <span class="token operator">+</span> testScore2 <span class="token operator">+</span> testScore3 <span class="token operator">+</span> testScore4 <span class="token operator">+</span> testScore5
+     <span class="token operator">+</span> testScore6 <span class="token operator">+</span> testScore7 <span class="token operator">+</span> testScore8 <span class="token operator">+</span> testScore9 <span class="token operator">+</span> testScore10
+     <span class="token operator">+</span> testScore11 <span class="token operator">+</span> testScore12 <span class="token operator">+</span> testScore13 <span class="token operator">+</span> testScore14 <span class="token operator">+</span> testScore15
+     <span class="token operator">+</span> testScore16 <span class="token operator">+</span> testScore17 <span class="token operator">+</span> testScore18 <span class="token operator">+</span> testScore19 <span class="token operator">+</span> testScore20
+     <span class="token operator">+</span> testScore21 <span class="token operator">+</span> testScore22 <span class="token operator">+</span> testScore23 <span class="token operator">+</span> testScore24 <span class="token operator">+</span> testScore25
+     <span class="token operator">+</span> testScore26<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">26</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Это не только требует много ввода текста, но и очень монотонно (и допустить опечатку в одном из чисел несложно, даже не заметив этого). А если мы захотим что-то сделать с каждым из этих значений (например, вывести их на экран), нам придётся заново вводить имена каждой из этих переменных.</p>
+<p>Теперь предположим, что нам нужно изменить нашу программу, чтобы учесть еще одного студента, который только что был добавлен в группу. Нам придется просканировать весь код и вручную внести <code>testScore31</code> необходимые изменения. Любое изменение существующего кода сопряжено с риском появления новых ошибок. Например, несложно забыть обновить делитель при вычислении среднего значения с 26 на 27!</p>
+<p>И это всего лишь при наличии 26 переменных. Рассмотрим случай, когда у нас сотни или тысячи объектов. Когда нам нужно больше нескольких объектов одного типа, определение отдельных переменных просто не масштабируется.</p>
+<p>Нужна структура, которая позволяет хранить много однотипных объектов.  -&gt; <strong>Массив</strong></p>
+<h2 id="массивы">2. Массивы</h2>
+<h3 id="объявление-массива">Объявление массива</h3>
+<p><code>ТИП-элементов-массива ИМЯ-массива [РАЗМЕР-массива];</code></p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> testScore<span class="token punctuation">[</span><span class="token number">25</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
+<pre class=" language-text"><code class="prism  language-text">testScore
+┌────┬────┬────┬         ┬───┬────┐
+│    │    │    │             │    │
+└────┴────┴────┴         ┴───┴────┘
+  0    1    2             23    24
+</code></pre>
+<p>Каждый элемент имеет свой индекс.</p>
+<p>Индексация начинается с нуля.</p>
+<p>Размер массива представляет собой <code>const</code> целочисленное значение типа, указывающее компилятору, сколько элементов находится в массиве.<br>
+Размер массива должн быть не менее 1. Компилятор выдаст ошибку, если длина массива равна нулю, отрицательному значению или нецелому числу.</p>
+<h3 id="агрегированная-инициализация-массивов">Агрегированная инициализация массивов</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp">    <span class="token keyword">int</span> fibonnaci<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> prime<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">11</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> arr2<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// инициализация всех элементов массива значением 0</span>
+</code></pre>
+<pre class=" language-cpp"><code class="prism  language-cpp">    <span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// error компиляции: слишком много инициализаторов</span>
+    <span class="token keyword">int</span> b<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>          <span class="token comment">// okey; b[2] and b[3] инициализированы значением 0</span>
+    <span class="token keyword">int</span> bad<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>               <span class="token comment">// error компиляции: компилятор определит это как массив нулевой длины, что недопустимо!</span>
+</code></pre>
+<h3 id="получение-длины-массива">Получение длины массива</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp">    <span class="token keyword">const</span> <span class="token keyword">int</span> array<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">11</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Размер массива: "</span> <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">" байт\n"</span><span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Массив содержит: "</span> <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">" элементов\n"</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="массивы-в-стиле-c-не-поддерживают-присваивание">Массивы в стиле C не поддерживают присваивание</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> arr<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    arr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+    arr <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>     <span class="token comment">// error компиляции: Недопустимое присваивание массива</span>
+</code></pre>
+<h3 id="перебор-массива">Перебор массива</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> array<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>size_t n <span class="token punctuation">{</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span>std<span class="token operator">::</span>size_t i<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p><code>std::size_t</code> — стандартный беззнаковый целочисленный тип, который обычно используют для размеров и индексов.</p>
+</blockquote>
+<h3 id="цикл-range-based-for">Цикл range-based for</h3>
+<p>Современный C++ позволяет писать проще:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> array<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> element <span class="token operator">:</span> array<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> element <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>Для каждого элемента(element) массива взять его значение в <code>array</code>.</p>
+</blockquote>
+<h3 id="изменение-элементов">Изменение элементов</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> arr<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">&amp;</span> element <span class="token operator">:</span> arr<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    element <span class="token operator">*</span><span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>в массиве теперь:</p>
+<pre class=" language-text"><code class="prism  language-text">2 4 6 8
+</code></pre>
+<p>без ссылки:</p>
+<p><code>element</code> был бы копией элемента.</p>
+<h3 id="const-при-переборе"><code>const</code> при переборе</h3>
+<p>Если массив менять не нужно:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> element <span class="token operator">:</span> arr<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> element <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class=" language-text"><code class="prism  language-text">int
+    ↓
+копия
+
+const int&amp;
+    ↓
+ссылка без изменения
+</code></pre>
+<h3 id="выход-за-границы-массива">Выход за границы массива</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> massiv<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Допустимые индексы:</p>
+<pre class=" language-text"><code class="prism  language-text">0 1 2 3 4
+</code></pre>
+<blockquote>
+<p><em><strong>C++ не проверяет выход за пределы границ массива во время выполнения.</strong></em></p>
+</blockquote>
+<p>Можно написать:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">massiv<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Это ошибка.</p>
+<p>Причем компилятор не обязан остановить программу.</p>
+<p>Происходит обращаение к памяти за пределами массива.</p>
+<p>Это <em><strong>неопределенное поведение</strong></em>.</p>
+<p>Программа может:</p>
+<ul>
+<li>случайно работать;</li>
+<li>вывести неправильное значение;</li>
+<li>изменить другую переменную;</li>
+<li>завершиться аварийно;</li>
+<li>проявить ошибку гораздо позже.</li>
+</ul>
+<h3 id="передача-массива-в-функцию">Передача массива в функцию</h3>
+<p>Можно написать:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">printArray</span><span class="token punctuation">(</span><span class="token keyword">int</span> arr<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> std<span class="token operator">::</span>size_t size<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>std<span class="token operator">::</span>size_t i<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">int</span> array<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token function">printArray</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token operator">/</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>В параметрах функции массив фактически корректируется в тип указателя.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">printArray</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span> arr<span class="token punctuation">,</span> std<span class="token operator">::</span>size_t size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<pre class=" language-text"><code class="prism  language-text">array
+   ↓
+доступ к нулевому элементу
+
+size
+   ↓
+количество элементов
+</code></pre>
+<!--&#1053;&#1086; &#1087;&#1086;&#1082;&#1072; &#1085;&#1072;&#1096;&#1072; &#1079;&#1072;&#1076;&#1072;&#1095;&#1072; &#8212; &#1087;&#1086;&#1085;&#1103;&#1090;&#1100; &#1092;&#1091;&#1085;&#1076;&#1072;&#1084;&#1077;&#1085;&#1090;&#1072;&#1083;&#1100;&#1085;&#1099;&#1077; &#1084;&#1077;&#1093;&#1072;&#1085;&#1080;&#1079;&#1084;&#1099; &#1103;&#1079;&#1099;&#1082;&#1072;.-->
+<h3 id="функция-изменения-массива">Функция изменения массива</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">void</span> <span class="token function">doubleValues</span><span class="token punctuation">(</span><span class="token keyword">int</span> arr<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> std<span class="token operator">::</span>size_t size<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>std<span class="token operator">::</span>size_t i<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">*</span><span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">int</span> array<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token function">doubleValues</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token operator">/</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>После:</p>
+<pre class=" language-text"><code class="prism  language-text">2 4 6 8
+</code></pre>
+<hr>
+<h1 id="вторая-часть">Вторая часть</h1>
+<h3 id="адрес-нулевого-элемента">Адрес нулевого элемента</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> array<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Адрес нулевого элемента:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">&amp;</span>array<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+</code></pre>
+<p>Имя массива в <em>большинстве</em> выражений преобразуется в указатель на первый элемент.</p>
+<p>Поэтому: <code>array</code> в соответствующем контексте представляет адрес первого элемента.</p>
+<p>Если сравнить:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">array
+</code></pre>
+<p>и:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">&amp;</span>array<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+</code></pre>
+<p>Оба выражения указывают на нулевой элемент массива.</p>
+<h3 id="но-массив-—-не-указатель">Но массив — НЕ указатель</h3>
+<p>Это принципиально.</p>
+<p>Нельзя говорить:</p>
+<blockquote>
+<p>«Массив — это указатель».</p>
+</blockquote>
+<p>Правильнее:</p>
+<blockquote>
+<p><strong>В большинстве выражений имя встроенного массива преобразуется в указатель на его нулевой элемент.</strong></p>
+</blockquote>
+<p>Например:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> array<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
+<p>и:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">;</span>
+</code></pre>
+<p>— это разные типы.</p>
+<p>Массив содержит свои элементы.</p>
+<p>Указатель хранит адрес.</p>
+<h3 id="но">НО</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> arr<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">{</span>arr<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>ptr <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>  <span class="token comment">//10</span>
+</code></pre>
+<p>Потому что:</p>
+<pre class=" language-text"><code class="prism  language-text">arr
+   ↓
+адрес arr[0]
+
+ptr
+   ↓
+тот же адрес
+
+*ptr
+   ↓
+array[0]
+</code></pre>
+<h3 id="перебор-элементов-массива">Перебор элементов массива</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp">    <span class="token keyword">int</span> arr<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">{</span>arr<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>      <span class="token comment">// 10</span>
+
+    <span class="token operator">++</span>ptr<span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>      <span class="token comment">// 20</span>
+
+    <span class="token operator">++</span>ptr<span class="token punctuation">;</span>                  <span class="token comment">// указывает на 30</span>
+</code></pre>
+<blockquote>
+<p><strong>Арифметика указателей выполняется в единицах элементов указанного типа.</strong></p>
+</blockquote>
+<!-- &#1048; &#1076;&#1072;&#1078;&#1077; `i[array]`&#10;&#10;`array[i]` &#1080;: `i[array]` &#1080;&#1084;&#1077;&#1102;&#1090; &#1086;&#1076;&#1080;&#1085;&#1072;&#1082;&#1086;&#1074;&#1099;&#1081; &#1089;&#1084;&#1099;&#1089;&#1083;.&#10;&#10;&#1055;&#1086;&#1090;&#1086;&#1084;&#1091; &#1095;&#1090;&#1086; &#1086;&#1087;&#1088;&#1077;&#1076;&#1077;&#1083;&#1077;&#1085;&#1080;&#1077; &#1080;&#1085;&#1076;&#1077;&#1082;&#1089;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1080;&#1103; &#1089;&#1074;&#1103;&#1079;&#1072;&#1085;&#1086; &#1089;:&#10;&#10;```cpp&#10;*(array + i)&#10;```&#10;&#10;&#1072; &#1089;&#1083;&#1086;&#1078;&#1077;&#1085;&#1080;&#1077; &#1082;&#1086;&#1084;&#1084;&#1091;&#1090;&#1072;&#1090;&#1080;&#1074;&#1085;&#1086;: `array + i` &#1080;: `i + array`&#10;&#10;&gt; &#1058;&#1072;&#1082; &#1087;&#1080;&#1089;&#1072;&#1090;&#1100; &#1074; &#1086;&#1073;&#1099;&#1095;&#1085;&#1086;&#1084; &#1082;&#1086;&#1076;&#1077; &#1085;&#1077; &#1085;&#1072;&#1076;&#1086;. &#1069;&#1090;&#1086; &#1076;&#1077;&#1084;&#1086;&#1085;&#1089;&#1090;&#1088;&#1072;&#1094;&#1080;&#1103; &#1090;&#1086;&#1075;&#1086;, &#1082;&#1072;&#1082; &#1088;&#1072;&#1073;&#1086;&#1090;&#1072;&#1077;&#1090; &#1086;&#1087;&#1077;&#1088;&#1072;&#1090;&#1086;&#1088; `[]`.&#10;-->
+<h3 id="перебор-массива-через-указатель">Перебор массива через указатель</h3>
+<p>Существует два классических способа обхода массива через явный указатель:</p>
+<ul>
+<li><em><strong>Сдвиг индекса (смещение относительно базы)</strong></em></li>
+</ul>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> n<span class="token punctuation">{</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> array<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">{</span>array<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span>std<span class="token operator">::</span>size_t i<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span><span class="token punctuation">(</span>ptr <span class="token operator">+</span> i<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>    <span class="token comment">// array[i]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li><em><strong>Способ 2: Инкремент самого указателя</strong></em></li>
+</ul>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> n<span class="token punctuation">{</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> array<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">{</span>array<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span>std<span class="token operator">::</span>size_t i<span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>ptr <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+    <span class="token operator">++</span>ptr<span class="token punctuation">;</span>     <span class="token comment">// Здесь указатель последовательно перемещается по массиву</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="сравнение-оператора-sizeof-array-vs-ptr">Сравнение оператора sizeof (array vs ptr)</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> array<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">{</span>array<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>     <span class="token comment">// 16</span>
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>       <span class="token comment">// 4 или 8(зависит от архитектуры)</span>
+</code></pre>
+<p>Конкретные размеры зависят от платформы и типов.</p>
+<h3 id="const-и-указатели"><code>const</code> и указатели</h3>
+<p>Позиция ключевого слова <code>const</code> в объявлении указателя кардинально меняет правила константности для адреса и самих данных.</p>
+<ul>
+<li><em><strong>Указатель на константу (Pointer to constant)</strong></em></li>
+</ul>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">*</span> ptr<span class="token punctuation">;</span>     <span class="token comment">// указатель на const int</span>
+
+<span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>  <span class="token comment">// error: через него нельзя изменить int:</span>
+</code></pre>
+<p>Но сам указатель можно переназначить:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>other<span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li><em><strong>Константный указатель (Constant pointer)</strong></em></li>
+</ul>
+<pre class=" language-cpp"><code class="prism  language-cpp">    <span class="token keyword">int</span> value<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span><span class="token operator">*</span> <span class="token keyword">const</span> ptr<span class="token punctuation">{</span><span class="token operator">&amp;</span>value<span class="token punctuation">}</span><span class="token punctuation">;</span>     <span class="token comment">// Здесь сам указатель const</span>
+
+    <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>                  <span class="token comment">// okay</span>
+    <span class="token keyword">int</span> other<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>other<span class="token punctuation">;</span>               <span class="token comment">// error</span>
+</code></pre>
+<p>Сводная таблица комбинаций модификатора const:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Синтаксис объявления</th>
+<th align="center">Можно менять сам адрес (ptr)?</th>
+<th align="center">Можно менять значение по адресу (*ptr)?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>int* ptr</code></td>
+<td align="center">Да</td>
+<td align="center">Да</td>
+</tr>
+<tr>
+<td align="left"><code>const int* ptr</code></td>
+<td align="center">Да</td>
+<td align="center"><strong>Нет</strong></td>
+</tr>
+<tr>
+<td align="left"><code>int* const ptr</code></td>
+<td align="center"><strong>Нет</strong></td>
+<td align="center">Да</td>
+</tr>
+<tr>
+<td align="left"><code>const int* const ptr</code></td>
+<td align="center"><strong>Нет</strong></td>
+<td align="center"><strong>Нет</strong></td>
+</tr>
+</tbody>
+</table></div>
+</body>
+
+</html>
