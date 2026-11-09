@@ -9,34 +9,27 @@
 </head>
 
 <body class="stackedit">
-  <div class="stackedit__html"><h6 id="лекции-по-курсу-основы-программирования-мгту-им.-баумана-кафедра-иу5"><em>Лекции по курсу "Основы программирования МГТУ им. Баумана кафедра ИУ5</em></h6>
+  <div class="stackedit__html"><h6 id="лекции-по-курсу-основы-программирования-мгту-им.-баумана-кафедра-иу5"><em>Лекции по курсу “Основы программирования” МГТУ им. Баумана кафедра ИУ5</em></h6>
 <h1 id="лекция-2.-типы-данных-переменные-операторы-и-условия">Лекция 2. Типы данных, переменные, операторы и условия</h1>
 <h1 id="цели-лекции">Цели лекции</h1>
-<p>После занятия студент должен:</p>
-<ul>
-<li>понимать, зачем языку программирования нужны типы данных;</li>
-<li>знать основные фундаментальные типы C++;</li>
-<li>уметь объявлять и инициализировать переменные;</li>
-<li>понимать разницу между объявлением, определением и инициализацией;</li>
-<li>знать способы преобразования типов;</li>
-<li>использовать арифметические, логические и операции сравнения;</li>
-<li>писать простые условные конструкции;</li>
-<li>понимать основы современного стиля программирования.</li>
-<li>использование прастранства имён - <code>namespace</code></li>
-</ul>
-<hr>
 <h1 id="план">План</h1>
 <h2 id="первая-часть">Первая часть</h2>
-<p><a href="#part1">1. Данные и память</a></p>
-<p><a href="#part2">2. Фундаментальные типы данных</a></p>
-<p><a href="#part3">3. Переменные</a></p>
+<ol>
+<li><a href="#part1">Данные и память</a></li>
+<li><a href="#part2">Фундаментальные типы данных</a></li>
+<li><a href="#part3">Постоянные переменные (именованные константы)</a></li>
+<li><a href="#part4">Литералы</a></li>
+<li><a href="#part5">Переменные</a></li>
+</ol>
 <hr>
 <h2 id="вторая-часть">Вторая часть</h2>
-<p><a href="#part4">4. Операторы</a></p>
-<p><a href="#part5">5. Преобразование типов</a></p>
-<p><a href="#part6">6. Условные конструкции</a></p>
-<p><a href="#part7">7. Современный стиль программирования</a></p>
-<p><a href="#part8">8. namespace</a></p>
+<ol start="6">
+<li><a href="#part6">Операторы</a></li>
+<li><a href="#part7">Преобразование типов</a></li>
+<li><a href="#part8">Условные конструкции</a></li>
+<li><a href="#part9">Современный стиль программирования</a></li>
+<li><a href="#part10">namespace</a></li>
+</ol>
 <hr>
 <h1 id="part1">1. Данные и память</h1>
 <p>Программа — это последовательность инструкций.</p>
@@ -71,7 +64,7 @@
 <hr>
 <h1 id="part2">2. Фундаментальные типы данных</h1>
 <p>Основные категории.<br>
-<a href="https://cppreference.com/cpp/language/types">https://cppreference.com/cpp/language/types</a></p>
+[]<a href="https://cppreference.com/cpp/language/types">https://cppreference.com/cpp/language/types</a></p>
 <hr>
 <h2 id="тип-void">Тип <code>void</code></h2>
 <p><code>void</code> — специальный тип, обозначающий отсутствие значения. Например, функция с типом <code>void</code> не возвращает значение.</p>
@@ -115,12 +108,12 @@
 <hr>
 <h2 id="типы-с-плавающей-запятой">Типы с плавающей запятой</h2>
 <p><code>float</code> — Тип с плавающей точкой одинарной точности. Обычно <a href="https://en.wikipedia.org/wiki/Single-precision_floating-point_format">в формате IEEE-754 binary32</a> .</p>
-<p><img src="./img/float-data-structure.png" alt=" "></p>
+<p><img src="/meta/img/float-data-structure.png" alt=" "></p>
 <p>Используются для хранения дробных значений.</p>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">float</span> middlePoint<span class="token punctuation">{</span><span class="token number">1.5625f</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 <p><code>double</code> — Тип с плавающей точкой двойной точности. Обычно используется <a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format">формат IEEE-754 binary64</a> .</p>
-<p><img src="./img/double-data-structure.png" alt=" "></p>
+<p><img src="/meta/img/double-data-structure.png" alt=" "></p>
 <p><code>long double</code> — Тип данных с плавающей запятой расширенной точности.<br>
 Не обязательно соответствует типам, предписанным стандартом IEEE-754.</p>
 <p>Типы с плавающей точкой используются для хранения дробных значений.</p>
@@ -148,7 +141,298 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 Точное определение зависит от компилятора и стандартной библиотеки.</p>
 <p>Например, в GCC на Linux <code>std::size_t</code> обычно в конечном итоге соответствует <code>unsigned long</code>, но полагаться именно на это соответствие в переносимом C++ коде не следует.</p>
 <hr>
-<h1 id="part3">3. Переменные</h1>
+<h1 id="part3">3. Постоянные переменные (именованные константы)</h1>
+<p>В программировании константа — это значение, которое не может быть изменено во время выполнения программы.</p>
+<p>В C++ поддерживаются два разных типа констант:</p>
+<ul>
+<li>
+<p><em><strong>Именованные константы</strong></em> — это постоянные значения, связанные с идентификатором. Их также иногда называют символическими константами .</p>
+</li>
+<li>
+<p><em><strong>Литеральные константы</strong></em> — это постоянные значения, не связанные с идентификатором.</p>
+</li>
+</ul>
+<h2 id="типы-именованных-констант">Типы именованных констант</h2>
+<p>В C++ существует три способа определения именованной константы:</p>
+<ul>
+<li>
+<p><em><strong>Постоянные переменные</strong></em> (рассматриваются на этой лекции).</p>
+</li>
+<li>
+<p><em><strong>Макросы, подобные объектам, с подстановочным текстом</strong></em> (представлены в лекции — <em>Введение в препроцессор</em>).</p>
+</li>
+<li>
+<p><em><strong>Перечисляемые константы</strong></em> (будут рассмотрены на лекции <em>Перечисления без области видимости</em>).</p>
+</li>
+</ul>
+<p><em><strong>Константные переменные</strong></em> — это наиболее распространенный тип именованных констант.</p>
+<p>Для объявления константной переменной мы помещаем <code>const</code> ключевое слово (называемое «квалификатором const») рядом с типом объекта:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">const</span> <span class="token keyword">double</span> gravity <span class="token punctuation">{</span> <span class="token number">9.8</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token keyword">const</span> sidesInSquare <span class="token punctuation">{</span> <span class="token number">4</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Несмотря на то, что язык C++ позволяет размещать <code>const</code> как перед типом данных, так и после него, хорошей практикой считается размещать <code>const</code> перед типом данных.</p>
+<blockquote>
+<p><em><strong>Константные переменные должны быть инициализированы.</strong></em><br>
+Объявление константы без её инициализации вызовет ошибку компиляции</p>
+</blockquote>
+<p>Константные переменные могут быть инициализированы другими переменными (включая неконстантные):</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Enter your age: "</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> age<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>cin <span class="token operator">&gt;&gt;</span> age<span class="token punctuation">;</span>
+
+    <span class="token keyword">const</span> <span class="token keyword">int</span> constAge <span class="token punctuation">{</span> age <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// Инициализировать константную переменную с использованием неконстантного значения</span>
+    age <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>      <span class="token comment">// ok: age является неконстантным</span>
+    constAge <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span> <span class="token comment">// error: constAge является константой, поэтому мы не можем изменить её значение</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Для константных переменных используется несколько различных соглашений об именовании.</p>
+<p>Программисты, перешедшие с C, часто предпочитают использовать подчеркивания и заглавные буквы для имен константных переменных (например, <code>EARTH_GRAVITY</code>). В C++ чаще используются имена с префиксом ‘k’ (например <code>kEarthGravity</code>).</p>
+<p>Однако, поскольку константные переменные ведут себя как обычные переменные (за исключением того, что им нельзя присваивать значения), нет причин для необходимости в специальном соглашении об именовании. По этой причине можно использовать то же соглашение об именовании, которое мы используем для неконстантных переменных (например, <code>earthGravity</code>).</p>
+<h3 id="время-компиляции-и-время-выполнения">Время компиляции и время выполнения</h3>
+<p>Процесс компиляции программы это <em><strong>время компиляции</strong></em> (<code>compile time</code>). Компилятор проверяет вашу программу на синтаксические ошибки и, если их нет, конвертирует код в объектные файлы.</p>
+<p>Временной промежуток с момента старта выполнения программы и до момента окончания её работы называется <em><strong>временем выполнения</strong></em> программы (<code>runtime</code>).</p>
+<h3 id="спецификатор-constexpr">Спецификатор <code>constexpr</code></h3>
+<p>В языке C++ есть два вида констант:</p>
+<ul>
+<li>
+<p>Константы <em>времени выполнения</em>. Их значения определяются только во время выполнения программы. Переменная <code>constAge</code> выше является константой <em>времени выполнения</em>, так как компилятор не может определить её значение во время компиляции. <code>constAge</code> зависит от пользовательского ввода (который можно получить только во время выполнения программы).</p>
+</li>
+<li>
+<p>Константы <em>времени компиляции</em>. Их значения определяются во время компиляции программы. Например, переменная со значением силы тяжести на Земле является константой времени компиляции, так как мы её определяем во время написания программы (до начала её выполнения).</p>
+</li>
+</ul>
+<p>В большинстве случаев не важно какой тип константы вы используете: времени выполнения или времени компиляции. Однако, все же есть несколько ситуаций, когда C++ может потребовать константу времени компиляции вместо времени выполнения. Так как есть 2 типа констант, то компилятору нужно постоянно отслеживать, к какому из них относится какая переменная. Чтобы упростить это задачу, в C++11 добавили спецификатор constexpr, который сообщает компилятору, что текущая переменная является константой времени компиляции:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">double</span> gravity <span class="token punctuation">{</span><span class="token number">9.8</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// ок, значение определяется во время компиляции программы</span>
+<span class="token keyword">constexpr</span> <span class="token keyword">int</span> sum <span class="token punctuation">{</span><span class="token number">4</span> <span class="token operator">+</span> <span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// ок, результат выражения 4 + 5 определяется во время компиляции программы</span>
+
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Enter your age: "</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> age<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>cin <span class="token operator">&gt;&gt;</span> age<span class="token punctuation">;</span>
+<span class="token keyword">constexpr</span> <span class="token keyword">int</span> myAge <span class="token punctuation">{</span> age <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// неправильно, переменная age не определяется во время компиляции программы</span>
+</code></pre>
+<blockquote>
+<p><em><strong>Правило: Любая переменная, которая не должна изменять свое значение после инициализации, должна быть объявлена с помощью спецификатора const (или constexpr).</strong></em></p>
+</blockquote>
+<hr>
+<h1 id="part4">4. Литералы</h1>
+<p><em><strong>Литералы</strong></em> — это значения, которые вставляются непосредственно в код.</p>
+<pre class=" language-cpp"><code class="prism  language-cpp">    <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>                     <span class="token comment">// 5 целочисленный литерал</span>
+    <span class="token keyword">bool</span> myNameIsAlex <span class="token punctuation">{</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>   <span class="token comment">// true булевым(логическим) литералом</span>
+    <span class="token keyword">double</span> d <span class="token punctuation">{</span> <span class="token number">3.4</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>             <span class="token comment">// 3.4 литерал с плавающей точкой типа double</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Hello, world!"</span><span class="token punctuation">;</span> <span class="token comment">// "Hello, world!" является строковым литералом в стиле Си</span>
+</code></pre>
+<p>Иногда литералы называют литеральными константами , потому что их значение нельзя переопределить ( 5 всегда означает целое значение 5).</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Буквальное значение</th>
+<th align="left">Примеры</th>
+<th align="left">Тип литерала по умолчанию</th>
+<th align="left">Примечание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Целочисленное значение</td>
+<td align="left"><code>5</code>, <code>0</code>, <code>-3</code></td>
+<td align="left"><code>int</code></td>
+<td align="left">целочисленный литерал</td>
+</tr>
+<tr>
+<td align="left">Логическое значение</td>
+<td align="left"><code>true</code>, <code>false</code></td>
+<td align="left"><code>bool</code></td>
+<td align="left">булевый(логический) литерал</td>
+</tr>
+<tr>
+<td align="left">Значение с плавающей запятой</td>
+<td align="left"><code>1.2</code>, <code>0.0</code>, <code>3.4</code></td>
+<td align="left"><code>double</code></td>
+<td align="left">В C++ по умолчанию используется double, а не float</td>
+</tr>
+<tr>
+<td align="left">Символьное значение (Character)</td>
+<td align="left"><code>'a'</code>, <code>'\n'</code></td>
+<td align="left"><code>char</code></td>
+<td align="left">символьный литерал. Всегда в одинарных кавычках</td>
+</tr>
+<tr>
+<td align="left">Строка в стиле C (C-style string)</td>
+<td align="left"><code>"Hello, world!"</code></td>
+<td align="left"><code>const char[14]</code></td>
+<td align="left">строковый литерал. Включает скрытый нулевой символ <code>\0</code> в конце</td>
+</tr>
+</tbody>
+</table><h3 id="литеральные-суффиксы">Литеральные суффиксы</h3>
+<p>Тип литерала по умолчанию можно изменить, добавив суффикс. Вот некоторые из наиболее распространенных суффиксов:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Тип данных</th>
+<th align="left">Суффикс</th>
+<th align="left">Значение</th>
+<th align="left">Примечание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Целочисленный</td>
+<td align="left"><code>u</code>, <code>U</code></td>
+<td align="left"><code>unsigned int</code></td>
+<td align="left">Беззнаковое целое число</td>
+</tr>
+<tr>
+<td align="left">Целочисленный</td>
+<td align="left"><code>l</code>, <code>L</code></td>
+<td align="left"><code>long</code></td>
+<td align="left">Длинное целое число</td>
+</tr>
+<tr>
+<td align="left">Целочисленный</td>
+<td align="left"><code>ul</code>, <code>UL</code>, <code>lu</code>, <code>LU</code></td>
+<td align="left"><code>unsigned long</code></td>
+<td align="left">Беззнаковое длинное целое число</td>
+</tr>
+<tr>
+<td align="left">Целочисленный</td>
+<td align="left"><code>ll</code>, <code>LL</code></td>
+<td align="left"><code>long long</code></td>
+<td align="left">Очень длинное целое число</td>
+</tr>
+<tr>
+<td align="left">Целочисленный</td>
+<td align="left"><code>ull</code>, <code>ULL</code>, <code>llu</code>, <code>LLU</code></td>
+<td align="left"><code>unsigned long long</code></td>
+<td align="left">Беззнаковое очень длинное целое число</td>
+</tr>
+<tr>
+<td align="left">Целочисленный</td>
+<td align="left"><code>z</code>, <code>Z</code></td>
+<td align="left">Знаковая версия <code>std::size_t</code></td>
+<td align="left">Добавлено в C++23 (тип <code>std::ptrdiff_t</code>)</td>
+</tr>
+<tr>
+<td align="left">Целочисленный</td>
+<td align="left"><code>uz</code>, <code>UZ</code>, <code>zu</code>, <code>ZU</code></td>
+<td align="left"><code>std::size_t</code></td>
+<td align="left">Добавлено в C++23 (размер объектов в памяти)</td>
+</tr>
+<tr>
+<td align="left">С плавающей запятой</td>
+<td align="left"><code>f</code>, <code>F</code></td>
+<td align="left"><code>float</code></td>
+<td align="left">Число с плавающей запятой одинарной точности</td>
+</tr>
+<tr>
+<td align="left">С плавающей запятой</td>
+<td align="left"><code>l</code>, <code>L</code></td>
+<td align="left"><code>long double</code></td>
+<td align="left">Число с плавающей запятой расширенной точности</td>
+</tr>
+</tbody>
+</table><p>В большинстве случаев суффиксы не требуются (за исключением <code>f</code>).</p>
+<h3 id="целочисленные-литералы">Целочисленные литералы</h3>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token number">5</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>  <span class="token comment">// 5</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token number">5L</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span> <span class="token comment">// 5L тип long</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token number">5u</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span> <span class="token comment">// 5u is тип unsigned int</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="литералы-с-плавающей-запятой">Литералы с плавающей запятой</h3>
+<p>По умолчанию литералы с плавающей запятой имеют тип <code>double</code>. Чтобы преобразовать их <code>float</code> в литералы, следует использовать суффикс <code>f</code>( или <code>F</code> ):</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token number">5.0</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>  <span class="token comment">// тип double (по умолчанию)</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token number">5.0f</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span> <span class="token comment">// 5.0f тип float</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">float</span> f <span class="token punctuation">{</span> <span class="token number">4.1</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// ошибку компиляции (narrowing conversion error) 4.1 is a double literal, not a float literal</span>
+</code></pre>
+<p>Поскольку <code>4.1</code> у него нет суффикса, литерал имеет тип <code>double</code>, а не <code>float</code>. Когда компилятор определяет тип литерала, ему всё равно, что вы с ним делаете (например, в данном случае, используете его для инициализации <code>float</code> переменной). Поскольку тип литерала (<code>double</code>) не совпадает с типом переменной, для инициализации которой он используется ( <code>float</code>), значение литерала необходимо преобразовать в тип <code>float</code>, чтобы затем использовать его для инициализации переменной <code>f</code>. Преобразование значения из типа <code>double</code> в тип <code>float</code> может привести к потере точности, поэтому компилятор выдаст предупреждение.</p>
+<p>В данном случае решение одно из следующих:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">float</span> f <span class="token punctuation">{</span> <span class="token number">4.1f</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> d <span class="token punctuation">{</span> <span class="token number">4.1</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="научная-нотация-для-литералов-с-плавающей-запятой">Научная нотация для литералов с плавающей запятой</h3>
+<p>Существует два разных способа записи литералов с плавающей запятой.</p>
+<ul>
+<li>В стандартной записи число записывается с десятичной точкой:</li>
+</ul>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">double</span> pi <span class="token punctuation">{</span> <span class="token number">3.14159</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> d <span class="token punctuation">{</span> <span class="token operator">-</span><span class="token number">1.23</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> why <span class="token punctuation">{</span> <span class="token number">0</span><span class="token punctuation">.</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>В научной нотации для обозначения показателя степени добавляется символ <code>e</code>:</li>
+</ul>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">double</span> avogadro <span class="token punctuation">{</span> <span class="token number">6.02e23</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> protonCharge <span class="token punctuation">{</span> <span class="token number">1.6e-19</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="строковые-литералы">Строковые литералы</h3>
+<p>В программировании строка — это набор последовательных символов, используемых для представления текста (например, имен, слов и предложений).</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Hello, world!"</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><code>"Hello, world!"</code> Это строковый литерал. Строковые литералы заключаются в двойные кавычки, чтобы обозначить их как строки (в отличие от символьных литералов, которые заключаются в одинарные кавычки).</p>
+<p>Поскольку строки широко используются в программах, большинство современных языков программирования включают в себя базовый строковый тип данных. По историческим причинам строки не являются базовым типом в C++. Вместо этого у них есть странный, сложный тип, с которым трудно работать (Лекция 8). Такие строки часто называют С-строками  или строками в стиле C, поскольку они унаследованы от языка C.</p>
+<p>Есть две неочевидные вещи, которые стоит знать о строковых литералах в стиле C.</p>
+<ul>
+<li>
+<p>Все строковые литералы в стиле C имеют неявный нулевой терминатор <code>'\0'</code>. Рассмотрим строку, например, такую “hello”: . Хотя эта строка в стиле C кажется состоящей всего из пяти символов, на самом деле в ней их шесть: <code>'h'</code>, <code>'e'</code>, <code>'l'</code>, <code>'l'</code>, <code>'o'</code>, и <code>'\0'</code>(символ с кодом ASCII 0). Этот завершающий символ <code>'\0'</code> является специальным символом, называемым нулевым терминатором , и используется для обозначения конца строки. Строка, заканчивающаяся нулевым терминатором, называется строкой с нулевым терминатором.</p>
+</li>
+<li>
+<p>В отличие от большинства других литералов (которые являются значениями, а не объектами), строковые литералы в стиле C являются константными объектами, которые создаются в начале программы и гарантированно существуют на протяжении всей программы.</p>
+</li>
+</ul>
+<h3 id="магические-числа">Магические числа</h3>
+<p>Магическое число — это литерал (обычно число), который либо имеет неясное значение, либо может потребовать изменения в дальнейшем.</p>
+<p>Вот два утверждения, демонстрирующие примеры «магических чисел»:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> maxStudentsPerSchool<span class="token punctuation">{</span> numClassrooms <span class="token operator">*</span> <span class="token number">30</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token function">setMax</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Что означают литералы 30 в этих контекстах? В первом случае, вероятно, можно догадаться, что это количество студентов в классе, но это не сразу очевидно. Во втором случае — кто знает. Нам нужно будет посмотреть на функцию, чтобы понять, что она делает.</p>
+<p>В сложных программах очень трудно понять, что означает тот или иной литерал, если нет поясняющего комментария.</p>
+<p>Использование «магических чисел» обычно считается плохой практикой, поскольку, помимо отсутствия контекста относительно того, для чего они используются, они создают проблемы, если значение необходимо изменить. Предположим, необходимо увеличить количество с 30 до 35, и наша программа должна это отражать.</p>
+<p>Для этого нам нужно обновить один или несколько литералов с 30 на 35. Но какие именно? Литерал 30 в инициализаторе <code>maxStudentsPerSchool</code> кажется очевидным. Но как насчет литерала, используемого в качестве аргумента для <code>setMax()</code>? Имеет ли он то же значение, что и другие 30? Если да, то его следует обновить. Если нет, то его следует оставить как есть, иначе мы можем сломать нашу программу где-то еще. При глобальном поиске и замене можно случайно обновить аргумент, <code>setMax()</code> когда он не должен был меняться. Поэтому приходится просматривать весь код на наличие каждого экземпляра литерала 30 (которых могут быть сотни), а затем индивидуально определять, нужно ли его менять или нет. Это может отнимать очень много времени (и чревато появлением новых ошибок).</p>
+<p>Проблемы с обновлением легко решаются с помощью символических констант:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">int</span> maxStudentsPerClass <span class="token punctuation">{</span> <span class="token number">30</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> totalStudents<span class="token punctuation">{</span> numClassrooms <span class="token operator">*</span> maxStudentsPerClass <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">constexpr</span> <span class="token keyword">int</span> maxNameLength<span class="token punctuation">{</span> <span class="token number">30</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token function">setMax</span><span class="token punctuation">(</span>maxNameLength<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Название константы задаёт контекст, и достаточно обновить значение только в одном месте, чтобы внести изменения во всю программу.</p>
+<p>Обратите внимание, что магические числа не всегда являются числами — они также могут быть текстом (например, именами) или другими типами данных:</p>
+<pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token function">printAppWelcome</span><span class="token punctuation">(</span><span class="token string">"MyCalculator"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// bad: имя приложения может использоваться в других местах или измениться в будущем</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Литералы, используемые в очевидных контекстах, которые вряд ли изменятся, обычно не считаются магическими. Значения <code>-1</code>, <code>0</code>, <code>0.0</code>, и <code>1</code> часто используются.</p>
+<blockquote>
+<p><em><strong>Избегайте использования «магических чисел» в коде (вместо них используйте constexpr-переменные)</strong></em></p>
+</blockquote>
+<hr>
+<h1 id="part5">5. Переменные</h1>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">int</span> age<span class="token punctuation">{</span><span class="token number">20</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
 <ul>
@@ -213,7 +497,7 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 <hr>
 <h1 id="перерыв">Перерыв</h1>
 <hr>
-<h1 id="part4">4. Операторы</h1>
+<h1 id="part6">6. Операторы</h1>
 <h2 id="арифметические">Арифметические</h2>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token operator">+</span>
 <span class="token operator">-</span>
@@ -272,7 +556,7 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 <span class="token operator">!</span> —     НЕ  → переворачивает значение
 </code></pre>
 <hr>
-<h1 id="part5">5. Преобразование типов</h1>
+<h1 id="part7">7. Преобразование типов</h1>
 <h2 id="неявное">Неявное</h2>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">double</span> x<span class="token punctuation">{</span><span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
@@ -288,7 +572,7 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 </code></pre>
 <p>явно показывает намерение программиста выполнить преобразование.</p>
 <hr>
-<h1 id="part6">6. Условные конструкции</h1>
+<h1 id="part8">8. Условные конструкции</h1>
 <p>Иногда программа должна принимать решение.</p>
 <p>Используются условные операторы.</p>
 <hr>
@@ -330,8 +614,8 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 </code></pre>
 <p>Компактная запись простого <code>if...else</code>.</p>
 <hr>
-<h1 id="part7">7. Современный стиль программирования</h1>
-<p>На протяжении курса придерживаемся следующих правил:</p>
+<h1 id="part9">9. Современный стиль программирования</h1>
+<p>На протяжении курса необходимо придерживаться следующих правил:</p>
 <ul>
 <li>использовать фигурную инициализацию;</li>
 <li>применять <code>const</code>, если значение не изменяется;</li>
@@ -342,21 +626,10 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 <li>форматировать код единообразно.</li>
 </ul>
 <hr>
-<h1 id="итоги-лекции">Итоги лекции</h1>
-<p>К концу занятия студент должен понимать:</p>
-<ul>
-<li>зачем существуют типы данных;</li>
-<li>как объявлять и инициализировать переменные;</li>
-<li>чем отличаются переменные и константы;</li>
-<li>как работают арифметические, логические операторы и операторы сравнения;</li>
-<li>как выполняются преобразования типов;</li>
-<li>как использовать условные конструкции;</li>
-<li>какие рекомендации современного C++ следует применять уже на первых этапах разработки.</li>
-</ul>
-<hr>
-<p>Следующий раздел необходим для правильного выполнения лабораторной работы № 1</p>
-<hr>
-<h1 id="part8">8. Namespace</h1>
+<h1 id="part10">10. Namespace</h1>
+<!--&lt;p style=&#34;text-align: right; font-size: 0.8em;&#34;-->
+<h6 id="этот-раздел-необходим-для-правильного-выполнения-лабораторной-работы-№-1"><em>Этот раздел необходим для правильного выполнения лабораторной работы № 1</em></h6>
+<!--&lt;/p&gt;-->
 <ul>
 <li>10.1.  <strong>Проблема конфликтов имён</strong>.</li>
 <li>10.2.  <strong>Обычный <code>namespace</code></strong>.</li>
