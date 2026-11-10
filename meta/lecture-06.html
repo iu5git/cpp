@@ -501,10 +501,10 @@ value = 10        ──────►     x = 10
 <span class="token punctuation">}</span>
 </code></pre>
 <p>Категория значений выражения (или подвыражения) указывает, преобразуется ли выражение в значение, функцию или объект какого-либо типа.</p>
-<blockquote>
-<p><em>До C++11 существовали только две возможные категории значений: <code>lvalue</code> и <code>rvalue</code>. В C++11 были добавлены три дополнительные категории значений ( <code>glvalue</code>, <code>prvalue</code>, и <code>xvalue</code>) для поддержки новой функции, называемой <code>move semantics</code>.<br>
-Семантику перемещения (и три дополнительные категории значений) рассмотрим в будущем.</em></p>
-</blockquote>
+
+<p>До C++11 существовали только две возможные категории значений: <code>lvalue</code> и <code>rvalue</code>. В C++11 были добавлены три дополнительные категории значений ( <code>glvalue</code>, <code>prvalue</code>, и <code>xvalue</code>) для поддержки новой функции, называемой <code>move semantics</code>.<br>
+Семантику перемещения (и три дополнительные категории значений) рассмотрим в будущем.</p>
+
 <pre class=" language-cpp"><code class="prism  language-cpp">    <span class="token keyword">int</span> x <span class="token punctuation">{</span> <span class="token number">10</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
     <span class="token keyword">int</span> y <span class="token punctuation">{</span> x <span class="token punctuation">}</span><span class="token punctuation">;</span>    <span class="token comment">// x  - lvalue выражение</span>
 </code></pre>
@@ -590,7 +590,7 @@ x * 2;   // rvalue
 <!--&#10;```text&#10;55&#10;66&#10;77&#10;&#10;```&#10;-->
 <p>Ссылка должна быть инициализирована при объявлении: при создании ссылки необходимо указать объект, с которым она будет связана.</p>
 <p><code>lvalue-ссылка</code> обычно связывается с объектом подходящего типа. Например, <code>int&amp;</code> может ссылаться на объект типа <code>int</code>.</p>
-<p>Eсли тип ссылки (например, <code>int&amp;</code>) не совпадает с типом связываемого объекта (например, <code>int</code>), преобразование здесь не применяется (даже тривиальное преобразование) — разница в типах обрабатывается в процессе инициализации ссылки.</p>
+<p>Eсли тип ссылки (например, <code>int&amp;</code>) не совпадает с типом связываемого объекта, преобразование здесь не применяется (даже тривиальное преобразование) — разница в типах обрабатывается в процессе инициализации ссылки.</p>
 <blockquote>
 <p><strong>Ссылка (обычно) будет связываться только с объектом, соответствующим типу, на который она ссылается.</strong></p>
 </blockquote>

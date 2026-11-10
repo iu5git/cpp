@@ -206,7 +206,7 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 <p>Константы <em>времени компиляции</em>. Их значения определяются во время компиляции программы. Например, переменная со значением силы тяжести на Земле является константой времени компиляции, так как мы её определяем во время написания программы (до начала её выполнения).</p>
 </li>
 </ul>
-<p>В большинстве случаев не важно какой тип константы вы используете: времени выполнения или времени компиляции. Однако, все же есть несколько ситуаций, когда C++ может потребовать константу времени компиляции вместо времени выполнения. Так как есть 2 типа констант, то компилятору нужно постоянно отслеживать, к какому из них относится какая переменная. Чтобы упростить это задачу, в C++11 добавили спецификатор constexpr, который сообщает компилятору, что текущая переменная является константой времени компиляции:</p>
+<p>В большинстве случаев не важно какой тип константы вы используете: времени выполнения или времени компиляции. Однако, все же есть несколько ситуаций, когда C++ может потребовать константу времени компиляции вместо времени выполнения. Так как есть 2 типа констант, то компилятору нужно постоянно отслеживать, к какому из них относится какая переменная. Чтобы упростить эту задачу, в C++11 добавили спецификатор <code>constexpr</code>, который сообщает компилятору, что текущая переменная является константой времени компиляции:</p>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">double</span> gravity <span class="token punctuation">{</span><span class="token number">9.8</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// ок, значение определяется во время компиляции программы</span>
 <span class="token keyword">constexpr</span> <span class="token keyword">int</span> sum <span class="token punctuation">{</span><span class="token number">4</span> <span class="token operator">+</span> <span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// ок, результат выражения 4 + 5 определяется во время компиляции программы</span>
 
@@ -216,7 +216,7 @@ std<span class="token operator">::</span>cin <span class="token operator">&gt;&g
 <span class="token keyword">constexpr</span> <span class="token keyword">int</span> myAge <span class="token punctuation">{</span> age <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// неправильно, переменная age не определяется во время компиляции программы</span>
 </code></pre>
 <blockquote>
-<p><em><strong>Правило: Любая переменная, которая не должна изменять свое значение после инициализации, должна быть объявлена с помощью спецификатора const (или constexpr).</strong></em></p>
+<p><em><strong>Правило: Любая переменная, которая не должна изменять свое значение после инициализации, должна быть объявлена с помощью спецификатора <code>const</code> (или <code>constexpr</code>).</strong></em></p>
 </blockquote>
 <hr>
 <h1 id="part4">4. Литералы</h1>
@@ -391,7 +391,7 @@ std<span class="token operator">::</span>cin <span class="token operator">&gt;&g
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><code>"Hello, world!"</code> Это строковый литерал. Строковые литералы заключаются в двойные кавычки, чтобы обозначить их как строки (в отличие от символьных литералов, которые заключаются в одинарные кавычки).</p>
+<p><code>"Hello, world!"</code> это строковый литерал. Строковые литералы заключаются в двойные кавычки, чтобы обозначить их как строки (в отличие от символьных литералов, которые заключаются в одинарные кавычки).</p>
 <p>Поскольку строки широко используются в программах, большинство современных языков программирования включают в себя базовый строковый тип данных. По историческим причинам строки не являются базовым типом в C++. Вместо этого у них есть странный, сложный тип, с которым трудно работать (Лекция 8). Такие строки часто называют С-строками  или строками в стиле C, поскольку они унаследованы от языка C.</p>
 <p>Есть две неочевидные вещи, которые стоит знать о строковых литералах в стиле C.</p>
 <ul>
@@ -403,7 +403,7 @@ std<span class="token operator">::</span>cin <span class="token operator">&gt;&g
 </li>
 </ul>
 <h3 id="магические-числа">Магические числа</h3>
-<p>Магическое число — это литерал (обычно число), который либо имеет неясное значение, либо может потребовать изменения в дальнейшем.</p>
+<p><em><strong>Магическое число</strong></em> — это литерал (обычно число), который либо имеет неясное значение, либо может потребовать изменения в дальнейшем.</p>
 <p>Вот два утверждения, демонстрирующие примеры «магических чисел»:</p>
 <pre class=" language-cpp"><code class="prism  language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> maxStudentsPerSchool<span class="token punctuation">{</span> numClassrooms <span class="token operator">*</span> <span class="token number">30</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token function">setMax</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
